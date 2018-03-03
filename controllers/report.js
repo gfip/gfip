@@ -7,9 +7,9 @@ module.exports = {
 	getReports : function(req, res){
 		Student.findById( req.params.student_id).populate("reports").exec()
 		.then( (foundStudent) => {
-				res.send(foundStudent.reports);
+				res.json(foundStudent.reports);
 			}).catch( (err) => {
-				console.log(err);
+				res.sendStatus(404);
 			});
 	},
 
@@ -19,10 +19,11 @@ module.exports = {
 			(createdReport) =>{
 				foundStudent.reports.push(createdReport._id);
 				foundStudent.save();
-				return res.send(foundStudent.reports);
+				// send email here
+				return res.json(createdReport);
 			}
 		)).catch((err) =>{
-			return console.log(err);
+			return res.sendStatus(404);
 		})	
 	},
 
@@ -31,20 +32,20 @@ module.exports = {
 			(deletedReport) =>{
 				foundStudent.reports.splice(foundStudent.reports.indexOf(deletedReport._id));
 				foundStudent.save();
-				return res.send(foundStudent.reports);
+				return res.json(deletedReport);
 			}
 		)).catch((err) =>{
-			return console.log(err);
+			return res.sendStatus(404);
 		})	
 	},
 
 	showReport: function(req, res){
 		Report.findById(req.params.report_id).then(
 			(foundReport) =>{
-				return res.send(foundReport);
+				return res.json(foundReport);
 			}
 		).catch( (err) =>{
-			return console.log(err);
+			return res.sendStatus(404);
 		})
 
 	},
@@ -55,7 +56,7 @@ module.exports = {
 				return res.send(updatedReport);
 			}
 		).catch( (err) =>{
-			return console.log(err);
+			return res.sendStatus(404);
 		})
 
 
