@@ -1,6 +1,6 @@
 var Student = require("../models/student.js");
 var Report  = require("../models/report.js");
-
+var Promise = require("bluebird");
 
 module.exports = {
 
@@ -18,18 +18,18 @@ module.exports = {
 		var report = {
 			title: req.body.title
 		}
-		Student.findById(req.params.student_id)
-		.then((foundStudent) => { 
-			return Report.create(report) 
-		}).then( (createdReport) =>{
-				foundStudent.reports.push(createdReport._id);
-				foundStudent.save();
-				// send email here
-				return res.json(createdReport);
-			}
-		).catch((err) =>{
-			return res.json({code: -1 , err : err});
-		})	
+		
+		Promise.all([Student.findById(req.params.student_id), Report.create(report)])
+		.spread((foundStudent, createdReport) => {
+			foundStudent.reports.push(createdReport._id);
+			foundStudent.save();
+			// send email here
+			return res.json(createdReport);
+		})
+		.catch((err) =>{
+ 			console.log(err);
+			return res.json({code: -1 , err});
+		});
 	},
 
 	deleteReport : function(req, res){

@@ -1,5 +1,6 @@
 const Student = require("../models/student.js");
 const User =require("../models/user.js");
+var Promise = require("bluebird");
 
 module.exports = {
 
@@ -19,15 +20,13 @@ module.exports = {
 			name: req.body.name
 		}
 		
-		User.findById(req.authData.user._id)
-		.then((foundUser) => { 
-			return Student.create(student) 
-		})
- 		.then((createdStudent) => {
+		Promise.all([User.findById(req.authData.user._id), Student.create(student)])
+		.spread((foundUser, createdStudent) => {
 			foundUser.students.push(createdStudent._id);
 			foundUser.save();
 			return res.json(createdStudent);
-		}).catch((err) =>{
+		})
+		.catch((err) =>{
  			console.log(err);
 			return res.json({code: -1 , err});
 		});
