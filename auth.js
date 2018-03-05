@@ -15,15 +15,15 @@ module.exports =  function(req, res, next) {
 
 		jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
 			if(err){
-				res.sendStatus(403);
+				res.json({code: -1 , err : err});
 			}else{
+				req.authData = authData;
 				next();
-			
 			}
-	});
+		});
 
 	} else {
-		res.sendStatus(403);
+		res.status(401).send("You need to be logged in to that");
 	}
 
 }

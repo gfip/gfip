@@ -2,7 +2,6 @@ const express  = require("express"),
 	  mongoose = require("mongoose"),
 	  methodOverride = require("method-override"),
 	  bodyParser = require("body-parser"),
-	  jwt = require("jsonwebtoken"),
 	  passport = require("passport"),
 	  LocalStrategy = require("passport-local"),
 	  User = require("./models/user.js"),
@@ -10,18 +9,18 @@ const express  = require("express"),
 
 
 var verifyToken = require("./auth.js");
-
+var middleware = require("./middleware.js");
 // requiring routes
 var reportRoutes = require("./routes/report.js");
 var userRoutes = require("./routes/user.js");
-
+var studentRoutes = require("./routes/student.js");
 
 
 app.use(bodyParser.urlencoded({extended:true}));// body-parser
 app.use(methodOverride("_method"));// method-override
 require('dotenv').config(); // eviroment variables
 
-mongoose.connect(process.env.DB); // connecting db
+mongoose.connect("mongodb://localhost/feedback-generator"); // connecting db
 
 // setting passport
 app.use(passport.initialize());
@@ -31,10 +30,9 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 
-app.use("/students/", verifyToken,reportRoutes);
+app.use("/students/", verifyToken ,reportRoutes);
 app.use("/", userRoutes);
+app.use("/students/",verifyToken, studentRoutes);
 
-// test route
-//app.get("/secret", verifyToken , (req, res) => res.json("This is a Secret Page!!"));
 
 app.listen(3000, () => console.log("Listening on port 3000"));
