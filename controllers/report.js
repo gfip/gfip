@@ -18,7 +18,6 @@ module.exports = {
 		var report = {
 			title: req.body.title
 		}
-
 		Student.findById(req.params.student_id).then((foundStudent) => Report.create(report)
 		.then( (createdReport) =>{
 				foundStudent.reports.push(createdReport._id);

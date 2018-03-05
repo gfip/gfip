@@ -12,15 +12,10 @@
     "nodemailer": "^4.6.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^5.0.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-scripts": "1.1.1"
+    "passport-local-mongoose": "^5.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+  "start": "node app.js",
+  "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   }
 }

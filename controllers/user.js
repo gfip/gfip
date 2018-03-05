@@ -3,8 +3,7 @@ const jwt  = require("jsonwebtoken");
 const passport = require("passport");
 const nodemailer = require("nodemailer");
 
-const transporter = require("../email.js");
-
+const transporter = require("../modules/email.js");
 
 module.exports = {
 
@@ -20,9 +19,7 @@ module.exports = {
 		  				if(user){
 		  					if(user.isConfirmed) {
 				  				res.json({
-				  					token,
-				  					user,
-				  					info
+				  					token
 				  				});			  					
 		  					}else {
 		  						res.status(401).send("User not confirmed")
@@ -55,7 +52,7 @@ module.exports = {
 							from: 'test@feedback.com',
 							to : user.username + "@cin.ufpe.br",
 							subject: "Register Confirmation",
-							html: '<a href = "http://localhost:3000/confirm/' + token + '">Click Here to Confirm registration</a>'
+							html: '<a href = "http://localhost:5000/api/confirm/' + token + '">Click here to confirm registration</a>'
 						}
 
 						transporter.sendMail(mailOptions, (err, info) => {
@@ -67,7 +64,7 @@ module.exports = {
 						});
 						// .......
 						res.json({
-							user
+							msg: "Succesfully Registered"
 						})
 					}
 				});
@@ -85,11 +82,19 @@ module.exports = {
 				User.findById(authData.user._id).then( (foundUser ) => {
 					foundUser.isConfirmed = true;
 					foundUser.save();
-					res.json(foundUser);
+					var username = foundUser.username;
+					res.json( { msg:"Succesfully Confirmed User", username:username});
 				}).catch( (err) => {
 					res.json({code: -1 , err : err});
 				})
 			}
+		});
+	},
+
+	getUser: function(req, res){
+		res.json({
+			username : req.authData.user.username,
+			students :req.authData.user.students
 		});
 	}
 

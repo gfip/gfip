@@ -2,7 +2,7 @@ const express = require("express"),
 	controller = require("../controllers/student.js"),
 	router = express.Router();
 
-const middleware = require("../middleware.js");
+const middleware = require("../modules/middleware.js");
 
 router.get("/", controller.getStudents);
 

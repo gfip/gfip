@@ -8,8 +8,7 @@ const express  = require("express"),
 	  app = express();
 
 
-var verifyToken = require("./auth.js");
-var middleware = require("./middleware.js");
+var verifyToken = require("./modules/auth.js");
 // requiring routes
 var reportRoutes = require("./routes/report.js");
 var userRoutes = require("./routes/user.js");
@@ -30,9 +29,9 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 
-app.use("/students/", verifyToken ,reportRoutes);
-app.use("/", userRoutes);
-app.use("/students/",verifyToken, studentRoutes);
+app.use("/api/students/", verifyToken ,reportRoutes);
+app.use("/api/", userRoutes);
+app.use("/api/students/",verifyToken, studentRoutes);
 
 
-app.listen(3000, () => console.log("Listening on port 3000"));
+app.listen(5000, () => console.log("Listening on port 5000"));
