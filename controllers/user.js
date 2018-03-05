@@ -1,9 +1,7 @@
 const User = require("../models/user.js");
 const jwt  = require("jsonwebtoken");
 const passport = require("passport");
-const nodemailer = require("nodemailer");
-
-const transporter = require("../modules/email.js");
+const mailer = require("../modules/email")
 
 module.exports = {
 
@@ -38,38 +36,39 @@ module.exports = {
 
 	registerUser: function(req, res) {
 		User.register( new User( {username:req.body.username} ), req.body.password)
-		.then( ( user ) => {
+		.then( (user) => {
 			passport.authenticate("local")(req, res, function(){
 				jwt.sign({user:user}, process.env.CONFIRMATION_SECRET_KEY , (err, token) =>{
 					if(err) {
-
-						res.json({code:-1 , err:err});
+						throw new Error(err);
+						// res.json({code:-1 , err:err});
 					}else{
 
 						//sending email
 						// .......
-						const mailOptions = {
-							from: 'test@feedback.com',
-							to : user.username + "@cin.ufpe.br",
-							subject: "Register Confirmation",
-							html: '<a href = "http://localhost:5000/api/confirm/' + token + '">Click here to confirm registration</a>'
-						}
-
-						transporter.sendMail(mailOptions, (err, info) => {
-							if(err){
-								return console.log(err);
-							}else{
-								return console.log(info);
-							}
-						});
+						// const mailOptions = {
+						// 	from: 'test@feedback.com',
+						// 	to : user.username + "@cin.ufpe.br",
+						// 	subject: "Register Confirmation",
+						// 	html: '<a href = "http://localhost:5000/api/confirm/' + token + '">Click here to confirm registration</a>'
+						// }
+						
+						// transporter.sendMail(mailOptions, (err, info) => {
+						// 	if(err){
+						// 		return console.log(err);
+						// 	}else{
+						// 		return console.log(info);
+						// 	}
+						// });
 						// .......
-						res.json({
-							msg: "Succesfully Registered"
-						})
+
+						return mailer.sendConfirmation(user, token);
 					}
 				});
 	        });
-		}).catch((err) => {
+		})
+		.then((info) => console.log(info))
+		.catch((err) => {
 			res.json({code:-1 , err:err});
 		});
 	},

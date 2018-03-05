@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var controller = require("../controllers/report.js");
-var middleware = require("../modules/middleware.js");
+var middleware = require("../modules/authorization").ownership;
 
 
 router.get("/:student_id/reports", controller.getReports);

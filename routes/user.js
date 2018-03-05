@@ -2,7 +2,7 @@ const express = require("express"),
 	  router  = express.Router(),
 	  controller = require("../controllers/user.js");
 
-const verifyToken = require("../modules/auth.js");
+const verifyToken = require("../modules/authorization").token;
 
 router.post("/register",controller.registerUser);
 

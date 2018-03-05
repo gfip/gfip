@@ -2,7 +2,7 @@ const express = require("express"),
 	controller = require("../controllers/student.js"),
 	router = express.Router();
 
-const middleware = require("../modules/middleware.js");
+var middleware = require("../modules/authorization").ownership;
 
 router.get("/", controller.getStudents);
 
