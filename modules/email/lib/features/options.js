@@ -1,5 +1,5 @@
 module.exports = function(user, table) {
-    const mailOptions = {
+    return {
         from: 'test@feedback.com',
         to : user.username + "@cin.ufpe.br",
         subject: "Register Confirmation",

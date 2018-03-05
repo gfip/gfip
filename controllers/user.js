@@ -76,6 +76,7 @@ module.exports = {
 	confirmUser: function(req, res) {
 		jwt.verify(req.params.token, process.env.CONFIRMATION_SECRET_KEY , (err, authData) => {
 			if(err){
+				console.log(err);
 				res.json({code: -1 , err : err});
 			}else{
 				User.findById(authData.user._id).then( (foundUser ) => {

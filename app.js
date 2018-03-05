@@ -8,7 +8,7 @@ const express  = require("express"),
 	  app = express();
 
 
-var verifyToken = require("./modules/auth.js");
+var verifyToken = require("./modules/authorization/index.js").token;
 // requiring routes
 var reportRoutes = require("./routes/report.js");
 var userRoutes = require("./routes/user.js");
