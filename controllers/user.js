@@ -61,7 +61,8 @@ module.exports = {
 						// 	}
 						// });
 						// .......
-
+						var username = user.username;
+						res.json("Succesfully Registered")
 						return mailer.sendConfirmation(user, token);
 					}
 				});

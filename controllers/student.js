@@ -4,6 +4,7 @@ const User =require("../models/user.js");
 module.exports = {
 
 	getStudents : function(req, res){
+		console.log(req.authData.user._id)
 		User.findById(req.authData.user._id).populate("students").exec()
 		.then( (foundUser) => {
 			return res.json(foundUser.students);
@@ -27,7 +28,8 @@ module.exports = {
 			foundUser.save();
 			return res.json(createdStudent);
 		}).catch((err) =>{
-			return res.json({code: -1 , err : err});
+ 			console.log(err);
+			return res.json({code: -1 , err});
 		});
 	},
 
