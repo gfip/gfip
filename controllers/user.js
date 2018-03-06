@@ -3,6 +3,8 @@ const jwt  = require("jsonwebtoken");
 const passport = require("passport");
 const mailer = require("../modules/email")
 
+const auth = require("../config/constants.js").authentication;
+
 module.exports = {
 
 	loginUser : function(req, res, next) {
@@ -10,7 +12,7 @@ module.exports = {
 		  	if(err){
 		  		res.json({ code: -1 , err: err});
 		  	}else{
-		  		jwt.sign({user:user}, process.env.SECRET_KEY , (err, token) =>{
+		  		jwt.sign({user:user}, auth.loginKey , (err, token) =>{
 		  			if(err){
 		  				res.json({ code: -1 , err: err});
 		  			}else{
@@ -38,7 +40,7 @@ module.exports = {
 		User.register( new User( {username:req.body.username} ), req.body.password)
 		.then( (user) => {
 			passport.authenticate("local")(req, res, function(){
-				jwt.sign({user:user}, process.env.CONFIRMATION_SECRET_KEY , (err, token) =>{
+				jwt.sign({user:user}, auth.confirmationKey , (err, token) =>{
 					if(err) {
 						res.json({code:-1 , err:err});  //isso aqui é temporario, se pá tem jwt com promises e logo mais implementa.
 					}else{
@@ -55,7 +57,7 @@ module.exports = {
 	},
 
 	confirmUser: function(req, res) {
-		jwt.verify(req.params.token, process.env.CONFIRMATION_SECRET_KEY , (err, authData) => {
+		jwt.verify(req.params.token, auth.confirmationKey , (err, authData) => {
 			if(err){
 				console.log(err);
 				res.json({code: -1 , err : err});

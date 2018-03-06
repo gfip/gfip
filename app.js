@@ -17,7 +17,6 @@ var studentRoutes = require("./routes/student.js");
 
 app.use(bodyParser.urlencoded({extended:true}));// body-parser
 app.use(methodOverride("_method"));// method-override
-require('dotenv').config(); // eviroment variables
 
 mongoose.connect("mongodb://localhost/feedback-generator"); // connecting db
 
@@ -29,9 +28,9 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 
-app.use("/api/students/", verifyToken ,reportRoutes);
+app.use("/api/me/students/", verifyToken ,reportRoutes);
 app.use("/api/", userRoutes);
-app.use("/api/students/",verifyToken, studentRoutes);
+app.use("/api/me/cstudents/",verifyToken, studentRoutes);
 
 
 app.listen(5000, () => console.log("Listening on port 5000"));
