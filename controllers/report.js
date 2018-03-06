@@ -33,15 +33,13 @@ module.exports = {
 	},
 
 	deleteReport : function(req, res){
-		Student.findById(req.params.student_id)
-		.then( (foundStudent) => { 
-			return Report.findByIdAndRemove(req.params.report_id) 
-		}).then((deletedReport) => {
-			foundStudent.reports.splice(foundStudent.reports.indexOf(req.params.report_id),1);
+		Promise.all([Student.findById(req.params.student_id), Report.findByIdAndRemove(req.params.report_id)])
+		.spread((foundStudent, deletedReport) => {
+			foundStudent.reports.splice(foundStudent.reports.indexOf(req.params.report_id), 1);
 			foundStudent.save();
-			return res.json(deletedReport);
+			return res.json(foundStudent.reports);
 		}).catch((err) =>{
-			return res.json({code: -1 , err : err});
+			return res.json({code: -1, err});
 		})
 	},
 

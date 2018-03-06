@@ -93,9 +93,12 @@ module.exports = {
 	},
 
 	getUser: function(req, res){
-		res.json({
-			username : req.authData.user.username,
-			students :req.authData.user.students
+		User.findById(req.authData.user._id).then( (foundUser) => {
+			var username = foundUser.username;
+			var students = foundUser.students;
+			res.json({username, students});
+		}).catch( (err) => {
+			res.json({code: -1, err})
 		});
 	}
 

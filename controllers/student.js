@@ -5,7 +5,6 @@ var Promise = require("bluebird");
 module.exports = {
 
 	getStudents : function(req, res){
-		console.log(req.authData.user._id)
 		User.findById(req.authData.user._id).populate("students").exec()
 		.then( (foundUser) => {
 			return res.json(foundUser.students);
@@ -33,12 +32,9 @@ module.exports = {
 	},
 
 	deleteStudent : function(req, res){
-		User.findById(req.authData.user._id)
-		.then( (foundUser) =>  { 
-			return Student.findByIdAndRemove(req.params.student_id) 
-		})
-		.then( (deletedStudent) => {
-			foundUser.students.splice(foundUser.students.indexOf(req.params.student_id));
+		Promise.all([User.findById(req.authData.user._id), Student.findByIdAndRemove(req.params.student_id)])
+		.spread( (foundUser, deletedStudent) =>{
+			foundUser.students.splice(foundUser.students.indexOf(req.params.student_id), 1);
 			foundUser.save();
 			return res.json(deletedStudent);
 		}).catch((err) => {
