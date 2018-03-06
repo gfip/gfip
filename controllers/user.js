@@ -1,5 +1,5 @@
 const User = require("../models/user.js");
-const jwt  = require("jsonwebtoken");
+const jwt  = require("jwt-then");
 const passport = require("passport");
 const mailer = require("../modules/email")
 
@@ -12,23 +12,23 @@ module.exports = {
 		  	if(err){
 		  		res.json({ code: -1 , err: err});
 		  	}else{
-		  		jwt.sign({user:user}, auth.loginKey , (err, token) =>{
-		  			if(err){
-		  				res.json({ code: -1 , err: err});
-		  			}else{
-		  				if(user){
-		  					if(user.isConfirmed) {
-				  				res.json({
-				  					token
-				  				});			  					
-		  					}else {
-		  						res.status(401).send("User not confirmed")
-		  					}
+
+		  		jwt.sign({user:user}, auth.loginKey).then( (token) => {
+		  			if(user){
+		  				if(user.isConfirmed){
+		  					res.json({
+				  				token
+				  			});	
 		  				}else{
-		  					res.status(401).send("Incorrect username or password.");
+		  					res.status(401).send("User not confirmed")
 		  				}
+		  			}else{
+	  					res.status(401).send("Incorrect username or password.");
 		  			}
+		  		}).catch( (err) => {
+		  			res.json({ code: -1 , err: err});
 		  		});
+
 		  	}
 
 	    })(req, res, next);
@@ -40,14 +40,13 @@ module.exports = {
 		User.register( new User( {username:req.body.username} ), req.body.password)
 		.then( (user) => {
 			passport.authenticate("local")(req, res, function(){
-				jwt.sign({user:user}, auth.confirmationKey , (err, token) =>{
-					if(err) {
-						res.json({code:-1 , err:err});  //isso aqui é temporario, se pá tem jwt com promises e logo mais implementa.
-					}else{
-						var username = user.username;
-						res.json("Succesfully Registered")
-						mailer.sendConfirmation(user, token).catch((err) => res.json({code:-1 , err:err})); //isso aqui é temporario, se pá tem jwt com promises e logo mais implementa.
-					}
+				jwt.sign({user:user}, auth.confirmationKey).then((token) => {
+					var username = user.username;
+					res.json({ msg:"Succesfully Registered", username});
+					return mailer.sendConfirmation(user, token);
+				}).catch( (err) => {
+					console.log(err);
+					res.json({code: -1, err:err})
 				});
 	        });
 		})
@@ -57,20 +56,16 @@ module.exports = {
 	},
 
 	confirmUser: function(req, res) {
-		jwt.verify(req.params.token, auth.confirmationKey , (err, authData) => {
-			if(err){
-				console.log(err);
-				res.json({code: -1 , err : err});
-			}else{
-				User.findById(authData.user._id).then( (foundUser ) => {
-					foundUser.isConfirmed = true;
-					foundUser.save();
-					var username = foundUser.username;
-					res.json( { msg:"Succesfully Confirmed User", username:username});
-				}).catch( (err) => {
-					res.json({code: -1 , err : err});
-				})
-			}
+		jwt.verify(req.params.token, auth.confirmationKey).then( (authData) => {
+			return User.findById(authData.user._id);
+		}).then( (foundUser) => {
+			foundUser.isConfirmed = true;
+			foundUser.save();
+			var username = foundUser.username;
+			return res.json( { msg:"Succesfully Confirmed User", username:username});
+		}).catch( (err) => {
+			console.log(err);
+			return res.json({code: -1 , err : err});
 		});
 	},
 

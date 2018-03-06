@@ -1,7 +1,6 @@
-const jwt = require("jsonwebtoken");
+const jwt = require("jwt-then");
 
-const secretKey = require("../../../../config/constants.js").authentication.secretKey;
-
+const loginKey = require("../../../../config/constants.js").authentication.loginKey;
 // to gain acess send Authorization header in the format Bearer <token>
 
 
@@ -15,13 +14,12 @@ module.exports =  function(req, res, next) {
 
 		req.token = bearerToken;
 
-		jwt.verify(req.token, secretKey, (err, authData) => {
-			if(err){
-				res.json({code: -1 , err : err});
-			}else{
-				req.authData = authData;
-				next();
-		}
+		jwt.verify(req.token, loginKey).then( (authData) => {
+			req.authData = authData;
+			next();
+		}).catch( (err) => {
+			console.log(err);	
+			res.json({code:-1, err});
 		});
 
 	} else {

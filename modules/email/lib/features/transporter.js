@@ -1,11 +1,11 @@
 const nodemailer = require('nodemailer');
 
-require("dotenv").config();
+const options = require("../../../../config/constants.js").email;
 
 module.exports = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
-    user: process.env.EMAIL_ACCOUNT,
-    pass: process.env.EMAIL_PASSWORD
+    user: options.emailUser,
+    pass: options.emailPassword
   } 
 });

@@ -8,7 +8,7 @@
     "body-parser": "^1.18.2",
     "dotenv": "^5.0.1",
     "express": "^4.16.2",
-    "jsonwebtoken": "^8.2.0",
+    "jwt-then": "^0.6.0",
     "method-override": "^2.3.10",
     "moment": "^2.21.0",
     "mongoose": "^5.0.7",
