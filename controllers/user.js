@@ -40,35 +40,15 @@ module.exports = {
 			passport.authenticate("local")(req, res, function(){
 				jwt.sign({user:user}, process.env.CONFIRMATION_SECRET_KEY , (err, token) =>{
 					if(err) {
-						throw new Error(err);
-						// res.json({code:-1 , err:err});
+						res.json({code:-1 , err:err});  //isso aqui é temporario, se pá tem jwt com promises e logo mais implementa.
 					}else{
-
-						//sending email
-						// .......
-						// const mailOptions = {
-						// 	from: 'test@feedback.com',
-						// 	to : user.username + "@cin.ufpe.br",
-						// 	subject: "Register Confirmation",
-						// 	html: '<a href = "http://localhost:5000/api/confirm/' + token + '">Click here to confirm registration</a>'
-						// }
-						
-						// transporter.sendMail(mailOptions, (err, info) => {
-						// 	if(err){
-						// 		return console.log(err);
-						// 	}else{
-						// 		return console.log(info);
-						// 	}
-						// });
-						// .......
 						var username = user.username;
 						res.json("Succesfully Registered")
-						return mailer.sendConfirmation(user, token);
+						mailer.sendConfirmation(user, token).catch((err) => res.json({code:-1 , err:err})); //isso aqui é temporario, se pá tem jwt com promises e logo mais implementa.
 					}
 				});
 	        });
 		})
-		.then((info) => console.log(info))
 		.catch((err) => {
 			res.json({code:-1 , err:err});
 		});
