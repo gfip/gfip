@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-const options = require("../../../../config/constants.js").email;
+const options = require(__base + "config/constants.js").email;
 
 module.exports = nodemailer.createTransport({
   service: 'Gmail',

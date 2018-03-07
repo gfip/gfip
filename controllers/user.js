@@ -10,7 +10,7 @@ module.exports = {
 	loginUser : function(req, res, next) {
 		passport.authenticate('local', (err, user, info) => {
 		  	if(err){
-		  		res.json({ code: -1 , err: err});
+		  		res.json({ code: -1 , err: err.message});
 		  	}else{
 
 		  		jwt.sign({user:user}, auth.loginKey).then( (token) => {
@@ -26,7 +26,7 @@ module.exports = {
 	  					res.status(401).send("Incorrect username or password.");
 		  			}
 		  		}).catch( (err) => {
-		  			res.json({ code: -1 , err: err});
+		  			res.json({ code: -1 , err: err.message});
 		  		});
 
 		  	}
@@ -45,13 +45,13 @@ module.exports = {
 					res.json({ msg:"Succesfully Registered", username});
 					return mailer.sendConfirmation(user, token);
 				}).catch( (err) => {
-					console.log(err);
-					res.json({code: -1, err:err})
+					console.log(err.message);
+					res.json({code: -1, err:err.message})
 				});
 	        });
 		})
 		.catch((err) => {
-			res.json({code:-1 , err:err});
+			res.json({code:-1 , err:err.message});
 		});
 	},
 
@@ -65,7 +65,7 @@ module.exports = {
 			return res.json( { msg:"Succesfully Confirmed User", username:username});
 		}).catch( (err) => {
 			console.log(err);
-			return res.json({code: -1 , err : err});
+			return res.json({code: -1 , err : err.message});
 		});
 	},
 
@@ -75,7 +75,7 @@ module.exports = {
 			var students = foundUser.students;
 			res.json({username, students});
 		}).catch( (err) => {
-			res.json({code: -1, err})
+			res.json({code: -1, err: err.message})
 		});
 	}
 

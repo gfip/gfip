@@ -7,7 +7,8 @@ const express  = require("express"),
 	  User = require("./models/user.js"),
 	  app = express();
 
-
+global.__base = __dirname + '/'; //set __base as root directory
+console.log(__base)
 var verifyToken = require("./modules/authorization/index.js").token;
 // requiring routes
 var reportRoutes = require("./routes/report.js");
@@ -18,7 +19,7 @@ var studentRoutes = require("./routes/student.js");
 app.use(bodyParser.urlencoded({extended:true}));// body-parser
 app.use(methodOverride("_method"));// method-override
 
-mongoose.connect("mongodb://localhost/feedback-generator"); // connecting db
+mongoose.connect("mongodb://localhost/feedback-generator").catch((err) => console.log(err.message)); // connecting db
 
 // setting passport
 app.use(passport.initialize());

@@ -1,5 +1,5 @@
-var User = require("../../../../models/user.js");
-var Student = require("../../../../models/student.js");
+var User = require(__base + "models/user.js");
+var Student = require(__base + "models/student.js");
 
 module.exports = {
 

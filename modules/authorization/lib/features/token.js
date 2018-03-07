@@ -1,6 +1,6 @@
 const jwt = require("jwt-then");
 
-const loginKey = require("../../../../config/constants.js").authentication.loginKey;
+const loginKey = require(__base + "config/constants.js").authentication.loginKey;
 // to gain acess send Authorization header in the format Bearer <token>
 
 
