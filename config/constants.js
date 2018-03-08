@@ -10,5 +10,10 @@ module.exports = {
     email : {
     	emailUser: process.env.EMAIL_USER,
     	emailPassword: process.env.EMAIL_PASSWORD
+    },
+
+    thehuxley: {
+        username: process.env.THEHUXLEY_USERNAME,
+        password: process.env.THEHUXLEY_PASSWORD
     }
 }
