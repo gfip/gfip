@@ -69,6 +69,8 @@ async function login() {
                 axios.defaults.headers.common['Authorization'] = "Bearer " + authorization.access_token;
                 resolve();
             }).catch((err) => reject(err));
+        } else {
+            resolve();
         }
     })
 }
