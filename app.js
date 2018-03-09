@@ -15,13 +15,12 @@ var userRoutes = require("./routes/user.js");
 var studentRoutes = require("./routes/student.js");
 
 
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(bodyParser.urlencoded({extended:true}));// body-parser
 app.use(methodOverride("_method"));// method-override
 
 mongoose.connect( process.env.MONGO_URL ).catch((err) => console.log(err.message)); // connecting db
-
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')));
 
 // setting passport
 app.use(passport.initialize());
@@ -34,6 +33,10 @@ passport.deserializeUser(User.deserializeUser());
 app.use("/api/me/students/", verifyToken ,reportRoutes);
 app.use("/api/", userRoutes);
 app.use("/api/me/students/",verifyToken, studentRoutes);
-
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname+'/client/build/index.html'));
+  });
 
 app.listen(process.env.PORT || 5000, () => console.log("Listening"));
