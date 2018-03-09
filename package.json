@@ -19,7 +19,7 @@
     "passport-local-mongoose": "^5.0.0"
   },
   "scripts": {
-    "start": "node app.js && cd client && npm install --only=dev && npm install && npm run build",
+    "start": "node app.js",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   }
 }
