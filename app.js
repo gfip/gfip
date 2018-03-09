@@ -8,7 +8,6 @@ const express  = require("express"),
 	  app = express();
 
 global.__base = __dirname + '/'; //set __base as root directory
-console.log(__base)
 var verifyToken = require("./modules/authorization/index.js").token;
 // requiring routes
 var reportRoutes = require("./routes/report.js");
@@ -20,6 +19,9 @@ app.use(bodyParser.urlencoded({extended:true}));// body-parser
 app.use(methodOverride("_method"));// method-override
 
 mongoose.connect( process.env.MONGO_URL ).catch((err) => console.log(err.message)); // connecting db
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 // setting passport
 app.use(passport.initialize());
