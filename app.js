@@ -14,7 +14,7 @@ var verifyToken = require("./modules/authorization/index.js").token;
 var reportRoutes = require("./routes/report.js");
 var userRoutes = require("./routes/user.js");
 var studentRoutes = require("./routes/student.js");
-
+var reactRoutes = require("./routes/react.js")
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -34,10 +34,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use("/api/me/students/", verifyToken ,reportRoutes);
 app.use("/api/", userRoutes);
 app.use("/api/me/students/",verifyToken, studentRoutes);
+app.use("/client", reactRoutes);
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
-app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname+'/client/build/index.html'));
-  });
-
 app.listen(process.env.PORT || 5000, () => console.log("Listening"));
