@@ -1,7 +1,10 @@
+const cheerio = require("cheerio");
+const URL = require("url-parse");
 
-// to gain acess send Authorization header in the format Bearer <token>
-
-
+/**
+ * @param {string} username - User's CIn login
+ */
+// Check if user requesting to register is a monitor.
 module.exports =  function(username) {
 
 

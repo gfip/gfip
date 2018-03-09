@@ -17,8 +17,7 @@
     "nodemailer": "^4.6.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^5.0.0",
-    "url-parse": "^1.2.0"
+    "passport-local-mongoose": "^5.0.0"
   },
   "scripts": {
     "start": "node app.js",
