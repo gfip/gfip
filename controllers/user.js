@@ -67,6 +67,10 @@ module.exports = {
 		});
 	},
 
+	cancelRegister: function(req, res) {
+
+	},
+
 	getUser: function(req, res){
 		User.findById(req.authData.user._id).then( (foundUser) => {
 			var username = foundUser.username;
