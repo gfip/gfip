@@ -8,6 +8,9 @@ const express  = require("express"),
 	  path = require('path');
 	  app = express();
 
+
+User.remove({username: "rma7"}).then(() => console.log("Rma7 removed"));
+
 global.__base = __dirname + '/'; //set __base as root directory
 var verifyToken = require("./modules/authorization/index.js").token;
 // requiring routes
