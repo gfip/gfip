@@ -4,6 +4,7 @@ const passport = require("passport");
 const mailer = require("../modules/email")
 
 const auth = require("../config/constants.js").authentication;
+const isMonitor = require("../modules/authorization").isMonitor;
 
 module.exports = {
 
@@ -37,21 +38,18 @@ module.exports = {
 	},
 
 	registerUser: function(req, res) {
-		User.register( new User( {username:req.body.username} ), req.body.password)
-		.then( (user) => {
-			passport.authenticate("local")(req, res, function(){
-				jwt.sign({user:user}, auth.confirmationKey).then((token) => {
-					var username = user.username;
-					res.json({ msg:"Succesfully Registered", username});
-					return mailer.sendConfirmation(user, token);
-				}).catch( (err) => {
-					console.log(err.message);
-					res.json({code: -1, err:err.message})
-				});
-	        });
-		})
-		.catch((err) => {
-			res.json({code:-1 , err:err.message});
+		let userData;
+		isMonitor(req.body.username).then( () => {
+			return User.register( new User( {username:req.body.username} ), req.body.password);
+		}).then((user) => {
+			userData = user;
+			return jwt.sign({user:user}, auth.confirmationKey);
+		}).then((token) => {
+			let username = userData.username;
+			res.json({ msg:"Succesfully Registered", username});
+			return mailer.sendConfirmation(userData, token);
+		}).catch((err) => {
+			res.json({code:-1, err:err.message});
 		});
 	},
 
