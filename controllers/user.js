@@ -57,17 +57,33 @@ module.exports = {
 		jwt.verify(req.params.token, auth.confirmationKey).then( (authData) => {
 			return User.findById(authData.user._id);
 		}).then( (foundUser) => {
-			foundUser.isConfirmed = true;
-			foundUser.save();
-			var username = foundUser.username;
-			return res.json( { msg:"Succesfully Confirmed User", username:username});
+			if(foundUser){
+				foundUser.isConfirmed = true;
+				foundUser.save();
+				var username = foundUser.username;
+				return res.json( { msg:"Succesfully Confirmed User", username:username});
+			}else{
+				throw new Error("User already canceled registration");
+			}
 		}).catch( (err) => {
-			console.log(err);
 			return res.json({code: -1 , err : err.message});
 		});
 	},
 
 	cancelRegister: function(req, res) {
+		jwt.verify(req.params.token, auth.confirmationKey).then((authData) => {
+			return User.findById(authData.user._id);
+		}).then( (foundUser) => {
+			if(foundUser.isConfirmed){
+				throw new Error("User already confirmed registration");
+			}else{
+				return User.findByIdAndRemove(foundUser._id);
+			}
+		}).then(() => {
+			res.json("Canceled Register");
+		}).catch((err) => {
+			res.json({code: -1 , err: err.message});
+		});
 
 	},
 
