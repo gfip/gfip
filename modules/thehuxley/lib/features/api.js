@@ -1,21 +1,13 @@
 const axios = require("axios");
-const config = require("../../../../config/constants.js");
+const config = require( _base +"/config/constants.js");
 const _ = require("lodash");
 const moment = require("moment")
 var authorization = null;
 axios.defaults.baseURL = "https://www.thehuxley.com/api";
 
 //obs: O JSON retornado pelas requisições estarão na variável .data da requisição do axios.
-//ex: getSubmissionCode(1055140).then((response) => (console.log(response.data)));
+//ex: getSubmissionCode(1055140).then((response) => (console.log(response.data)))
 
-config.thehuxley.username = "ipccufpe";
-config.thehuxley.password = "6FO6G8";
-
-getFilteredLists().then( (lists) =>{
-    return getListProblems(lists[0].id);
-}).then( (problems) => {
-    console.log(problems.data);
-})
 
 async function getSubmissionCode(submissionID){
     try {
