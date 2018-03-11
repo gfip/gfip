@@ -23,7 +23,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(bodyParser.urlencoded({extended:true}));// body-parser
 app.use(methodOverride("_method"));// method-override
 
-mongoose.connect( process.env.MONGO_URL ).catch((err) => console.log(err.message)); // connecting db
+mongoose.connect( process.env.MONGO_URL || 'mongodb://localhost/feedback-generator' ).catch((err) => console.log(err.message)); // connecting db
 
 // setting passport
 app.use(passport.initialize());
