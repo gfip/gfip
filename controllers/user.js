@@ -4,6 +4,7 @@ const passport = require("passport");
 const mailer = require("../modules/email")
 
 const auth = require("../config/constants.js").authentication;
+const isMonitor = require("../modules/authorization").isMonitor;
 
 module.exports = {
 
@@ -37,21 +38,18 @@ module.exports = {
 	},
 
 	registerUser: function(req, res) {
-		User.register( new User( {username:req.body.username} ), req.body.password)
-		.then( (user) => {
-			passport.authenticate("local")(req, res, function(){
-				jwt.sign({user:user}, auth.confirmationKey).then((token) => {
-					var username = user.username;
-					res.json({ msg:"Succesfully Registered", username});
-					return mailer.sendConfirmation(user, token);
-				}).catch( (err) => {
-					console.log(err.message);
-					res.json({code: -1, err:err.message})
-				});
-	        });
-		})
-		.catch((err) => {
-			res.json({code:-1 , err:err.message});
+		let userData;
+		isMonitor(req.body.username).then( () => {
+			return User.register( new User( {username:req.body.username} ), req.body.password);
+		}).then((user) => {
+			userData = user;
+			return jwt.sign({user:user}, auth.confirmationKey);
+		}).then((token) => {
+			let username = userData.username;
+			res.json({ msg:"Succesfully Registered", username});
+			return mailer.sendConfirmation(userData, token);
+		}).catch((err) => {
+			res.json({code:-1, err:err.message});
 		});
 	},
 
@@ -59,14 +57,34 @@ module.exports = {
 		jwt.verify(req.params.token, auth.confirmationKey).then( (authData) => {
 			return User.findById(authData.user._id);
 		}).then( (foundUser) => {
-			foundUser.isConfirmed = true;
-			foundUser.save();
-			var username = foundUser.username;
-			return res.json( { msg:"Succesfully Confirmed User", username:username});
+			if(foundUser){
+				foundUser.isConfirmed = true;
+				foundUser.save();
+				var username = foundUser.username;
+				return res.json( { msg:"Succesfully Confirmed User", username:username});
+			}else{
+				throw new Error("User already canceled registration");
+			}
 		}).catch( (err) => {
-			console.log(err);
 			return res.json({code: -1 , err : err.message});
 		});
+	},
+
+	cancelRegister: function(req, res) {
+		jwt.verify(req.params.token, auth.confirmationKey).then((authData) => {
+			return User.findById(authData.user._id);
+		}).then( (foundUser) => {
+			if(foundUser.isConfirmed){
+				throw new Error("User already confirmed registration");
+			}else{
+				return User.findByIdAndRemove(foundUser._id);
+			}
+		}).then(() => {
+			res.json("Canceled Register");
+		}).catch((err) => {
+			res.json({code: -1 , err: err.message});
+		});
+
 	},
 
 	getUser: function(req, res){

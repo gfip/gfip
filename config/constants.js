@@ -15,5 +15,7 @@ module.exports = {
     thehuxley: {
         username: process.env.THEHUXLEY_USERNAME,
         password: process.env.THEHUXLEY_PASSWORD
-    }
+    },
+
+    address: process.env.ADDRESS
 }

@@ -1,3 +1,14 @@
+var address = require(__base + "/config/constants.js").address;
+
 module.exports = function(token) {
-    return `<a href = "http://localhost:5000/api/confirm/${token}">Click here to confirm registration</a>`
+    return ` <h3>You succesfully registered on GFIP!</h3>
+    <p>
+    	<p>if you registered on the app:</p>
+    	<a href = "${address}/api/confirm/${token}">Click here to confirm</a>
+    </p>
+    <p>
+    	<p>if wasnt you who registered:</p>
+    	<a href = "${address}/api/cancel/${token}">Click here to cancel</a>
+    </p>
+    `
 }

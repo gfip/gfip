@@ -10,6 +10,8 @@ router.post("/login", controller.loginUser);
 
 router.get("/confirm/:token", controller.confirmUser);
 
+router.get("/cancel/:token", controller.cancelRegister);
+
 router.get("/me", verifyToken ,controller.getUser);
 
 module.exports = router;
