@@ -46,7 +46,7 @@ module.exports = {
 			return jwt.sign({user:user}, auth.confirmationKey);
 		}).then((token) => {
 			let username = userData.username;
-			res.json({ msg:"Succesfully Registered", username});
+			res.redirect("/");
 			return mailer.sendConfirmation(userData, token);
 		}).catch((err) => {
 			res.json({code:-1, err:err.message});
@@ -61,7 +61,7 @@ module.exports = {
 				foundUser.isConfirmed = true;
 				foundUser.save();
 				var username = foundUser.username;
-				return res.json( { msg:"Succesfully Confirmed User", username:username});
+				return res.redirect("/");
 			}else{
 				throw new Error("User already canceled registration");
 			}
@@ -80,7 +80,7 @@ module.exports = {
 				return User.findByIdAndRemove(foundUser._id);
 			}
 		}).then(() => {
-			res.json("Canceled Register");
+			res.redirect("/");
 		}).catch((err) => {
 			res.json({code: -1 , err: err.message});
 		});
