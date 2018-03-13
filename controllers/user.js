@@ -1,8 +1,7 @@
 const User = require("../models/user.js");
 const jwt  = require("jwt-then");
 const passport = require("passport");
-const mailer = require("../modules/email")
-
+const mailer = require("../modules/email");
 const auth = require("../config/constants.js").authentication;
 const isMonitor = require("../modules/authorization").isMonitor;
 
@@ -13,7 +12,6 @@ module.exports = {
 		  	if(err){
 		  		res.json({ code: -1 , err: err.message});
 		  	}else{
-
 		  		jwt.sign({user:user}, auth.loginKey).then( (token) => {
 		  			if(user){
 		  				if(user.isConfirmed){
@@ -33,8 +31,6 @@ module.exports = {
 		  	}
 
 	    })(req, res, next);
-
-
 	},
 
 	registerUser: function(req, res) {

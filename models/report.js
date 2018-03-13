@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 var reportSchema = mongoose.Schema({
-	title: String,
+	list: { type:mongoose.Schema.Types.ObjectId, ref: "List"},
 	problems: [ { title: String, score: Number, status: String , comment: String }],
 	comment: String
 });

@@ -9,7 +9,7 @@ const express  = require("express"),
 	  app = express();
 
 
-User.remove({username: "rma7"}).then(() => console.log("Rma7 removed"));
+// User.remove({username: "rma7"}).then(() => console.log("Rma7 removed"));
 
 global.__base = __dirname + '/'; //set __base as root directory
 var verifyToken = require("./modules/authorization/index.js").token;
@@ -17,7 +17,6 @@ var verifyToken = require("./modules/authorization/index.js").token;
 var reportRoutes = require("./routes/report.js");
 var userRoutes = require("./routes/user.js");
 var studentRoutes = require("./routes/student.js");
-
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
