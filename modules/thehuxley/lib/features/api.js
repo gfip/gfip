@@ -95,7 +95,7 @@ async function getUserInfoByName(name) {
     try{
         await login();
         let users = await axios.get("/v1/groups/194/users?max=150");
-        let user = _.find(users, {'name': name});
+        let user = _.find(users.data, {'name': name});
         if(!user) throw new Error("No student found with this name.");
         return Promise.resolve(user);
     } catch(e){
