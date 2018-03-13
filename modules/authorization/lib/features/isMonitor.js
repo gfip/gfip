@@ -21,7 +21,7 @@ function isMonitor(username) {
                     resolve(username);
               }))
 
-              reject(new Error('User trying to register is not a IP-CC-UFPE Monitor'));
+              reject(new Error(`You're not not allowed to register to this service.`));
         })
         .catch((err) => reject(err));
     })
