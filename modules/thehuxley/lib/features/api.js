@@ -76,9 +76,37 @@ async function login() {
     })
 }
 
+
+// Get user info by name returns:
+// {
+//     "id": 18153,
+//     "name": "Rafael Rodrigues da Silva",
+//     "avatar": "https://www.thehuxley.com/avatar/thumbs/826d8a16b1035c0e906d70cf09deb056cdb0936c.png",
+//     "institution": {
+//       "id": 48,
+//       "name": "Universidade Federal de Pernambuco",
+//       "acronym": "UFPE",
+//       "logo": "https://www.thehuxley.com/api/v1/institutions/logo/default.png",
+//       "status": "APPROVED"
+//     }
+//   }
+
+async function getUserInfoByName(name) {
+    try{
+        await login();
+        let users = await axios.get("/v1/groups/194/users?max=150");
+        let user = _.find(users, {'name': name});
+        if(!user) throw new Error("No student found with this name.");
+        return Promise.resolve(user);
+    } catch(e){
+        return Promise.reject(err);
+    }
+}
+
 module.exports = {
     getSubmissionCode,
     getStudentSubmissions,
     getFilteredLists,
-    getListProblems
+    getListProblems,
+    getUserInfoByName
 }
