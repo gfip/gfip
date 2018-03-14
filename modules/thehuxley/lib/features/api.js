@@ -98,7 +98,7 @@ async function getUserInfoByName(name) {
         let user = _.find(users.data, {'name': name});
         if(!user) throw new Error("No student found with this name.");
         return Promise.resolve(user);
-    } catch(e){
+    } catch(err){
         return Promise.reject(err);
     }
 }
