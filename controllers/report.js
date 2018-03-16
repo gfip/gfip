@@ -23,7 +23,7 @@ module.exports = {
 				let createdReport = await Report.create(report);
 				foundStudent.reports.push(createdReport._id);
 				let updatedStudent = await foundStudent.save();
-				res.json(createdReport);
+				return res.json(createdReport);
 		} catch(err){
 			return res.json({code:-1, err:err.message});
 		}
