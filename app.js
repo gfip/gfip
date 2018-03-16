@@ -11,6 +11,10 @@ const express  = require("express"),
 // DEBUG
 // User.remove({username: "rma7"}).then(() => console.log("Rma7 removed"));
 
+
+
+
+
 global.__base = __dirname + '/'; //set __base as root directory
 var verifyToken = require("./modules/authorization/index.js").token;
 // requiring routes
@@ -24,6 +28,10 @@ app.use(bodyParser.urlencoded({extended:true}));// body-parser
 app.use(methodOverride("_method"));// method-override
 
 mongoose.connect( process.env.MONGO_URL || 'mongodb://localhost/feedback-generator' ).catch((err) => console.log(err.message)); // connecting db
+
+var listController = require("./controllers/list.js");
+app.get("/api/me/students/:student_id/lists/:list_id", listController.getStudentList);
+listController.getNewLists();
 
 // setting passport
 app.use(passport.initialize());

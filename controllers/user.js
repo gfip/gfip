@@ -34,6 +34,7 @@ module.exports = {
 
 	registerUser: async function(req, res) {
 		try{
+			let foundMonitor = await isMonitor(req.body.username);
 			let registeredUser = await User.register( new User( {username:req.body.username} ), req.body.password);
 			let token = await jwt.sign({user:registeredUser}, auth.confirmationKey);
 			res.redirect("/");
