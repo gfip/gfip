@@ -1,6 +1,6 @@
 var Student = require("../models/student.js");
 var Report  = require("../models/report.js");
-var Promise = require("bluebird");
+var listController = require("./list.js");
 
 module.exports = {
 
@@ -10,6 +10,16 @@ module.exports = {
 			res.json(foundStudent.reports);
 		} catch(err){
 			return res.json({code:-1, err:err.message});
+		}
+	},
+
+	showStudentList: async function(req, res){
+		try{
+			let studentList = await listController.getStudentList(req.params.student_id, req.params.list_id);
+			console.log(studentList);
+			return res.json(studentList);
+		}catch(err){
+			return res.json({code:-1, err:err.message})
 		}
 	},
 
