@@ -35,11 +35,8 @@ app.use(bodyParser.urlencoded({extended:true}));// body-parser
 app.use(methodOverride("_method"));// method-override
 
 mongoose.connect( process.env.MONGO_URL || 'mongodb://localhost/feedback-generator' ).catch((err) => console.log(err.message)); // connecting db
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 11847e507b30e1ad08e3117875ff11db726579fb
 
 // setting passport
 app.use(passport.initialize());
