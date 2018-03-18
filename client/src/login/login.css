@@ -1,5 +1,5 @@
 
-p{
+#registerText{
     color:#C2C2C2;
 }
 
@@ -20,6 +20,10 @@ p{
 
 #loginForm{
     width: 250px;
+}
+
+#statusFeedback{
+    color:rgb(180, 50, 50);
 }
 
 #registerLink{

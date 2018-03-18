@@ -8,9 +8,6 @@ export function me(token){
     })
 }
 
-export function login(username, password){
-    return axios.post('/api/login', {
-        username: username,
-        password: password
-    })
+export function login(auth){
+    return axios.post('api/login', auth)
 }
