@@ -7,3 +7,10 @@ export function me(token){
         }
     })
 }
+
+export function login(username, password){
+    return axios.post('/api/login', {
+        username: username,
+        password: password
+    })
+}

@@ -1,0 +1,22 @@
+
+#root {
+    height: 100%
+}
+
+.container{ 
+    display: flex;
+}
+
+.container.centered{
+    justify-content: center;
+    align-items: center;
+}
+
+.container.column {
+    flex-direction: column;
+}
+
+.container.row {
+    flex-direction: row;
+}
+/* add a corresponding positive top margin to all flex items (all direct children of the flex container) */
