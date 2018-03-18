@@ -4,11 +4,13 @@ var controller = require("../controllers/report.js");
 var middleware = require("../modules/authorization").ownership;
 
 
-router.get("/:student_id/reports", middleware.checkStudentOwnership ,controller.getReports);
+router.get("/:student_id/lists/:lists_id/reports", middleware.checkStudentOwnership ,controller.getReports);
 
-router.post("/:student_id/reports", middleware.checkStudentOwnership ,controller.createReport);
+router.get("/:student_id/lists/:list_id/reports/new", middleware.checkStudentOwnership,controller.showStudentList);
 
-router.delete("/:student_id/reports/:report_id",middleware.checkStudentOwnership, middleware.checkReportOwnership, controller.deleteReport);
+router.post("/:student_id/lists/:list_id", middleware.checkStudentOwnership ,controller.createReport);
+
+router.delete("/:student_id/lists/:list_id/reports/:report_id",middleware.checkStudentOwnership, middleware.checkReportOwnership, controller.deleteReport);
 
 router.get("/:student_id/reports/:report_id",middleware.checkStudentOwnership, middleware.checkReportOwnership, controller.showReport);
 

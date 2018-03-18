@@ -1,100 +1,89 @@
 const User = require("../models/user.js");
 const jwt  = require("jwt-then");
 const passport = require("passport");
-const mailer = require("../modules/email")
-
+const mailer = require("../modules/email");
 const auth = require("../config/constants.js").authentication;
 const isMonitor = require("../modules/authorization").isMonitor;
 
 module.exports = {
 
 	loginUser : function(req, res, next) {
-		passport.authenticate('local', (err, user, info) => {
+		passport.authenticate('local', async (err, user, info) => {
 		  	if(err){
-		  		res.json({ code: -1 , err: err.message});
+		  		return res.json({ code: -1 , err: err.message});
 		  	}else{
-
-		  		jwt.sign({user:user}, auth.loginKey).then( (token) => {
-		  			if(user){
-		  				if(user.isConfirmed){
-		  					res.json({
+		  		try{
+			  		let token = await jwt.sign({user:user}, auth.loginKey);
+			  		if(user){
+			  			if(user.isConfirmed){
+			  				res.json({
 				  				token
 				  			});	
 		  				}else{
 		  					res.status(401).send("User not confirmed")
-		  				}
-		  			}else{
-	  					res.status(401).send("Incorrect username or password.");
-		  			}
-		  		}).catch( (err) => {
-		  			res.json({ code: -1 , err: err.message});
-		  		});
-
+			  			}
+			  		}else{
+		  				res.status(401).send("Incorrect username or password.");
+			  		}
+		  		}catch(err){
+		  			return res.json({code:-1, err:err.message});
+		  		}
 		  	}
-
 	    })(req, res, next);
-
-
 	},
 
-	registerUser: function(req, res) {
-		let userData;
-		isMonitor(req.body.username).then( () => {
-			return User.register( new User( {username:req.body.username} ), req.body.password);
-		}).then((user) => {
-			userData = user;
-			return jwt.sign({user:user}, auth.confirmationKey);
-		}).then((token) => {
-			let username = userData.username;
+	registerUser: async function(req, res) {
+		try{
+			let foundMonitor = await isMonitor(req.body.username);
+			let registeredUser = await User.register( new User( {username:req.body.username} ), req.body.password);
+			let token = await jwt.sign({user:registeredUser}, auth.confirmationKey);
 			res.redirect("/");
-			return mailer.sendConfirmation(userData, token);
-		}).catch((err) => {
-			res.json({code:-1, err:err.message});
-		});
+			return await mailer.sendConfirmation(registeredUser, token);
+		}catch(err){
+			return res.json({code:-1 , err:err.message});
+		}
 	},
 
-	confirmUser: function(req, res) {
-		jwt.verify(req.params.token, auth.confirmationKey).then( (authData) => {
-			return User.findById(authData.user._id);
-		}).then( (foundUser) => {
+	confirmUser: async function(req, res) {
+		try{
+			let authData = await jwt.verify(req.params.token, auth.confirmationKey);
+			let foundUser = await User.findById(authData.user._id);
 			if(foundUser){
 				foundUser.isConfirmed = true;
-				foundUser.save();
-				var username = foundUser.username;
+				let confirmedUser = await foundUser.save();
 				return res.redirect("/");
 			}else{
 				throw new Error("User already canceled registration");
 			}
-		}).catch( (err) => {
-			return res.json({code: -1 , err : err.message});
-		});
+		}catch(err){
+			return res.json({code:-1, err:err.message});
+		}
 	},
 
-	cancelRegister: function(req, res) {
-		jwt.verify(req.params.token, auth.confirmationKey).then((authData) => {
-			return User.findById(authData.user._id);
-		}).then( (foundUser) => {
+	cancelRegister: async function(req, res) {
+		try{
+			let authData = await jwt.verify(req.params.token , auth.confirmationKey);
+			let foundUser = await User.findById(authData.user._id);
 			if(foundUser.isConfirmed){
 				throw new Error("User already confirmed registration");
 			}else{
-				return User.findByIdAndRemove(foundUser._id);
+				let canceledUser = await User.findByIdAndRemove(foundUser._id);
+				return res.redirect("/");
 			}
-		}).then(() => {
-			res.redirect("/");
-		}).catch((err) => {
-			res.json({code: -1 , err: err.message});
-		});
-
+		}catch(err){
+			return res.json({code:-1 , err:err.message});
+		}
 	},
 
-	getUser: function(req, res){
-		User.findById(req.authData.user._id).then( (foundUser) => {
-			var username = foundUser.username;
-			var students = foundUser.students;
+	getUser: async function(req, res){
+		try{
+			let foundUser = await User.findById(req.authData.user._id).populate("students").exec();
+			let username = foundUser.username;
+			let students = foundUser.students;
 			res.json({username, students});
-		}).catch( (err) => {
-			res.json({code: -1, err: err.message})
-		});
+		}catch(err){
+			return res.json({code:-1, err:err.message});
+		}
 	}
 
 
