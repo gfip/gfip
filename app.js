@@ -9,15 +9,25 @@ const express  = require("express"),
 	  app = express();
 
 
-User.remove({username: "rma7"}).then(() => console.log("Rma7 removed"));
-
 global.__base = __dirname + '/'; //set __base as root directory
+
+// DEBUG
+// User.remove({username: "rma7"}).then(() => console.log("Rma7 removed"));
+// var listController = require("./controllers/list.js");
+// listController.getNewLists();
+// listController.getStudentList("5aaaea9eae9edd34efc20508","5aaab0a5034527253dbeaf1a")
+// .then( (studentList) => console.log(studentList));
+
+//==========================================================================
+
+
+
+
 var verifyToken = require("./modules/authorization/index.js").token;
 // requiring routes
 var reportRoutes = require("./routes/report.js");
 var userRoutes = require("./routes/user.js");
 var studentRoutes = require("./routes/student.js");
-
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -25,6 +35,11 @@ app.use(bodyParser.urlencoded({extended:true}));// body-parser
 app.use(methodOverride("_method"));// method-override
 
 mongoose.connect( process.env.MONGO_URL || 'mongodb://localhost/feedback-generator' ).catch((err) => console.log(err.message)); // connecting db
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 11847e507b30e1ad08e3117875ff11db726579fb
 
 // setting passport
 app.use(passport.initialize());

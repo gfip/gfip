@@ -1,67 +1,72 @@
 const Student = require("../models/student.js");
 const User =require("../models/user.js");
+const theHuxley = require("../modules/thehuxley/");
 var Promise = require("bluebird");
+
+
+
 
 module.exports = {
 
-	getStudents : function(req, res){
-		User.findById(req.authData.user._id).populate("students").exec()
-		.then( (foundUser) => {
-			return res.json(foundUser.students);
-		}).catch( (err) => {
-			return res.json({code: -1 , err : err});
-		});
+	getStudents : async function(req, res){
+		try{
+			let foundUser = await User.findById(req.authData.user._id).populate("students").exec();
+			res.json(foundUser.students);
+		}catch(err){
+			return res.json({code:-1, err:err.message});
+		}
 	},
 
-	createStudent : function(req, res){
-		var student = {
-			login : req.body.login,
-			name: req.body.name
-		}
-		
-		Promise.all([User.findById(req.authData.user._id), Student.create(student)])
-		.spread((foundUser, createdStudent) => {
+	createStudent : async function(req, res){
+		try{
+			let studentData = await theHuxley.getUserInfoByName(req.body.name);
+			let student = {
+				name: req.body.name,
+				login: req.body.login,
+				theHuxleyId: studentData.id
+			}
+			let foundUser = await User.findById(req.authData.user._id);
+			let createdStudent = await Student.create(student);
 			foundUser.students.push(createdStudent._id);
-			foundUser.save();
-			return res.json(createdStudent);
-		})
-		.catch((err) =>{
- 			console.log(err);
-			return res.json({code: -1 , err});
-		});
-	},
-
-	deleteStudent : function(req, res){
-		Promise.all([User.findById(req.authData.user._id), Student.findByIdAndRemove(req.params.student_id)])
-		.spread( (foundUser, deletedStudent) =>{
-			foundUser.students.splice(foundUser.students.indexOf(req.params.student_id), 1);
-			foundUser.save();
-			return res.json(deletedStudent);
-		}).catch((err) => {
-			return res.json({code: -1 , err : err});
-		});
-	},
-
-	showStudent : function(req, res){
-		Student.findById(req.params.student_id)
-		.then( (foundStudent) => {
-			return res.json(foundStudent);
-		}).catch( (err) => {
-			return res.json({code: -1 , err : err});
-		});
-	},
-
-	updateStudent : function(req, res){
-		var updatedStudent = {
-			login : req.body.login,
-			name: req.body.name
+			let updatedUser = await foundUser.save();
+			res.json(createdStudent);
+		}catch(err){
+			res.json({code:-1 , err: err.message});
 		}
-		Student.findByIdAndUpdate(req.params.student_id, updatedStudent)
-		.then( (foundStudent) => {
-			return res.json({foundStudent, updatedStudent})
-		}).catch((err) => {
-			return res.json({code: -1 , err : err});
-		});
+	},
+
+	deleteStudent : async function(req, res){
+		try{
+			let foundUser = await User.findById(req.authData.user._id);
+			let deletedStudent = await Student.findByIdAndRemove(req.params.student_id);
+			foundUser.students.splice(foundUser.students.indexOf(req.params.student_id), 1);
+			let updatedUser = await foundUser.save();
+			return res.json(deletedStudent);
+		}catch(err){
+			return res.json({code:-1 , err:err.message});
+		}
+	},
+
+	showStudent : async function(req, res){
+		try{
+			let foundStudent = await Student.findById(req.params.student_id);
+			return res.json(foundStudent);
+		}catch(err){
+			return res.json({code:-1, err:err.message});
+		}
+	},
+
+	updateStudent : async function(req, res){
+		try{
+			let student = {
+				login : req.body.login,
+				name: req.body.name
+			}
+			let updatedStudent = await Student.findByIdAndUpdate(req.params.student_id, student);
+			return res.json(student);
+		}catch(err){
+			return res.json({code:-1, err:err.message});
+		}
 	}
 
 
