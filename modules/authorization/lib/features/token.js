@@ -14,11 +14,12 @@ module.exports =  function(req, res, next) {
 
 		req.token = bearerToken;
 
-		jwt.verify(req.token, loginKey).then( (authData) => {
+		jwt.verify(req.token, loginKey)
+		.then( (authData) => {
 			req.authData = authData;
 			next();
 		}).catch( (err) => {
-			console.log(err);	
+			console.log(err.message);	
 			res.json({code:-1, err});
 		});
 

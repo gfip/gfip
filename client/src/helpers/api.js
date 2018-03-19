@@ -7,7 +7,3 @@ export function me(token){
         }
     })
 }
-
-export function login(auth){
-    return axios.post('api/login', auth)
-}

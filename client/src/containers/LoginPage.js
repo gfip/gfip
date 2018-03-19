@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import logo from './img/logo.svg';
+import logo from '../assets/img/logo.svg';
+import AuthService from '../components/AuthService';
+import { withRouter } from "react-router-dom";
 import { Button, Form } from 'semantic-ui-react';
-import { login } from '../helpers/api';
-import Cookies from 'universal-cookie';
-import './login.css';
+import '../assets/login.css';
 
-class LoginIndex extends Component {
+class LoginPage extends Component {
   constructor(props) {
     super(props);
-
+    this.AuthService = new AuthService();
     this.state = {
       username: "",
       password: ""
@@ -27,11 +27,12 @@ class LoginIndex extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    login(this.state)
-    .then((response) => new Cookies().set('gfip_token', response.data.token))
-    .catch((err) => {
-        this.setState({status: err.response.data});
-    });
+    this.AuthService.login({username: this.state.username, password: this.state.password})
+    .then((res) => {
+      return this.props.history.push("/dashboard");
+    }).catch((err) => {
+      this.setState({status: err.response.data});
+    })
   }
 
   render() {
@@ -58,4 +59,4 @@ class LoginIndex extends Component {
   }
 }
 
-export default LoginIndex;
+export default withRouter(LoginPage);
