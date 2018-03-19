@@ -16,7 +16,14 @@ module.exports = {
 	showStudentList: async function(req, res){
 		try{
 			let studentList = await listController.getStudentList(req.params.student_id, req.params.list_id);
-			console.log(studentList);
+			for(let i = 0; i < studentList.submissions.length; i++){
+				let sub = studentList.submissions[i];
+				if(sub.theHuxleyId === 0){
+					sub.code = "";
+				}else{
+					sub.code =  await listController.getSubmissionCode(studentList.submissions[i].theHuxleyId);
+				}
+			}
 			return res.json(studentList);
 		}catch(err){
 			return res.json({code:-1, err:err.message})
@@ -26,13 +33,27 @@ module.exports = {
 
 	createReport: async function(req, res){
 		try {
+				let studentList = await listController.getStudentList(req.params.student_id, req.params.list_id);
 				let foundStudent = await Student.findById(req.params.student_id);
 				let report = {
-					title: req.body.title
+					list: studentList.list,
+					submissions: []
 				}
+				for(var i = 0; i < studentList.submissions.length; i++){
+					report.submissions.push({
+						problem: {
+							name : studentList.submissions[i].problem.name,
+							score: studentList.submissions[i].problem.score
+						} ,
+						evaluation: studentList.submissions[i].evaluation,
+						comment: req.body.comments[i]
+					});
+				}
+				report.finalComment = req.body.finalComment;				
 				let createdReport = await Report.create(report);
 				foundStudent.reports.push(createdReport._id);
 				let updatedStudent = await foundStudent.save();
+				//send email here
 				return res.json(createdReport);
 		} catch(err){
 			return res.json({code:-1, err:err.message});

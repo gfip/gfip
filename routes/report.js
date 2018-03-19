@@ -8,7 +8,7 @@ router.get("/:student_id/lists/:lists_id/reports", middleware.checkStudentOwners
 
 router.get("/:student_id/lists/:list_id/reports/new", middleware.checkStudentOwnership,controller.showStudentList);
 
-router.post("/:student_id/lists/:list_id", middleware.checkStudentOwnership ,controller.createReport);
+router.post("/:student_id/lists/:list_id/reports", middleware.checkStudentOwnership ,controller.createReport);
 
 router.delete("/:student_id/lists/:list_id/reports/:report_id",middleware.checkStudentOwnership, middleware.checkReportOwnership, controller.deleteReport);
 
