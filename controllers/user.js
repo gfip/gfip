@@ -37,8 +37,8 @@ module.exports = {
 			let foundMonitor = await isMonitor(req.body.username);
 			let registeredUser = await User.register( new User( {username:req.body.username} ), req.body.password);
 			let token = await jwt.sign({user:registeredUser}, auth.confirmationKey);
-			res.redirect("/");
-			return await mailer.sendConfirmation(registeredUser, token);
+			await mailer.sendConfirmation(registeredUser, token);
+			//res.redirect("/");
 		}catch(err){
 			return res.json({code:-1 , err:err.message});
 		}
@@ -82,7 +82,7 @@ module.exports = {
 			let students = foundUser.students;
 			res.json({username, students});
 		}catch(err){
-			return res.json({code:-1, err:err.message});
+			res.json({code:-1, err:err.message});
 		}
 	}
 

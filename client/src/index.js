@@ -1,25 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import LoginIndex from './login/index';
-import NotFound from './notfound/index';
+
+import AuthService from './components/AuthService';
+import PrivateRoute from './components/PrivateRoute';
+import * as Pages from './containers';
 //import registerServiceWorker from './registerServiceWorker';
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
-import Cookies from 'universal-cookie';
+
 import 'semantic-ui-css/semantic.min.css';
-import './flexbox.css';
+import './assets/flexbox.css';
+
+this.AuthService = new AuthService();
 
 ReactDOM.render(
     <BrowserRouter>
         <Switch>
-            <Route exact path='/' render={() => ( loggedIn() ? (<Redirect to='/dashboard'/>) : (<LoginIndex/>) )}/>
-            <Route exact path='/dashboard' component={NotFound}/>
-            <Route component={NotFound} />
+            <Route exact path='/' render={() => ( this.AuthService.getToken() ? (<Redirect to='/dashboard'/>) : (<Pages.Login/>))}/>
+            <PrivateRoute exact path='/dashboard' component={Pages.NotFound}/>
+            {/* <Route component={NotFound} /> */}
         </Switch>
     </BrowserRouter>,
     document.getElementById('root'));
-
-//registerServiceWorker();
-
-function loggedIn(){
-    return new Cookies().get('gfip_token');
-}
