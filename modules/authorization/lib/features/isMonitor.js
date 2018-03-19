@@ -18,7 +18,7 @@ function isMonitor(username) {
                 return link == 'https://i.imgur' || link == 'http://i.imgur';
               }).each((function(i, elem){
                   if($(elem).text() == username)
-                    resolve(username);
+                    resolve(elem.attribs.href);
               }))
 
               reject(new Error(`You're not not allowed to register to this service.`));
