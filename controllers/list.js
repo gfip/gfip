@@ -75,9 +75,17 @@ module.exports = {
 				return studentList;
 			}
 		}catch(err){
-			return res.json({code:-1, err:err.message});
+			throw new Error(err.message);
 		}			
-	}
+	},
+	getSubmissionCode: async function (submissionHuxleyId){
+		try{
+			let foundCode = await theHuxley.getSubmissionCode(submissionHuxleyId);
+			return foundCode.data;
+		}catch(err){
+			throw new Error(err.message);
+		}
 
+	}
 
 }
