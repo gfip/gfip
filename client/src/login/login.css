@@ -1,0 +1,47 @@
+
+#registerText{
+    color:#C2C2C2;
+}
+
+#logo {
+    width: 130px;
+    margin-bottom: 40px;
+    height: auto;
+}
+
+#loginButton{
+    background-color: #56FE99;
+    color: white;
+}
+
+#loginButton:hover{
+    opacity: 0.8;
+}
+
+#loginForm{
+    width: 250px;
+}
+
+#statusFeedback{
+    color:rgb(180, 50, 50);
+}
+
+#registerLink{
+    color: #56FE99;
+    font-weight: 900;
+}
+
+#registerLink:hover{
+    text-decoration: underline;
+}
+
+#main{
+    background-color: #FCFCFC;
+    height: 100%;
+}
+
+.buttonHolder {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+}
