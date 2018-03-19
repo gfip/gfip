@@ -17,7 +17,7 @@ ReactDOM.render(
         <Switch>
             <Route exact path='/' render={() => ( this.AuthService.getToken() ? (<Redirect to='/dashboard'/>) : (<Pages.Login/>))}/>
             <PrivateRoute exact path='/dashboard' component={Pages.NotFound}/>
-            {/* <Route component={NotFound} /> */}
+            <Route component={Pages.NotFound} />
         </Switch>
     </BrowserRouter>,
     document.getElementById('root'));
