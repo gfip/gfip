@@ -1,10 +1,7 @@
 const Student = require("../models/student.js");
 const User =require("../models/user.js");
+const Report = require("../models/report.js");
 const theHuxley = require("../modules/thehuxley/");
-var Promise = require("bluebird");
-
-
-
 
 module.exports = {
 
@@ -22,7 +19,7 @@ module.exports = {
 			let studentData = await theHuxley.getUserInfoByName(req.body.name);
 			let student = {
 				name: req.body.name,
-				login: req.body.login,
+				username: req.body.username,
 				theHuxleyId: studentData.id
 			}
 			let foundUser = await User.findById(req.authData.user._id);
@@ -39,6 +36,9 @@ module.exports = {
 		try{
 			let foundUser = await User.findById(req.authData.user._id);
 			let deletedStudent = await Student.findByIdAndRemove(req.params.student_id);
+			for(var i = 0 ; i < deletedStudent.reports.length; i++){
+				await Report.findByIdAndRemove(deletedStudent.reports[i]);
+			}
 			foundUser.students.splice(foundUser.students.indexOf(req.params.student_id), 1);
 			let updatedUser = await foundUser.save();
 			return res.json(deletedStudent);
