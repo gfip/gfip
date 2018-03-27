@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 var studentSchema = mongoose.Schema({
 	name: String,
-	login: String,
+	username: String,
 	theHuxleyId: Number,
 	reports: [ {
 		listId: { type:mongoose.Schema.Types.ObjectId, ref: "Report"},

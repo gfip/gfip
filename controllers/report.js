@@ -1,6 +1,7 @@
 var Student = require("../models/student.js");
 var Report  = require("../models/report.js");
 var listController = require("./list.js");
+var mailer = require("../modules/email");
 
 module.exports = {
 
@@ -43,7 +44,8 @@ module.exports = {
 					report.submissions.push({
 						problem: {
 							name : studentList.submissions[i].problem.name,
-							score: studentList.submissions[i].problem.score
+							score: studentList.submissions[i].problem.score,
+							theHuxleyId: studentList.submissions[i].problem.theHuxleyId
 						} ,
 						evaluation: studentList.submissions[i].evaluation,
 						comment: req.body.comments[i]
@@ -54,8 +56,10 @@ module.exports = {
 				foundStudent.reports.push(createdReport._id);
 				let updatedStudent = await foundStudent.save();
 				//send email here
+				await mailer.sendReport(report, foundStudent);
 				return res.json(createdReport);
 		} catch(err){
+			console.log(err);
 			return res.json({code:-1, err:err.message});
 		}
 	},
