@@ -33,19 +33,19 @@ class RegisterForm extends Component {
     if(this.validateForm()){
         register({username: this.state.username, password: this.state.password})
         .then((res) => {
-            let status, color, clear
-            
+            let status, statusColor, active = true
+            let {username, password} = this.state;
             if(res.data.code){ // se houve erro, haverá outro tratamento.
                 status = res.data.err;
-                color = "#b43232";
-                clear = false;
+                statusColor = "#b43232";
             } else {
                 status = res.data;
-                color = "#56FE99";
-                clear = true;
+                statusColor = "#56FE99";
+                username = '';
+                password = '';
+                active = false;
             }
-
-            this.setState({status: status, statusColor: color, clear: clear});
+            this.setState({status: status, statusColor: color, username: username, password: password, active: active});
         }).catch((err) => {
             this.setState({status: err.response.data});
         })
