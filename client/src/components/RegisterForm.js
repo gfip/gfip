@@ -9,7 +9,8 @@ class RegisterForm extends Component {
     this.state = {
       username: "",
       password: "",
-      active: this.props.active
+      active: this.props.active,
+      statusColor: "#C2C2C2"
     };
   }
 
@@ -32,9 +33,19 @@ class RegisterForm extends Component {
     if(this.validateForm()){
         register({username: this.state.username, password: this.state.password})
         .then((res) => {
-            let status = res.data.code ? res.data.err : res.data //se houver variavel "code", então houve erro na resposta. 
-            this.setState({status: status});
+            let status, color, clear
             
+            if(res.data.code){ // se houve erro, haverá outro tratamento.
+                status = res.data.err;
+                color = "#C2C2C2";
+                clear = false;
+            } else {
+                status = res.data;
+                color = "#56FE99";
+                clear = true;
+            }
+
+            this.setState({status: status, statusColor: color, clear: clear});
         }).catch((err) => {
             this.setState({status: err.response.data});
         })
@@ -49,11 +60,11 @@ class RegisterForm extends Component {
       <div className={activeClass}>
         <Form onSubmit={this.handleSubmit} id="registerForm">
             <Form.Field>
-                <input name="username" onChange={this.handleChange} placeholder='Username'/>
-                <span style={{color: "#C2C2C2"}}>* Your username from CIn's login system</span>
+                <input name="username" onChange={this.handleChange} value={this.state.username} placeholder='Username'/>
+                <span style={{color: this.state.statusColor}}>* Your username from CIn's login system</span>
             </Form.Field>
             <Form.Field>
-                <input type="password" onChange={this.handleChange} name="password" placeholder='Password'/>
+                <input type="password" onChange={this.handleChange} value={this.state.password} name="password" placeholder='Password'/>
                 <span className="statusFeedback"> {this.state.status} </span>
             </Form.Field>
             <div className="buttonHolder no-margin">
