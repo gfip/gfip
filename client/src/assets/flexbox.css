@@ -19,3 +19,11 @@
 .container.row {
     flex-direction: row;
 }
+
+.active {
+    display: block;
+}
+
+.disabled {
+    display: none;
+}
