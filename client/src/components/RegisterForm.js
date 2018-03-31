@@ -33,7 +33,7 @@ class RegisterForm extends Component {
     if(this.validateForm()){
         register({username: this.state.username, password: this.state.password})
         .then((res) => {
-            let status, statusColor, active = true
+            let status, statusColor;
             let {username, password} = this.state;
             if(res.data.code){ // se houve erro, haverá outro tratamento.
                 status = res.data.err;
@@ -43,9 +43,8 @@ class RegisterForm extends Component {
                 statusColor = "#56FE99";
                 username = '';
                 password = '';
-                active = false;
             }
-            this.setState({status: status, statusColor: color, username: username, password: password, active: active});
+            this.setState({status: status, statusColor: color, username: username, password: password});
         }).catch((err) => {
             this.setState({status: err.response.data});
         })
