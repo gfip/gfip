@@ -44,7 +44,7 @@ class RegisterForm extends Component {
                 username = '';
                 password = '';
             }
-            this.setState({status: status, statusColor: color, username: username, password: password});
+            this.setState({status: status, statusColor: statusColor, username: username, password: password});
         }).catch((err) => {
             this.setState({status: err.response.data});
         })
