@@ -35,7 +35,7 @@ module.exports = {
 	registerUser: async function(req, res) {
 		try{
 			let imgUrl = await isMonitor(req.body.username);
-			let registeredUser = await User.register( new User( {username:req.body.username, imageUrl:imgUrl} ), req.body.password);
+			let registeredUser = await User.register( new User( {username:req.body.username} ), req.body.password);
 			let token = await jwt.sign({user:registeredUser}, auth.confirmationKey);
 			await mailer.sendConfirmation(registeredUser, token);
 			res.status(200).send("Successfully registered, please confirm your @cin.ufpe.br e-mail.");

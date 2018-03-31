@@ -5,7 +5,7 @@ const table = require("./table");
 module.exports = function(user, token) {
 
     return new Promise((resolve, reject) => {
-        let options = getOptions(user, table(token))
+        let options = getOptions(user, table(token),"Confirmation Email")
         transporter.sendMail(options, function(err, info){
             if(err){
                 reject(err);
