@@ -38,7 +38,7 @@ module.exports = {
 			let registeredUser = await User.register( new User( {username:req.body.username, imageUrl:imgUrl} ), req.body.password);
 			let token = await jwt.sign({user:registeredUser}, auth.confirmationKey);
 			await mailer.sendConfirmation(registeredUser, token);
-			//res.redirect("/");
+			res.status(200).send("Succesfully registered");
 		}catch(err){
 			return res.json({code:-1 , err:err.message});
 		}
@@ -84,7 +84,7 @@ module.exports = {
 		}catch(err){
 			res.json({code:-1, err:err.message});
 		}
-	}
+	} 
 
 
 
