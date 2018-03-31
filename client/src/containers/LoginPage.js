@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../assets/img/logo.svg';
 import AuthService from '../components/AuthService';
+import RegisterForm from '../components/RegisterForm'; 
 import { withRouter } from "react-router-dom";
 import { Button, Form } from 'semantic-ui-react';
 import '../assets/login.css';
@@ -11,7 +12,8 @@ class LoginPage extends Component {
     this.AuthService = new AuthService();
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      register: false
     };
   }
 
@@ -35,24 +37,29 @@ class LoginPage extends Component {
     })
   }
 
+  alterRegisterForm = (event, opened) => {
+    this.setState({registerOpened: opened});
+  }
+
   render() {
     return (
       <div id="main" className="container column centered">
           <div className="container column centered">
             <img src={logo} id="logo" alt="logo" />
-            <Form onSubmit={this.handleSubmit} id="loginForm">
+            <Form onClick={(e) => { this.alterRegisterForm(e, false)}} onSubmit={this.handleSubmit} id="loginForm">
               <Form.Field>
                 <input name="username" onChange={this.handleChange} placeholder='Username'/>
               </Form.Field>
               <Form.Field>
                 <input type="password" onChange={this.handleChange} name="password" placeholder='Password'/>
               </Form.Field>
-              <span id="statusFeedback"> {this.state.status} </span>
+              <span className="statusFeedback"> {this.state.status} </span>
               <div className="buttonHolder">
                 <Button type="submit" id="loginButton">Login</Button>
               </div>
             </Form>
-            <p id="registerText">Doesn't have an account yet? <a id="registerLink" href="/register">Register here</a></p>
+            <p id="registerText">Doesn't have an account yet? <a id="registerLink" onClick={(e) => { this.alterRegisterForm(e, true)}}>Register here</a></p>
+            <RegisterForm active={this.state.registerOpened}/>
           </div>
       </div>
     );

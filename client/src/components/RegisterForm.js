@@ -8,7 +8,8 @@ class RegisterForm extends Component {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      active: this.props.active
     };
   }
 
@@ -22,12 +23,18 @@ class RegisterForm extends Component {
     });
   }
 
+  componentWillReceiveProps(nextProps){
+      this.setState({active: nextProps.active});
+  }
+
   handleSubmit = event => {
     event.preventDefault();
     if(this.validateForm()){
         register({username: this.state.username, password: this.state.password})
         .then((res) => {
-            this.setState({status: res.data});
+            let status = res.data.code ? res.data.err : res.data //se houver variavel "code", então houve erro na resposta. 
+            this.setState({status: status});
+            
         }).catch((err) => {
             this.setState({status: err.response.data});
         })
@@ -37,13 +44,25 @@ class RegisterForm extends Component {
   }
 
   render() {
+    let activeClass = this.state.active ? "active" : "disabled"
     return (
-      <div>
-
-
+      <div className={activeClass}>
+        <Form onSubmit={this.handleSubmit} id="registerForm">
+            <Form.Field>
+                <input name="username" onChange={this.handleChange} placeholder='Username'/>
+                <span style={{color: "#C2C2C2"}}>* Your username from CIn's login system</span>
+            </Form.Field>
+            <Form.Field>
+                <input type="password" onChange={this.handleChange} name="password" placeholder='Password'/>
+                <span className="statusFeedback"> {this.state.status} </span>
+            </Form.Field>
+            <div className="buttonHolder no-margin">
+                <Button type="submit" id="registerButton">Register</Button>
+            </div>
+        </Form>
       </div>
     );
   }
 }
 
-export default LoginPage;
+export default RegisterForm;
