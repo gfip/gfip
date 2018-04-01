@@ -56,7 +56,7 @@ class RegisterForm extends Component {
   render() {
     let activeClass = this.state.active ? "active" : "disabled"
     return (
-      <div className={activeClass}>
+      <div style={{position: "relative"}} className={activeClass}>
         <Form onSubmit={this.handleSubmit} id="registerForm">
             <Form.Field>
                 <input name="username" onChange={this.handleChange} value={this.state.username} placeholder='Username'/>
