@@ -30,7 +30,8 @@
 #registerForm{
     width: 300px;
     height: auto;
-    border-color: rgb(240, 240, 240);
+    border-color: rgb(226, 226, 226);
+    background-color: #fcfcfc;
     border-width: 1px;
     border-style: solid;
     border-radius: 2%;
@@ -38,6 +39,19 @@
     -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.04);
     -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.04);
     box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.04);
+}
+
+#registerForm:before{
+    content: '';
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 50px;
+    top: -10px;
+    background-color: #fcfcfc;
+    border-left: 1px solid rgb(226, 226, 226);
+    border-top: 1px solid rgb(226, 226, 226);   
+    transform: rotate(45deg);
 }
 
 .statusFeedback{
