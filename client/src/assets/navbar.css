@@ -1,0 +1,17 @@
+#navbar {
+    width: 100%;
+    height: 100px;
+    padding-left: 10%;
+    padding-right: 10%;
+    background-color: #FAFAFA;
+    border-bottom: 2px solid #F2F2F2;
+}
+
+#navbarLogo {
+    width: 75px;
+}
+
+#userImage{
+    border-radius: 100%;
+    width: 60px;
+}

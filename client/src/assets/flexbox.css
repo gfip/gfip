@@ -12,6 +12,14 @@
     align-items: center;
 }
 
+.container.verticalCentered {
+    align-items: center;
+}
+
+.container.spaceBetween {
+    justify-content: space-between;
+}
+
 .container.column {
     flex-direction: column;
 }
