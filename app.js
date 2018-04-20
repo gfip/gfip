@@ -11,18 +11,9 @@ const express  = require("express"),
 
 global.__base = __dirname + '/'; //set __base as root directory
 
-// DEBUG
-// User.remove({username: "rma7"}).then(() => console.log("Rma7 removed"));
+
 var listController = require("./controllers/list.js");
 listController.getNewLists();
-//listController.getStudentList("5aaaea9eae9edd34efc20508","5aaab0a5034527253dbeaf1a")
-//.then( (studentList) => console.log(studentList));
-//listController.getSubmissionCode("1061843");
-
-
-//==========================================================================
-
-
 
 
 var verifyToken = require("./modules/authorization/index.js").token;

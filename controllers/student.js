@@ -1,6 +1,7 @@
 const Student = require("../models/student.js");
 const User =require("../models/user.js");
 const Report = require("../models/report.js");
+const List = require("../models/list.js");
 const theHuxley = require("../modules/thehuxley/");
 
 module.exports = {
@@ -12,6 +13,23 @@ module.exports = {
 		}catch(err){
 			return res.json({code:-1, err:err.message});
 		}
+	},
+
+	getStudentPendingLists: async function(studentId){
+		try{
+			let foundLists = await List.find({});
+			let foundStudent = await Student.findById(studentId).populate("reports").exec();
+			pendingLists = foundLists.filter( (list) => {
+				let found = foundStudent.reports.find((report) => {
+					return  report.list.theHuxleyId === list.theHuxleyId;
+				})
+				return !found;
+			})
+			return res.json(pendingLists);
+		}catch(err){
+			res.json({code:-1 , err})
+		}
+
 	},
 
 	createStudent : async function(req, res){
