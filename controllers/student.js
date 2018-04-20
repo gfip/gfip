@@ -3,7 +3,7 @@ const User =require("../models/user.js");
 const Report = require("../models/report.js");
 const List = require("../models/list.js");
 const theHuxley = require("../modules/thehuxley/");
-const listController = require("list.js");
+const listController = require("./list.js");
 
 module.exports = {
 
