@@ -32,6 +32,23 @@ module.exports = {
 		}
 	},
 
+	getStudentPendingLists: async function(studentId){
+		try{
+			let foundLists = await List.find({});
+			let foundStudent = await Student.findById(studentId).populate("reports").exec();
+			pendingLists = foundLists.filter( (list) => {
+				let found = foundStudent.reports.find((report) => {
+					return  report.list.theHuxleyId === list.theHuxleyId;
+				})
+				return !found;
+			})
+			return res.json(pendingLists);
+		}catch(err){
+			res.json({code:-1 , err})
+		}
+
+	},
+
 	getStudentList: async function ( studentId, listId) {
 		try{
 			let foundList = await List.findById(listId);
