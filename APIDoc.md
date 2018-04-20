@@ -56,6 +56,3 @@ REPORT ROUTES:
 
 	PUT /api/me/students/:student_id/reports/:report_id
 	Update report information
-
-
-

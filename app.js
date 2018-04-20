@@ -5,16 +5,15 @@ const express  = require("express"),
 	  passport = require("passport"),
 	  LocalStrategy = require("passport-local"),
 	  User = require("./models/user.js"),
-	  path = require('path');
+	  path = require('path'),
+	  nodeSchedule = require("node-schedule"),
 	  app = express();
-
 
 global.__base = __dirname + '/'; //set __base as root directory
 
-
+// search for new lists every day at 5 pm
 var listController = require("./controllers/list.js");
-listController.getNewLists();
-
+nodeSchedule.scheduleJob({hour: 17, minute: 0}, listController.getNewLists());
 
 var verifyToken = require("./modules/authorization/index.js").token;
 // requiring routes
@@ -30,15 +29,12 @@ app.use(methodOverride("_method"));// method-override
 
 mongoose.connect( process.env.MONGO_URL || 'mongodb://localhost/feedback-generator' ).catch((err) => console.log(err.message)); // connecting db
 
-
-
 // setting passport
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
 
 app.use("/api/me/students/", verifyToken ,reportRoutes);
 app.use("/api/", userRoutes);
