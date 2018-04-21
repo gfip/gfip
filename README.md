@@ -41,13 +41,13 @@ If successful:
 ```
 If not successful and user didn't confirm e-mail:
 ```HTTP
-CODE 401
+401 unauthorized
 "User not confirmed"
 ```
 
 If not successful and incorrect password/username:
 ```HTTP
-CODE 401
+401 unauthorized
 "Incorrect username or password"
 ```
 
