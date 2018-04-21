@@ -62,7 +62,7 @@ If not successful and its a custom error:
 ---
 
 ```HTTP
-POST /api/me
+GET /api/me
 ``` 
 #### HEADERS
 | key  | value  |
