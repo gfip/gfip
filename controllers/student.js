@@ -3,6 +3,7 @@ const User =require("../models/user.js");
 const Report = require("../models/report.js");
 const List = require("../models/list.js");
 const theHuxley = require("../modules/thehuxley/");
+const listController = require("list.js");
 
 module.exports = {
 
@@ -30,6 +31,23 @@ module.exports = {
 			res.json({code:-1 , err})
 		}
 
+	},
+
+	showStudentList: async function(req, res){
+		try{
+			let studentList = await listController.getStudentList(req.params.student_id, req.params.list_id);
+			for(let i = 0; i < studentList.submissions.length; i++){
+				let sub = studentList.submissions[i];
+				if(sub.theHuxleyId === 0){
+					sub.code = "";
+				}else{
+					sub.code =  await listController.getSubmissionCode(studentList.submissions[i].theHuxleyId);
+				}
+			}
+			return res.json(studentList);
+		}catch(err){
+			return res.json({code:-1, err:err.message})
+		}
 	},
 
 	createStudent : async function(req, res){
@@ -86,10 +104,5 @@ module.exports = {
 			return res.json({code:-1, err:err.message});
 		}
 	}
-
-
-
-
-
 
 }

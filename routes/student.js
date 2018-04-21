@@ -8,7 +8,9 @@ router.get("/", controller.getStudents);
 
 router.post("/", controller.createStudent);
 
-router.post("/:student_id", middleware.checkStudentOwnership, controller.getStudentPendingLists);
+router.post("/:student_id/lists", middleware.checkStudentOwnership, controller.getStudentPendingLists);
+
+router.get("/:student_id/lists/:list_id", middleware.checkStudentOwnership,controller.showStudentList);
 
 router.delete("/:student_id", middleware.checkStudentOwnership, controller.deleteStudent);
 

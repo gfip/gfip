@@ -14,24 +14,6 @@ module.exports = {
 		}
 	},
 
-	showStudentList: async function(req, res){
-		try{
-			let studentList = await listController.getStudentList(req.params.student_id, req.params.list_id);
-			for(let i = 0; i < studentList.submissions.length; i++){
-				let sub = studentList.submissions[i];
-				if(sub.theHuxleyId === 0){
-					sub.code = "";
-				}else{
-					sub.code =  await listController.getSubmissionCode(studentList.submissions[i].theHuxleyId);
-				}
-			}
-			return res.json(studentList);
-		}catch(err){
-			return res.json({code:-1, err:err.message})
-		}
-	},
-
-
 	createReport: async function(req, res){
 		try {
 				let studentList = await listController.getStudentList(req.params.student_id, req.params.list_id);
@@ -55,7 +37,6 @@ module.exports = {
 				let createdReport = await Report.create(report);
 				foundStudent.reports.push(createdReport._id);
 				let updatedStudent = await foundStudent.save();
-				//send email here
 				await mailer.sendReport(report, foundStudent);
 				return res.json(createdReport);
 		} catch(err){
