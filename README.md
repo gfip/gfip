@@ -66,7 +66,8 @@ Given an token (normally sent by email upon registration), cancels the user regi
 
 GET /api/me
 Returns the logged in user basic informations.
-STUDENT ROUTES:
+
+## STUDENT ROUTES:
 
 GET /api/me/students
 Returns the current user students.
