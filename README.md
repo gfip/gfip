@@ -61,8 +61,30 @@ If not successful and its a custom error:
 
 ---
 
-GET /api/me
-Returns the logged in user basic informations.
+```HTTP
+POST /api/me
+``` 
+#### HEADERS
+| key  | value  |
+| ---  |  ---   |
+| Authorization  |  Bearer authorization token |
+
+#### RESPONSE
+If successful:
+```JSON
+{
+  "username": "user's username",
+  "students": "array of user's registered students",
+  "imageUrl": "user's image url"
+}
+```
+
+If not successful and its a custom error:
+```JSON
+{"code": -1, "err": "custom error message"}
+```
+
+---
 
 ## STUDENT ROUTES
 
