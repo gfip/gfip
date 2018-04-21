@@ -2,17 +2,31 @@
 
 ## AUTHENTICATION ROUTES:
 
-```HTTP POST /api/register``` 
+```POST /api/register``` 
 
 #### REQUEST BODY:
 
 | key  | value  |
 | ---  |  ---   |
-| username  |  user's CIn login. Only valid if it's a teacher assistant login. |
-| password |  user's registered password. |
+| username  |  user's CIn login. Only valid if it's a teacher assistant login. **Required**. |
+| password |  user's wanted password. **Required**. |
+
+#### RESPONSE:
+If successful:
+```"Successfully registered, please confirm your @cin.ufpe.br e-mail."```
+If not successful and its a custom error:
+```JSON
+{code: -1, err: custom error message}
+```
 
 POST /api/login
-Takes a username and a password, a logs the user, returns an authentication token.
+
+#### REQUEST BODY:
+
+| key  | value  |
+| ---  |  ---   |
+| username  |  user's registered login. **Required**. |
+| password |  user's registered password. **Required**. |
 
 GET /api/confirm/:token
 Given an token (normally sent by email upon registration), confirms the user registration.
