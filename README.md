@@ -1,8 +1,10 @@
-#API ROUTES
+# API ROUTES
 
-##AUTHENTICATION ROUTES:
+## AUTHENTICATION ROUTES:
 
 ```HTTP POST /api/register``` 
+
+#### REQUEST BODY:
 
 | key  | value  |
 | ---  |  ---   |
