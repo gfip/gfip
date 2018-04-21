@@ -21,8 +21,11 @@ If not successful and its a custom error:
 ```JSON
 {"code": -1, "err": "custom error message"}
 ```
+---
 
-##### POST /api/login
+```HTTP
+POST /api/login
+``` 
 
 #### REQUEST BODY:
 
@@ -30,6 +33,30 @@ If not successful and its a custom error:
 | ---  |  ---   |
 | username  |  user's registered login. **Required**. |
 | password |  user's registered password. **Required**. |
+
+#### RESPONSE:
+If successful:
+```JSON
+{"token": "user token"}
+```
+If not successful and user didn't confirm e-mail:
+```HTTP
+CODE 401
+"User not confirmed"
+```
+
+If not successful and incorrect password/username:
+```HTTP
+CODE 401
+"Incorrect username or password"
+```
+
+If not successful and its a custom error:
+```JSON
+{"code": -1, "err": "custom error message"}
+```
+
+---
 
 GET /api/confirm/:token
 Given an token (normally sent by email upon registration), confirms the user registration.
