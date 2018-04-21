@@ -14,9 +14,10 @@
 #### RESPONSE:
 If successful:
 ```"Successfully registered, please confirm your @cin.ufpe.br e-mail."```
+
 If not successful and its a custom error:
 ```JSON
-{code: -1, err: custom error message}
+{code: -1, err: "custom error message"}
 ```
 
 POST /api/login
