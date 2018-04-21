@@ -15,7 +15,10 @@ POST /api/register
 
 #### RESPONSE:
 If successful:
-```"Successfully registered, please confirm your @cin.ufpe.br e-mail."```
+```HTTP
+200 OK
+"Successfully registered, please confirm your @cin.ufpe.br e-mail."
+```
 
 If not successful and its a custom error:
 ```JSON
