@@ -2,7 +2,9 @@
 
 ## AUTHENTICATION ROUTES:
 
-```POST /api/register``` 
+```HTTP
+POST /api/register
+``` 
 
 #### REQUEST BODY:
 
@@ -20,7 +22,7 @@ If not successful and its a custom error:
 {"code": -1, "err": "custom error message"}
 ```
 
-POST /api/login
+##### POST /api/login
 
 #### REQUEST BODY:
 
