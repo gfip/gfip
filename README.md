@@ -61,12 +61,6 @@ If not successful and its a custom error:
 
 ---
 
-GET /api/confirm/:token
-Given an token (normally sent by email upon registration), confirms the user registration.
-
-GET /api/cancel/:token
-Given an token (normally sent by email upon registration), cancels the user registration.
-
 GET /api/me
 Returns the logged in user basic informations.
 
