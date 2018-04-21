@@ -6,14 +6,14 @@
 POST /api/register
 ``` 
 
-#### REQUEST BODY:
+#### REQUEST BODY
 
 | key  | value  |
 | ---  |  ---   |
 | username  |  user's CIn login. Only valid if it's a teacher assistant login. **Required**. |
 | password |  user's wanted password. **Required**. |
 
-#### RESPONSE:
+#### RESPONSE
 If successful:
 ```HTTP
 200 OK
@@ -30,14 +30,14 @@ If not successful and its a custom error:
 POST /api/login
 ``` 
 
-#### REQUEST BODY:
+#### REQUEST BODY
 
 | key  | value  |
 | ---  |  ---   |
 | username  |  user's registered login. **Required**. |
 | password |  user's registered password. **Required**. |
 
-#### RESPONSE:
+#### RESPONSE
 If successful:
 ```JSON
 {"token": "user token"}
@@ -70,7 +70,7 @@ Given an token (normally sent by email upon registration), cancels the user regi
 GET /api/me
 Returns the logged in user basic informations.
 
-## STUDENT ROUTES:
+## STUDENT ROUTES
 
 GET /api/me/students
 Returns the current user students.
