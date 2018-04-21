@@ -17,7 +17,7 @@ If successful:
 
 If not successful and its a custom error:
 ```JSON
-{code: -1, err: "custom error message"}
+{"code": -1, "err": "custom error message"}
 ```
 
 POST /api/login
