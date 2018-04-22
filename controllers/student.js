@@ -18,6 +18,7 @@ module.exports = {
 
 	getStudentPendingLists: async function(studentId){
 		try{
+			await listController.getNewLists();
 			let foundLists = await List.find({});
 			let foundStudent = await Student.findById(studentId).populate("reports").exec();
 			pendingLists = foundLists.filter( (list) => {

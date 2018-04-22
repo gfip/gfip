@@ -11,10 +11,6 @@ const express  = require("express"),
 
 global.__base = __dirname + '/'; //set __base as root directory
 
-// search for new lists every day at 5 pm
-var listController = require("./controllers/list.js");
-nodeSchedule.scheduleJob({hour: 17, minute: 0}, listController.getNewLists());
-
 var verifyToken = require("./modules/authorization/index.js").token;
 // requiring routes
 var reportRoutes = require("./routes/report.js");
