@@ -12,7 +12,7 @@ module.exports = {
 				res.status(400).send("Student not found in user database");
 			}
 		}).catch( (err) => {
-			return res.json({code: -1 , err : err});
+			return res.status(500).send(err.message);
 		});
 	},
 
@@ -24,7 +24,7 @@ module.exports = {
 				res.status(400).send("Report not found in student database");
 			}
 		}).catch( (err) => {
-			return res.json({code: -1 , err : err});
+			return res.status(500).send(err.message);
 		});
 	}
 

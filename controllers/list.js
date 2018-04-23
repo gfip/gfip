@@ -78,6 +78,7 @@ module.exports = {
 			throw new Error(err.message);
 		}			
 	},
+	
 	getSubmissionCode: async function (submissionHuxleyId){
 		try{
 			let foundCode = await theHuxley.getSubmissionCode(submissionHuxleyId);

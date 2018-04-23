@@ -10,7 +10,7 @@ module.exports = {
 			let foundStudent = await Student.findById(req.params.student_id).populate("reports").exec();
 			res.json(foundStudent.reports);
 		} catch(err){
-			return res.json({code:-1, err:err.message});
+			return res.status(500).send(err.message);
 		}
 	},
 
@@ -40,8 +40,7 @@ module.exports = {
 				await mailer.sendReport(report, foundStudent);
 				return res.json(createdReport);
 		} catch(err){
-			console.log(err);
-			return res.json({code:-1, err:err.message});
+			return res.status(500).send(err.message);
 		}
 	},
 
@@ -53,7 +52,7 @@ module.exports = {
 			let updatedStudent = await foundStudent.save();
 			return res.json(deletedReport);
 		} catch(err){
-			return res.json({code:-1, err:err.message});
+			return res.status(500).send(err.message);
 		}
 	},
 
@@ -62,7 +61,7 @@ module.exports = {
 			let foundReport = await Report.findById(req.params.report_id);
 			return res.json(foundReport);
 		} catch(err){
-			return res.json({code:-1, err:err.message});
+			return res.status(500).send(err.message);
 		}
 	},
 
@@ -74,7 +73,7 @@ module.exports = {
 			let updatedReport = await Report.findByIdAndUpdate(req.params.report_id, report);
 			return res.json(report);
 		} catch(err){
-			return res.json({code:-1, err:err.message});
+			return res.status(500).send(err.message);
 		}
 	}
 

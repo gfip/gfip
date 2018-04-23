@@ -10,7 +10,7 @@ module.exports = {
 	loginUser : function(req, res, next) {
 		passport.authenticate('local', async (err, user, info) => {
 		  	if(err){
-		  		return res.json({ code: -1 , err: err.message});
+		  		return res.status(500).send(err.message);
 		  	}else{
 		  		try{
 			  		let token = await jwt.sign({user:user}, auth.loginKey);
@@ -26,7 +26,7 @@ module.exports = {
 		  				res.status(401).send("Incorrect username or password.");
 			  		}
 		  		}catch(err){
-		  			return res.json({code:-1, err:err.message});
+		  			return res.status(500).send(err.message);
 		  		}
 		  	}
 	    })(req, res, next);
@@ -40,7 +40,7 @@ module.exports = {
 			await mailer.sendConfirmation(registeredUser, token);
 			res.status(200).send("Successfully registered, please confirm your @cin.ufpe.br e-mail.");
 		}catch(err){
-			return res.json({code:-1 , err:err.message});
+			return res.status(500).send(err.message);
 		}
 	},
 
@@ -54,9 +54,9 @@ module.exports = {
 				return res.redirect("/");
 			}else{
 				throw new Error("User already canceled registration");
-			}
+			} 
 		}catch(err){
-			return res.json({code:-1, err:err.message});
+			return res.status(500).send(err.message);
 		}
 	},
 
@@ -71,7 +71,7 @@ module.exports = {
 				return res.redirect("/");
 			}
 		}catch(err){
-			return res.json({code:-1 , err:err.message});
+			res.status(500).send(err.message);
 		}
 	},
 
@@ -82,7 +82,7 @@ module.exports = {
 			let imageUrl = foundUser.imageUrl;
 			res.json({username, imageUrl});
 		}catch(err){
-			res.json({code:-1, err:err.message});
+			res.status(500).send(err.message);
 		}
 	} 
 

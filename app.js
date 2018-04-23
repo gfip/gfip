@@ -5,7 +5,7 @@ const express  = require("express"),
 	  passport = require("passport"),
 	  LocalStrategy = require("passport-local"),
 	  User = require("./models/user.js"),
-	  path = require('path'),
+	  path = require('path'),	
 	  app = express();
 
 global.__base = __dirname + '/'; //set __base as root directory
