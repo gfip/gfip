@@ -18,7 +18,7 @@ module.exports = {
 			});
 			return res.json(returnedStudents);
 		}catch(err){
-			return res.json({code:-1, err:err.message});
+			return res.status(500).send(err.message);
 		}
 	},
 
@@ -35,7 +35,7 @@ module.exports = {
 			})
 			return res.json(pendingLists);
 		}catch(err){
-			res.json({code:-1 , err})
+			return res.status(500).send(err.message);
 		}
 
 	},
@@ -53,7 +53,7 @@ module.exports = {
 			}
 			return res.json(studentList);
 		}catch(err){
-			return res.json({code:-1, err:err.message})
+			return res.status(500).send(err.message);
 		}
 	},
 
@@ -71,7 +71,7 @@ module.exports = {
 			let updatedUser = await foundUser.save();
 			res.json(createdStudent);
 		}catch(err){
-			res.json({code:-1 , err: err.message});
+			return res.status(500).send(err.message);
 		}
 	},
 
@@ -86,7 +86,7 @@ module.exports = {
 			let updatedUser = await foundUser.save();
 			return res.json(deletedStudent);
 		}catch(err){
-			return res.json({code:-1 , err:err.message});
+			return res.status(500).send(err.message)
 		}
 	},
 
@@ -95,7 +95,7 @@ module.exports = {
 			let foundStudent = await Student.findById(req.params.student_id);
 			return res.json(foundStudent);
 		}catch(err){
-			return res.json({code:-1, err:err.message});
+			return res.status(500).send(err.message)
 		}
 	},
 
@@ -108,7 +108,7 @@ module.exports = {
 			let updatedStudent = await Student.findByIdAndUpdate(req.params.student_id, student);
 			return res.json(student);
 		}catch(err){
-			return res.json({code:-1, err:err.message});
+			return res.status(500).send(err.message)
 		}
 	}
 

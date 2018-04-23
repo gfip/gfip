@@ -20,7 +20,7 @@ module.exports = async function(req, res, next) {
 		if(foundUser){
 			next();
 		}else{
-			res.json({code:-1 ,err: "Invalid Token"});
+			return res.status(500).send(err.message);
 		}
 
 	} else {
