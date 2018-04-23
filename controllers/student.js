@@ -10,7 +10,13 @@ module.exports = {
 	getStudents : async function(req, res){
 		try{
 			let foundUser = await User.findById(req.authData.user._id).populate("students").exec();
-			res.json(foundUser.students);
+			returnedStudents = foundUser.students.map( (student) => {
+				return {
+					name: student.name,
+					username: student.username
+				};
+			});
+			return res.json(returnedStudents);
 		}catch(err){
 			return res.json({code:-1, err:err.message});
 		}
