@@ -77,11 +77,10 @@ module.exports = {
 
 	getUser: async function(req, res){
 		try{
-			let foundUser = await User.findById(req.authData.user._id).populate("students").exec();
+			let foundUser = await User.findById(req.authData.user._id);
 			let username = foundUser.username;
-			let students = foundUser.students;
 			let imageUrl = foundUser.imageUrl;
-			res.json({username, students, imageUrl});
+			res.json({username, imageUrl});
 		}catch(err){
 			res.json({code:-1, err:err.message});
 		}
