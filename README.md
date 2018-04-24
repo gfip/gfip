@@ -102,7 +102,14 @@ GET /api/me/students
 If successful:
 ```JSON
 {
-  "returnedStudents": [{"name": "Example jr.", "username": "ej"}]
+  "returnedStudents": "array of name and username of user registered students"
+}
+```
+
+Example:
+```JSON
+{
+  "returnedStudents": "[{"name": "Example junior", "username": "ej"}, {"name": "Example Neto", "username": "en"}]"
 }
 ```
 
