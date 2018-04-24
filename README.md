@@ -102,7 +102,7 @@ GET /api/me/students
 If successful:
 ```JSON
 {
-  "returnedStudents": [{name: "Example jr.", username: "ej"}]
+  "returnedStudents": [{"name": "Example jr.", "username": "ej"}]
 }
 ```
 
