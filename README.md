@@ -21,8 +21,9 @@ If successful:
 ```
 
 If not successful and its a custom error:
-```JSON
-{"code": -1, "err": "custom error message"}
+```HTTP
+500 Internal Server Error
+"Error custom message"
 ```
 ---
 
@@ -55,8 +56,9 @@ If not successful and incorrect password/username:
 ```
 
 If not successful and its a custom error:
-```JSON
-{"code": -1, "err": "custom error message"}
+```HTTP
+500 Internal Server Error
+"Error custom message"
 ```
 
 ---
@@ -80,8 +82,9 @@ If successful:
 ```
 
 If not successful and its a custom error:
-```JSON
-{"code": -1, "err": "custom error message"}
+```HTTP
+500 Internal Server Error
+"Error custom message"
 ```
 
 ---
