@@ -76,7 +76,6 @@ If successful:
 ```JSON
 {
   "username": "user's username",
-  "students": "array of user's registered students",
   "imageUrl": "user's image url"
 }
 ```
@@ -91,8 +90,28 @@ If not successful and its a custom error:
 
 ## STUDENT ROUTES
 
+```HTTP
 GET /api/me/students
-Returns the current user students.
+``` 
+#### HEADERS
+| key  | value  |
+| ---  |  ---   |
+| Authorization  |  Bearer authorization token |
+
+#### RESPONSE
+If successful:
+```JSON
+{
+  "returnedStudents": [{name: "Example jr.", username: "ej"}]
+}
+```
+
+If not successful and its a custom error:
+```HTTP
+500 Internal Server Error
+"Error custom message"
+```
+---
 
 POST /api/me/students
 Creates a student for the current user.
