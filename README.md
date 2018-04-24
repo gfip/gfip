@@ -23,7 +23,7 @@ If successful:
 If not successful and its a custom error:
 ```HTTP
 500 Internal Server Error
-"Error custom message"
+"Custom error message"
 ```
 ---
 
@@ -58,7 +58,7 @@ If not successful and incorrect password/username:
 If not successful and its a custom error:
 ```HTTP
 500 Internal Server Error
-"Error custom message"
+"Custom error message"
 ```
 
 ---
@@ -83,7 +83,7 @@ If successful:
 If not successful and its a custom error:
 ```HTTP
 500 Internal Server Error
-"Error custom message"
+"Custom error message"
 ```
 
 ---
@@ -116,7 +116,7 @@ Example:
 If not successful and its a custom error:
 ```HTTP
 500 Internal Server Error
-"Error custom message"
+"Custom error message"
 ```
 ---
 
