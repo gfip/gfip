@@ -109,7 +109,7 @@ If successful:
 Example:
 ```JSON
 {
-  "returnedStudents": "[{"name": "Example junior", "username": "ej"}, {"name": "Example Neto", "username": "en"}]"
+  "returnedStudents": [{"name": "Example junior", "username": "ej"}, {"name": "Example Neto", "username": "en"}]
 }
 ```
 
