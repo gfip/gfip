@@ -13,7 +13,8 @@ module.exports = {
 			returnedStudents = foundUser.students.map( (student) => {
 				return {
 					name: student.name,
-					username: student.username
+					username: student.username,
+					theHuxleyId: student.theHuxleyId
 				};
 			});
 			return res.json(returnedStudents);

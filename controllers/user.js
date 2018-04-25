@@ -44,6 +44,16 @@ module.exports = {
 		}
 	},
 
+	changePassword: async function(req, res){
+		try{
+			let foundUser = await User.findById(req.authData.user._id);
+			await foundUser.changePassword(req.body.oldPassword, req.body.newPassword);
+			return res.json("Password Successfully changed");
+		}catch(err){
+			return res.status(500).send(err.message);
+		}
+	},
+
 	confirmUser: async function(req, res) {
 		try{
 			let authData = await jwt.verify(req.params.token, auth.confirmationKey);

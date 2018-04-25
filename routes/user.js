@@ -14,4 +14,6 @@ router.get("/cancel/:token", controller.cancelRegister);
 
 router.get("/me", verifyToken ,controller.getUser);
 
+router.post("/me", verifyToken, controller.changePassword);
+
 module.exports = router;
