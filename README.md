@@ -102,14 +102,15 @@ GET /api/me/students
 If successful:
 ```JSON
 {
-  "returnedStudents": "array of name and username of user registered students"
+  "returnedStudents": "array of objects with name, username and The Huxley Id of user's registered students"
 }
 ```
 
 Example:
 ```JSON
 {
-  "returnedStudents": [{"name": "Example junior", "username": "ej"}, {"name": "Example Neto", "username": "en"}]
+  "returnedStudents": [{"name": "Example junior", "username": "ej", theHuxleyId: 123}, {"name": "Example Neto", "username": "en", theHuxleyId: 555}]
+
 }
 ```
 
