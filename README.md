@@ -132,9 +132,9 @@ POST /api/me/students
 If successful:
 ```JSON
 {
-	name: "Student's name",
-	username: "Student's CIn login",
-	theHuxleyId: "Id from the huxley app"
+	"name": "Student's name",
+	"username": "Student's CIn login",
+	"theHuxleyId": "Id from the huxley app"
 }
 ```
 If not successful and its a custom error:
