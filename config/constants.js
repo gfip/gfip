@@ -4,7 +4,8 @@ module.exports = {
 
     authentication :{
     	loginKey : process.env.SECRET_KEY,
-    	confirmationKey: process.env.CONFIRMATION_SECRET_KEY	
+    	confirmationKey: process.env.CONFIRMATION_SECRET_KEY,
+        passwordResetKey: process.env.PASSRESET_SECRET_KEY
     },
 
     email : {

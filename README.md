@@ -173,3 +173,16 @@ Returns report information
 
 PUT /api/me/students/:student_id/reports/:report_id
 Update report information
+
+POST /api/me/reset 
+body: username
+Send reset password email
+
+PUT /api/me/reset/:token 
+body: newPassword
+Reset password
+
+POST /api/me 
+body: oldPassword
+newPassword
+Changes password given old one

@@ -8,6 +8,10 @@ router.post("/register",controller.registerUser);
 
 router.post("/login", controller.loginUser);
 
+router.put("/me/reset/:token", controller.resetPassword);
+
+router.post("/me/reset", controller.resetPasswordEmail);
+
 router.get("/confirm/:token", controller.confirmUser);
 
 router.get("/cancel/:token", controller.cancelRegister);

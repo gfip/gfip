@@ -54,6 +54,35 @@ module.exports = {
 		}
 	},
 
+
+	resetPasswordEmail: async function(req, res){
+		try{
+			let user = await User.findOne({username: req.body.username});
+			let token = await jwt.sign({user:user}, auth.passwordResetKey);
+			await mailer.sendPasswordReset(user, token);
+			res.json("Reset password email sent to " + user.username + "@cin.ufpe.br");
+		}catch(err){
+			return res.status(500).send(err.message);
+		}
+	},
+
+
+	resetPassword: async function(req, res){
+		try{
+			let authData = await jwt.verify(req.params.token, auth.passwordResetKey);
+			let foundUser =  await User.findById(authData.user._id);
+			if(foundUser){+
+				await foundUser.setPassword(req.body.newPassword);
+				res.json("Changed password for " +  foundUser.username);
+			}else{
+				throw new Error("User does not exist");
+			}
+		}catch(err){
+			return res.status(500).send(err.message);
+		}
+
+	},
+
 	confirmUser: async function(req, res) {
 		try{
 			let authData = await jwt.verify(req.params.token, auth.confirmationKey);
