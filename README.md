@@ -142,7 +142,7 @@ If not successful and its a custom error:
 500 Internal Server Error
 "Custom error message"
 ```
-
+---
 DELETE /api/me/students/:student_id
 Deletes the student from the database.
 
