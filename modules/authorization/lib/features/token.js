@@ -5,26 +5,31 @@ const loginKey = require(__base + "config/constants.js").authentication.loginKey
 
 
 module.exports = async function(req, res, next) {
-	var bearerHeader = req.headers['authorization'];
+	try{
+		var bearerHeader = req.headers['authorization'];
 
-	if(bearerHeader){
-		var bearer = bearerHeader.split(' ');
-		
-		var bearerToken = bearer[1];
 
-		req.token = bearerToken;
+		if(bearerHeader){
+			var bearer = bearerHeader.split(' ');
+			
+			var bearerToken = bearer[1];
 
-		var authData = await jwt.verify(req.token, loginKey);
-		req.authData = authData;
-		var foundUser = await User.findById(authData.user._id);
-		if(foundUser){
-			next();
-		}else{
-			return res.status(500).send(err.message);
+			req.token = bearerToken;
+
+			var authData = await jwt.verify(req.token, loginKey);
+			req.authData = authData;
+			var foundUser = await User.findById(authData.user._id);
+			if(foundUser){
+				next();
+			}else{
+				return res.status(500).send(err.message);
+			}
+
+		} else {
+			res.status(401).send("You need to be logged in to that");
 		}
-
-	} else {
-		res.status(401).send("You need to be logged in to that");
+	}catch(err){
+		res.status(500).send(err.message);
 	}
 
 }
