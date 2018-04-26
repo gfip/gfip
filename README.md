@@ -120,9 +120,28 @@ If not successful and its a custom error:
 "Custom error message"
 ```
 ---
-
+```HTTP
 POST /api/me/students
-Creates a student for the current user.
+```
+##HEADERS
+| key | value |
+| --- | ---   |
+| Authorization | Bearer authorization token |
+
+## RESPONSE
+If successful:
+```JSON
+{
+	name: "Student's name",
+	username: "Student's CIn login",
+	theHuxleyId: "Id from the huxley app"
+}
+```
+If not successful and its a custom error:
+```HTTP
+500 Internal Server Error
+"Custom error message"
+```
 
 DELETE /api/me/students/:student_id
 Deletes the student from the database.
