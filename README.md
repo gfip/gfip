@@ -123,12 +123,12 @@ If not successful and its a custom error:
 ```HTTP
 POST /api/me/students
 ```
-##HEADERS
+#### HEADERS
 | key | value |
 | --- | ---   |
 | Authorization | Bearer authorization token |
 
-## RESPONSE
+#### RESPONSE
 If successful:
 ```JSON
 {
