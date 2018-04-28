@@ -8,7 +8,7 @@ A website that makes it easy to send code review feedbacks to Programming Introd
 [MongoDB](https://www.mongodb.com/download-center?jmp=nav#community)
 ### Installing
 - Setup a `.env` file inside the project directory with the following content:
-```
+```markdown
 CONFIRMATION_SECRET_KEY=anythingyouwant
 EMAIL_USER=consult one of the main developers or use your e-mail address
 EMAIL_PASSWORD=consult one of the main developers or use your e-mail password
@@ -29,7 +29,7 @@ MONGO_URL=Optional. Set only if you want to use the main DB. If you want so, con
 To see the API methods - go to the [APIDoc.md](APIDoc.md) file
 
 ## Deployment
-    The project on github is linked directly with Heroku, being deployed in live version with any changes made. *Be careful with your code, test on your local machine before pushing to live!* 
+The project on github is linked directly with Heroku, being deployed in live version with any changes made. *Be careful with your code, test on your local machine before pushing to live!* 
 
 ## Built With
 
