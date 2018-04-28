@@ -1,58 +1,188 @@
-API ROUTES
+# API ROUTES
 
-AUTHENTICATION ROUTES:
+## AUTHENTICATION ROUTES
 
-	POST /api/register 
-	Takes a username and a password, and if the username is a valid teaching assistant, registers the user.
+```HTTP
+POST /api/register
+``` 
 
-	POST /api/login
-	Takes a username and a password, a logs the user, returns an authentication token.
+#### REQUEST BODY
 
-	GET /api/confirm/:token
-	Given an token (normally sent by email upon registration), confirms the user registration.
+| key  | value  |
+| ---  |  ---   |
+| username  |  user's CIn login. Only valid if it's a teacher assistant login. **Required**. |
+| password |  user's wanted password. **Required**. |
 
-	GET /api/cancel/:token
-	Given an token (normally sent by email upon registration), cancels the user registration.
+#### RESPONSE
+If successful:
+```HTTP
+200 OK
+"Successfully registered, please confirm your @cin.ufpe.br e-mail."
+```
 
-	GET /api/me
-	Returns the logged in user basic informations.
+If not successful and its a custom error:
+```HTTP
+500 Internal Server Error
+"Custom error message"
+```
+---
 
-STUDENT ROUTES:
+```HTTP
+POST /api/login
+``` 
 
-	GET /api/me/students
-	Returns the current user students.
+#### REQUEST BODY
 
-	POST /api/me/students
-	Creates a student for the current user.
+| key  | value  |
+| ---  |  ---   |
+| username  |  user's registered login. **Required**. |
+| password |  user's registered password. **Required**. |
 
-	DELETE /api/me/students/:student_id
-	Deletes the student from the database.
+#### RESPONSE
+If successful:
+```JSON
+{"token": "user token"}
+```
+If not successful and user didn't confirm e-mail:
+```HTTP
+401 Unauthorized
+"User not confirmed"
+```
 
-	GET /api/me/students/:student_id
-	Returns the information from the student.
+If not successful and incorrect password/username:
+```HTTP
+401 Unauthorized
+"Incorrect username or password"
+```
 
-	PUT /api/me/students/:student_id
-	Updates the student information
+If not successful and its a custom error:
+```HTTP
+500 Internal Server Error
+"Custom error message"
+```
 
-	GET /api/me/students/:student_id/lists
-	Returns the student pending lists information
+---
 
-	GET /api/me/students/:student_id/lists/:list_id
-	Returns the student's list (with evaluation and code)
+```HTTP
+GET /api/me
+``` 
+#### HEADERS
+| key  | value  |
+| ---  |  ---   |
+| Authorization  |  Bearer authorization token |
 
+#### RESPONSE
+If successful:
+```JSON
+{
+  "username": "user's username",
+  "imageUrl": "user's image url"
+}
+```
+
+If not successful and its a custom error:
+```HTTP
+500 Internal Server Error
+"Custom error message"
+```
+
+---
+
+## STUDENT ROUTES
+
+```HTTP
+GET /api/me/students
+``` 
+#### HEADERS
+| key  | value  |
+| ---  |  ---   |
+| Authorization  |  Bearer authorization token |
+
+#### RESPONSE
+If successful:
+```JSON
+{
+  "returnedStudents": "array of objects with name, username and The Huxley Id of user's registered students"
+}
+```
+
+Example:
+```JSON
+{
+  "returnedStudents": [{"name": "Example junior", "username": "ej","theHuxleyId": 123}, {"name": "Example Neto", "username": "en", "theHuxleyId": 555}]
+
+}
+```
+
+If not successful and its a custom error:
+```HTTP
+500 Internal Server Error
+"Custom error message"
+```
+---
+```HTTP
+POST /api/me/students
+```
+#### HEADERS
+| key | value |
+| --- | ---   |
+| Authorization | Bearer authorization token |
+
+#### RESPONSE
+If successful:
+```JSON
+{
+	"name": "Student's name",
+	"username": "Student's CIn login",
+	"theHuxleyId": "Id from the huxley app"
+}
+```
+If not successful and its a custom error:
+```HTTP
+500 Internal Server Error
+"Custom error message"
+```
+---
+DELETE /api/me/students/:student_id
+Deletes the student from the database.
+
+GET /api/me/students/:student_id
+Returns the information from the student.
+
+PUT /api/me/students/:student_id
+Updates the student information
+
+GET /api/me/students/:student_id/lists
+Returns the student pending lists information
+
+GET /api/me/students/:student_id/lists/:list_id
+Returns the student's list (with evaluation and code)
 REPORT ROUTES:
 
-	GET /api/me/students/:student_id/reports
-	Returns the student's reports
+GET /api/me/students/:student_id/reports
+Returns the student's reports
 
-	POST /api/me/students/:student_id/reports
-	Create a report and sends it via email to the student
+POST /api/me/students/:student_id/reports
+Create a report and sends it via email to the student
 
-	DELETE /api/me/students/:student_id/reports/:report_id
-	Deletes a report
+DELETE /api/me/students/:student_id/reports/:report_id
+Deletes a report
 
-	GET /api/me/students/:student_id/reports/:report_id
-	Returns report information
+GET /api/me/students/:student_id/reports/:report_id
+Returns report information
 
-	PUT /api/me/students/:student_id/reports/:report_id
-	Update report information
+PUT /api/me/students/:student_id/reports/:report_id
+Update report information
+
+POST /api/me/reset 
+body: username
+Send reset password email
+
+PUT /api/me/reset/:token 
+body: newPassword
+Reset password
+
+POST /api/me 
+body: oldPassword
+newPassword
+Changes password given old one

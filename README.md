@@ -1,188 +1,41 @@
-# API ROUTES
+# GFIP - Feedbacks Made Easy
 
-## AUTHENTICATION ROUTES
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua.
 
-```HTTP
-POST /api/register
-``` 
+## Getting Started
 
-#### REQUEST BODY
+### Prerequisites
 
-| key  | value  |
-| ---  |  ---   |
-| username  |  user's CIn login. Only valid if it's a teacher assistant login. **Required**. |
-| password |  user's wanted password. **Required**. |
+### Installing
 
-#### RESPONSE
-If successful:
-```HTTP
-200 OK
-"Successfully registered, please confirm your @cin.ufpe.br e-mail."
-```
+## Methods
 
-If not successful and its a custom error:
-```HTTP
-500 Internal Server Error
-"Custom error message"
-```
----
+To see the API methods - go to the [APIDoc.md](APIDoc.md) file
 
-```HTTP
-POST /api/login
-``` 
+## Deployment
 
-#### REQUEST BODY
 
-| key  | value  |
-| ---  |  ---   |
-| username  |  user's registered login. **Required**. |
-| password |  user's registered password. **Required**. |
+## Built With
 
-#### RESPONSE
-If successful:
-```JSON
-{"token": "user token"}
-```
-If not successful and user didn't confirm e-mail:
-```HTTP
-401 Unauthorized
-"User not confirmed"
-```
+* [MongoDB](https://docs.mongodb.com/) - The database used
+* [Express](http://expressjs.com/pt-br/api.html) - The web frameword used
+* [TheHuxley](https://thehuxley.com.br/) - The code analysis tool used to submit the code by the students
 
-If not successful and incorrect password/username:
-```HTTP
-401 Unauthorized
-"Incorrect username or password"
-```
+## Contributing
 
-If not successful and its a custom error:
-```HTTP
-500 Internal Server Error
-"Custom error message"
-```
+Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us. 
 
----
+## Authors
 
-```HTTP
-GET /api/me
-``` 
-#### HEADERS
-| key  | value  |
-| ---  |  ---   |
-| Authorization  |  Bearer authorization token |
+* **Éden Ernandes** - [edenalsant](https://github.com/edenalsant)
+* **Luan Antunes**  - [luanbrito7](https://github.com/luanbrito7)
+* **Lucas Barros**  - [lucasbarross](https://github.com/lucasbarross)
+* **Rafael Mota**   - [rafaelmotaalves](https://github.com/rafaelmotaalves)
 
-#### RESPONSE
-If successful:
-```JSON
-{
-  "username": "user's username",
-  "imageUrl": "user's image url"
-}
-```
 
-If not successful and its a custom error:
-```HTTP
-500 Internal Server Error
-"Custom error message"
-```
+See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
----
+## License
 
-## STUDENT ROUTES
-
-```HTTP
-GET /api/me/students
-``` 
-#### HEADERS
-| key  | value  |
-| ---  |  ---   |
-| Authorization  |  Bearer authorization token |
-
-#### RESPONSE
-If successful:
-```JSON
-{
-  "returnedStudents": "array of objects with name, username and The Huxley Id of user's registered students"
-}
-```
-
-Example:
-```JSON
-{
-  "returnedStudents": [{"name": "Example junior", "username": "ej","theHuxleyId": 123}, {"name": "Example Neto", "username": "en", "theHuxleyId": 555}]
-
-}
-```
-
-If not successful and its a custom error:
-```HTTP
-500 Internal Server Error
-"Custom error message"
-```
----
-```HTTP
-POST /api/me/students
-```
-#### HEADERS
-| key | value |
-| --- | ---   |
-| Authorization | Bearer authorization token |
-
-#### RESPONSE
-If successful:
-```JSON
-{
-	"name": "Student's name",
-	"username": "Student's CIn login",
-	"theHuxleyId": "Id from the huxley app"
-}
-```
-If not successful and its a custom error:
-```HTTP
-500 Internal Server Error
-"Custom error message"
-```
----
-DELETE /api/me/students/:student_id
-Deletes the student from the database.
-
-GET /api/me/students/:student_id
-Returns the information from the student.
-
-PUT /api/me/students/:student_id
-Updates the student information
-
-GET /api/me/students/:student_id/lists
-Returns the student pending lists information
-
-GET /api/me/students/:student_id/lists/:list_id
-Returns the student's list (with evaluation and code)
-REPORT ROUTES:
-
-GET /api/me/students/:student_id/reports
-Returns the student's reports
-
-POST /api/me/students/:student_id/reports
-Create a report and sends it via email to the student
-
-DELETE /api/me/students/:student_id/reports/:report_id
-Deletes a report
-
-GET /api/me/students/:student_id/reports/:report_id
-Returns report information
-
-PUT /api/me/students/:student_id/reports/:report_id
-Update report information
-
-POST /api/me/reset 
-body: username
-Send reset password email
-
-PUT /api/me/reset/:token 
-body: newPassword
-Reset password
-
-POST /api/me 
-body: oldPassword
-newPassword
-Changes password given old one
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
