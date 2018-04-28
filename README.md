@@ -5,22 +5,22 @@ A website that makes it easy to send code review feedbacks to Programming Introd
 ## Getting Started
 
 ### Prerequisites
-    [MongoDB](https://www.mongodb.com/download-center?jmp=nav#community)
+[MongoDB](https://www.mongodb.com/download-center?jmp=nav#community)
 ### Installing
-    - Setup a `.env` file inside the project directory with the following content:
-    ```
-    CONFIRMATION_SECRET_KEY=anythingyouwant
-    EMAIL_USER=consult one of the main developers or use your e-mail address
-    EMAIL_PASSWORD=consult one of the main developers or use your e-mail password
-    SECRET_KEY=anythingyouwant
-    THEHUXLEY_USERNAME=consult one of the main developers to get the thehuxley main account username.
-    THEHUXLEY_PASSWORD=consult one of the main developers to get the thehuxley main account password.
-    MONGO_URL=Optional. Set only if you want to use the main DB. If you want so, consult [lucasbarross](https://github.com/lucasbarross)     to get the credentials and URL or get from HEROKU settings > reveal config vars
-    ```
-    
-    -Go to the `mongodb/server/YOURVERSION/bin` folder, open a command prompt and execute `mongod`. This will run your local mongoDB database(only required if you didn't set MONGO_URL in your environment variables).
-    -Go to the project folder and type `npm start` in the command prompt. This will start the API server.
-    -Go to the `/client` folder inside the project folder and type `npm start`in the command prompt. This will start React server.
+- Setup a `.env` file inside the project directory with the following content:
+```
+CONFIRMATION_SECRET_KEY=anythingyouwant
+EMAIL_USER=consult one of the main developers or use your e-mail address
+EMAIL_PASSWORD=consult one of the main developers or use your e-mail password
+SECRET_KEY=anythingyouwant
+THEHUXLEY_USERNAME=consult one of the main developers to get the thehuxley main account username.
+THEHUXLEY_PASSWORD=consult one of the main developers to get the thehuxley main account password.
+MONGO_URL=Optional. Set only if you want to use the main DB. If you want so, consult [lucasbarross](https://github.com/lucasbarross)     to get the credentials and URL or get from HEROKU settings > reveal config vars
+```
+
+-Go to the `mongodb/server/YOURVERSION/bin` folder, open a command prompt and execute `mongod`. This will run your local mongoDB database(only required if you didn't set MONGO_URL in your environment variables).
+-Go to the project folder and type `npm start` in the command prompt. This will start the API server.
+-Go to the `/client` folder inside the project folder and type `npm start`in the command prompt. This will start React server.
 ## Methods
 
 To see the API methods - go to the [APIDoc.md](APIDoc.md) file
