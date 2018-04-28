@@ -35,7 +35,7 @@ A website that makes it easy to send code review feedbacks to Programming Introd
 To see the API methods - go to the [APIDoc.md](APIDoc.md) file
 
 ## Deployment
-The project on github is linked directly with Heroku, being deployed in live version with any changes made. *Be careful with your code, test on your local machine before pushing!* 
+The project on github is linked directly with Heroku, being deployed in live version with any changes made. *Be careful with your code, test it on your local machine before pushing!* 
 
 ## Built With
 
