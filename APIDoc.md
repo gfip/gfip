@@ -19,12 +19,6 @@ If successful:
 200 OK
 "Successfully registered, please confirm your @cin.ufpe.br e-mail."
 ```
-
-If not successful and its a custom error:
-```HTTP
-500 Internal Server Error
-"Custom error message"
-```
 ---
 
 ```HTTP
@@ -55,12 +49,6 @@ If not successful and incorrect password/username:
 "Incorrect username or password"
 ```
 
-If not successful and its a custom error:
-```HTTP
-500 Internal Server Error
-"Custom error message"
-```
-
 ---
 
 ```HTTP
@@ -78,12 +66,6 @@ If successful:
   "username": "user's username",
   "imageUrl": "user's image url"
 }
-```
-
-If not successful and its a custom error:
-```HTTP
-500 Internal Server Error
-"Custom error message"
 ```
 
 ---
@@ -113,12 +95,6 @@ Example:
 
 }
 ```
-
-If not successful and its a custom error:
-```HTTP
-500 Internal Server Error
-"Custom error message"
-```
 ---
 ```HTTP
 POST /api/me/students
@@ -136,11 +112,6 @@ If successful:
 	"username": "Student's CIn login",
 	"theHuxleyId": "Id from the huxley app"
 }
-```
-If not successful and its a custom error:
-```HTTP
-500 Internal Server Error
-"Custom error message"
 ```
 ---
 DELETE /api/me/students/:student_id
