@@ -40,7 +40,7 @@ The project on github is linked directly with Heroku, being deployed in live ver
 ## Built With
 
 * [MongoDB](https://docs.mongodb.com/) - The database used
-* [Express](http://expressjs.com/pt-br/api.html) - The web frameword used
+* [Express](http://expressjs.com/pt-br/api.html) - The web framework used
 * [TheHuxley](https://thehuxley.com.br/) - The code analysis tool used to submit the code by the students
 
 ## Contributing
