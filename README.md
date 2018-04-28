@@ -10,19 +10,19 @@ A website that makes it easy to send code review feedbacks to Programming Introd
 ### Installing
 - Setup a `.env` file inside the project directory with the following content:
 
->CONFIRMATION_SECRET_KEY=anythingyouwant
+  >CONFIRMATION_SECRET_KEY=anythingyouwant
 
->EMAIL_USER=consult one of the main developers or use your e-mail address
+  >EMAIL_USER=consult one of the main developers or use your e-mail address
 
->EMAIL_PASSWORD=consult one of the main developers or use your e-mail password
+  >EMAIL_PASSWORD=consult one of the main developers or use your e-mail password
 
->SECRET_KEY=anythingyouwant
+  >SECRET_KEY=anythingyouwant
 
->THEHUXLEY_USERNAME=consult one of the main developers to get the thehuxley main account username.
+  >THEHUXLEY_USERNAME=consult one of the main developers to get the thehuxley main account username.
 
->THEHUXLEY_PASSWORD=consult one of the main developers to get the thehuxley main account password.
+  >THEHUXLEY_PASSWORD=consult one of the main developers to get the thehuxley main account password.
 
->MONGO_URL=Optional. Set only if you want to use the main DB. If you want so, consult [lucasbarross](https://github.com/lucasbarross) to get the credentials and URL or get from HEROKU settings > reveal config vars
+  >MONGO_URL=Optional. Set only if you want to use the main DB. If you want so, consult [lucasbarross](https://github.com/lucasbarross) to get the credentials and URL or get from HEROKU settings > reveal config vars
 
 - Go to the `mongodb/server/YOURVERSION/bin` folder, open a command prompt and execute `mongod`. This will run your local mongoDB database(only required if you didn't set MONGO_URL in your environment variables).
 
