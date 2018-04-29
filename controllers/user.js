@@ -1,5 +1,5 @@
 const User = require("../models/user.js");
-const jwt  = require("jwt-then");
+const jwt = require("jwt-then");
 const passport = require("passport");
 const mailer = require("../modules/email");
 const auth = require("../config/constants.js").authentication;
@@ -7,7 +7,7 @@ const isMonitor = require("../modules/authorization").isMonitor;
 
 module.exports = {
 
-	loginUser : function(req, res, next) {
+	loginUser :function(req, res, next) {
 		passport.authenticate('local', async (err, user, info) => {
 		  	if(err){
 		  		return res.status(500).send(err.message);
@@ -60,7 +60,7 @@ module.exports = {
 			let user = await User.findOne({username: req.body.username});
 			let token = await jwt.sign({user:user}, auth.passwordResetKey);
 			await mailer.sendPasswordReset(user, token);
-			res.json("Reset password email sent to " + user.username + "@cin.ufpe.br");
+			res.status(200).send("Reset password email sent to your @cin.ufpe.br email");
 		}catch(err){
 			return res.status(500).send(err.message);
 		}
@@ -73,7 +73,7 @@ module.exports = {
 			let foundUser =  await User.findById(authData.user._id);
 			if(foundUser){+
 				await foundUser.setPassword(req.body.newPassword);
-				res.json("Changed password for " +  foundUser.username);
+				res.status(200).send("Changed password for " +  foundUser.username);
 			}else{
 				throw new Error("User does not exist");
 			}
