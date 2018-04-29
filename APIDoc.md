@@ -303,7 +303,7 @@ POST /api/me/students/:student_id/reports
 If successful sends it by email do the student and returns:
 ```JSON
 {
-	createdReport: " All the report's information",
+	"createdReport": " All the report's information",
 }
 ```
 ---
@@ -326,7 +326,7 @@ POST /api/me/students/:student_id/reports
 If successful sends it by email do the student and returns:
 ```JSON
 {
-	createdReport: " All the report's information",
+	"createdReport": " All the report's information",
 }
 ```
 ---
@@ -342,7 +342,7 @@ DELETE /api/me/students/:student_id/reports/:report_id
 If successful:
 ```JSON
 {
-	deletedReport: " All the report's information",
+	"deletedReport": " All the report's information",
 }
 ```
 ---
@@ -359,6 +359,6 @@ GET /api/me/students/:student_id/reports/:report_id
 If successful:
 ```JSON
 {
-	foundReport: " All the report's information",
+	"foundReport": " All the report's information",
 }
 ```
