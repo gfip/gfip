@@ -68,20 +68,60 @@ If successful:
 }
 ```
 ---
+```HTTP
+POST /api/me/reset
+``` 
 
-POST /api/me/reset 
-body: username
-Send reset password email
+#### REQUEST BODY
 
-PUT /api/me/reset/:token 
-body: newPassword
-Reset password
+| key  | value  |
+| ---  |  ---   |
+| username  |  user's CIn login|
 
-POST /api/me 
-body: oldPassword
-newPassword
-Changes password given old one
+#### RESPONSE
+If successful send email to user and returns:
+```HTTP
+200 OK
+"Reset password email sent to your @cin.ufpe.br email"
+```
 
+---
+```HTTP
+PUT /api/me/reset/:token
+``` 
+
+#### REQUEST BODY
+
+| key  | value  |
+| ---  |  ---   |
+| newPassword |  user's new password|
+
+#### RESPONSE
+If successful send email to user and returns:
+```HTTP
+200 OK
+"Changed password for (username)"
+```
+
+---
+```HTTP
+PUT /api/me
+``` 
+
+#### REQUEST BODY
+
+| key  | value  |
+| ---  |  ---   |
+| oldPassword |  user's current password|
+| newPassword |  user's new password|
+
+#### RESPONSE
+If successful send email to user and returns:
+```HTTP
+200 OK
+"Password Successfully changed"
+```
+---
 
 ## STUDENT ROUTES
 
@@ -143,7 +183,7 @@ If successful:
 {
 	"name": "Deleted Student's name",
 	"username": "Deleted Student's login",
-	"theHuxleyId": "Deleted "Student's the huxley app id",
+	"theHuxleyId": "Deleted Student's the huxley app id",
 	"reports": "List of the deleted student reports database ids"
 }
 ```
@@ -245,14 +285,80 @@ If successful:
 ```
 ---
 
+```HTTP
 POST /api/me/students/:student_id/reports
-Create a report and sends it via email to the student
+```
+#### HEADERS
+| key | value |
+| --- | ---   |
+| Authorization | Bearer authorization token |
 
+#### REQUEST BODY
+| key  | value  |
+| ---  |  ---   |
+| comments |  an array of comments on the problems of the report. |
+| finalComment | a final comment on the report. |
+
+#### RESPONSE
+If successful sends it by email do the student and returns:
+```JSON
+{
+	createdReport: " All the report's information",
+}
+```
+---
+
+```HTTP
+POST /api/me/students/:student_id/reports
+```
+#### HEADERS
+| key | value |
+| --- | ---   |
+| Authorization | Bearer authorization token |
+
+#### REQUEST BODY
+| key  | value  |
+| ---  |  ---   |
+| comments |  an array of comments on the problems of the report. |
+| finalComment | a final comment on the report. |
+
+#### RESPONSE
+If successful sends it by email do the student and returns:
+```JSON
+{
+	createdReport: " All the report's information",
+}
+```
+---
+```HTTP
 DELETE /api/me/students/:student_id/reports/:report_id
-Deletes a report
+```
+#### HEADERS
+| key | value |
+| --- | ---   |
+| Authorization | Bearer authorization token |
 
+#### RESPONSE
+If successful:
+```JSON
+{
+	deletedReport: " All the report's information",
+}
+```
+---
+
+```HTTP
 GET /api/me/students/:student_id/reports/:report_id
-Returns report information
+```
+#### HEADERS
+| key | value |
+| --- | ---   |
+| Authorization | Bearer authorization token |
 
-PUT /api/me/students/:student_id/reports/:report_id
-Update report information
+#### RESPONSE
+If successful:
+```JSON
+{
+	foundReport: " All the report's information",
+}
+```
