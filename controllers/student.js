@@ -14,7 +14,8 @@ module.exports = {
 				return {
 					name: student.name,
 					username: student.username,
-					theHuxleyId: student.theHuxleyId
+					theHuxleyId: student.theHuxleyId,
+					_id: student._id,
 				};
 			});
 			return res.json(returnedStudents);
@@ -23,11 +24,11 @@ module.exports = {
 		}
 	},
 
-	getStudentPendingLists: async function(studentId){
+	getStudentPendingLists: async function(req, res){
 		try{
 			await listController.getNewLists();
 			let foundLists = await List.find({});
-			let foundStudent = await Student.findById(studentId).populate("reports").exec();
+			let foundStudent = await Student.findById(req.params.student_id).populate("reports").exec();
 			pendingLists = foundLists.filter( (list) => {
 				let found = foundStudent.reports.find((report) => {
 					return  report.list.theHuxleyId === list.theHuxleyId;
