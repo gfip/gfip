@@ -45,11 +45,12 @@ The project on github is linked directly with Heroku, being deployed in live ver
 
 * [MongoDB](https://docs.mongodb.com/) - The database used
 * [Express](http://expressjs.com/pt-br/api.html) - The web framework used
+* [React](https://reactjs.org/) - The Front-End framework used
 * [TheHuxley](https://thehuxley.com.br/) - The code analysis tool used to submit the code by the students
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us. 
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us. 
 
 ## Authors
 
