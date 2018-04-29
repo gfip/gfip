@@ -67,8 +67,21 @@ If successful:
   "imageUrl": "user's image url"
 }
 ```
-
 ---
+
+POST /api/me/reset 
+body: username
+Send reset password email
+
+PUT /api/me/reset/:token 
+body: newPassword
+Reset password
+
+POST /api/me 
+body: oldPassword
+newPassword
+Changes password given old one
+
 
 ## STUDENT ROUTES
 
@@ -110,28 +123,127 @@ If successful:
 {
 	"name": "Student's name",
 	"username": "Student's CIn login",
-	"theHuxleyId": "Id from the huxley app"
+	"theHuxleyId": "Id from the huxley app",
+	"_id": "Student's database id"
 }
 ```
 ---
+
+```HTTP
 DELETE /api/me/students/:student_id
-Deletes the student from the database.
+```
+#### HEADERS
+| key | value |
+| --- | ---   |
+| Authorization | Bearer authorization token |
 
+#### RESPONSE
+If successful:
+```JSON
+{
+	"name": "Deleted Student's name",
+	"username": "Deleted Student's login",
+	"theHuxleyId": "Deleted "Student's the huxley app id",
+	"reports": "List of the deleted student reports database ids"
+}
+```
+---
+```HTTP
 GET /api/me/students/:student_id
-Returns the information from the student.
+```
+#### HEADERS
+| key | value |
+| --- | ---   |
+| Authorization | Bearer authorization token |
 
+#### RESPONSE
+If successful:
+```JSON
+{
+	"name": "Student's name",
+	"username": "Student's login",
+	"theHuxleyId": "Student's the huxley app id",
+	"reports": "Student's reports database ids"
+}
+```
+---
+
+```HTTP
 PUT /api/me/students/:student_id
-Updates the student information
+```
+#### HEADERS
+| key | value |
+| --- | ---   |
+| Authorization | Bearer authorization token |
 
+#### REQUEST BODY
+| key  | value  |
+| ---  |  ---   |
+| name  |  students's new name. **Required**. |
+| login |  students's new login. **Required**. |
+
+#### RESPONSE
+If successful:
+```JSON
+{
+	"name": "Student's name",
+	"username": "Student's login",
+	"theHuxleyId": "Student's the huxley app id",
+	"reports": "Student's reports database ids"
+}
+```
+---
+```HTTP
 GET /api/me/students/:student_id/lists
-Returns the student pending lists information
+```
+#### HEADERS
+| key | value |
+| --- | ---   |
+| Authorization | Bearer authorization token |
 
+#### RESPONSE
+If successful:
+```JSON
+{
+	"pendingLists": "An array with de information of the lists that doesnt have reports registered on this student" 
+}
+```
+---
+```HTTP
 GET /api/me/students/:student_id/lists/:list_id
-Returns the student's list (with evaluation and code)
-REPORT ROUTES:
+```
+#### HEADERS
+| key | value |
+| --- | ---   |
+| Authorization | Bearer authorization token |
 
+#### RESPONSE
+If successful:
+```JSON
+{
+	"list": "An object with the list's information and the to each problem code submitted to it" 
+}
+```
+---
+
+## REPORT ROUTES:
+
+```HTTP
 GET /api/me/students/:student_id/reports
-Returns the student's reports
+```
+#### HEADERS
+| key | value |
+| --- | ---   |
+| Authorization | Bearer authorization token |
+
+#### RESPONSE
+If successful:
+```JSON
+{
+	"report": "An array with the user reports" 
+}
+```
+---
 
 POST /api/me/students/:student_id/reports
 Create a report and sends it via email to the student
@@ -144,16 +256,3 @@ Returns report information
 
 PUT /api/me/students/:student_id/reports/:report_id
 Update report information
-
-POST /api/me/reset 
-body: username
-Send reset password email
-
-PUT /api/me/reset/:token 
-body: newPassword
-Reset password
-
-POST /api/me 
-body: oldPassword
-newPassword
-Changes password given old one
