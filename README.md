@@ -60,7 +60,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 * **Rafael Mota**   - [rafaelmotaalves](https://github.com/rafaelmotaalves)
 
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/lucasbarross/feedback-generator/contributors) who participated in this project.
 
 ## License
 
