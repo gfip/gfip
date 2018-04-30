@@ -259,7 +259,7 @@ Example:
 					"theHuxleyId": 123,
 					"score": 1
 				}	
-			]
+			],
 			"title": "Test 1",
 			"theHuxleyID": 2121,
 			"totalScore": 1,
@@ -271,8 +271,8 @@ Example:
 					"name": "P2Q1 - Question 1",
 					"theHuxleyId": 456,
 					"score": 1
-				}	
-			]
+				}
+			],
 			"title": "Test 2",
 			"theHuxleyID": 2123,
 			"totalScore": 1,
@@ -319,9 +319,9 @@ Example:
 				"theHuxleyId": 2123,
 				"score": 1
 			},
-			evaluation: "CORRECT",
-			code: "
-				print("Hello, World!")
+			"evaluation": "CORRECT",
+			"code": "
+				print('Hello, World!')
 			"
 		},
 		....
@@ -390,15 +390,15 @@ Example:
 				"theHuxleyId": 2123,
 				"score": 1
 			},
-			comment: "Great!",
-			evaluation: "CORRECT",
-			code: "
+			"comment": "Great!",
+			"evaluation": "CORRECT",
+			"code": "
 				print("Hello, World!")
 			"
 		},
-		....
+		"...."
 	],
-	finalComment: "Great Moves!, Keep it up, proud of you." 
+	"finalComment": "Great Moves!, Keep it up, proud of you." 
 }
 ```
 
