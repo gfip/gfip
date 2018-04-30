@@ -1,12 +1,13 @@
-const express  = require("express"),
-	  mongoose = require("mongoose"),
-	  methodOverride = require("method-override"),
-	  bodyParser = require("body-parser"),
-	  passport = require("passport"),
-	  LocalStrategy = require("passport-local"),
-	  User = require("./models/user.js"),
-	  path = require('path'),	
-	  app = express();
+const express = require('express');
+const mongoose = require('mongoose');
+
+const methodOverride = require('method-override');
+	bodyParser = require('body-parser'),
+	passport = require('passport'),
+	LocalStrategy = require('passport-local'),
+	User = require('./models/user.js'),
+	path = require('path'),	
+	app = express();
 
 global.__base = __dirname + '/'; //set __base as root directory
 
