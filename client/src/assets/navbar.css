@@ -1,4 +1,5 @@
 #navbar {
+    position: relative;
     width: 100%;
     height: 100px;
     padding-left: 10%;
@@ -14,4 +15,46 @@
 #userImage{
     border-radius: 100%;
     width: 60px;
+}
+
+#menuNavbar {
+    position: absolute;
+    width: 150px;
+    height: 80px;
+    background-color: rgb(247, 247, 247);
+    right: 11%;
+    bottom: -69%;
+    z-index: 1;
+}
+
+#menuNavbar:before{
+    content: '';
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 5px;
+    top: -10px;
+    background-color: rgb(247, 247, 247); 
+    transform: rotate(45deg);
+    z-index: -1;
+}
+
+#menuNavbar:hover {
+    display: flex;
+}
+
+.menuNavbarCell {
+    width: inherit;
+    height: 40px;
+    font-weight: bold;
+    color: rgb(216, 216, 216);
+    -webkit-box-shadow: 1px 3px 14px -1px rgba(0,0,0,0.12);
+    -moz-box-shadow: 1px 3px 14px -1px rgba(0,0,0,0.12);
+    box-shadow: 1px 1px 3px -1px rgba(0,0,0,0.05);
+}
+
+.menuNavbarCell:hover {
+    cursor: pointer;
+    background-color: rgb(241, 241, 241);
+    color: #56FE99;
 }
