@@ -248,6 +248,41 @@ If successful:
 	"pendingLists": "An array with de information of the lists that doesnt have reports registered on this student" 
 }
 ```
+Example:
+```JSON
+{
+	"pendingLists": [
+		{ 
+			"problems": [
+				{
+					"name": "P1Q1 - Question 1",
+					"theHuxleyId": 123,
+					"score": 1
+				}	
+			]
+			"title": "Test 1",
+			"theHuxleyID": 2121,
+			"totalScore": 1,
+			"endDate": "2018-04-02T13:25:00.000Z"
+		},
+		{ 
+			"problems": [
+				{
+					"name": "P2Q1 - Question 1",
+					"theHuxleyId": 456,
+					"score": 1
+				}	
+			]
+			"title": "Test 2",
+			"theHuxleyID": 2123,
+			"totalScore": 1,
+			"endDate": "2018-04-10T13:25:00.000Z"
+		}
+	]
+}
+```
+
+
 ---
 ```HTTP
 GET /api/me/students/:student_id/lists/:list_id
@@ -262,6 +297,35 @@ If successful:
 ```JSON
 {
 	"list": "An object with the list's information and the to each problem code submitted to it" 
+}
+```
+Example:
+```JSON
+{
+	"list": {
+		"title": "Test 1",
+		"theHuxleyId": 2123,
+		"totalScore": 10,
+		"endDate": "2018-03-14T13:25:00.000Z"
+	},
+	"student":{
+		"name": "John Smith",
+		"theHuxleyId": 2123
+	},
+	"submissions": [
+		{
+			"problem": {
+				"name": "P1Q1 - Question 1",
+				"theHuxleyId": 2123,
+				"score": 1
+			},
+			evaluation: "CORRECT",
+			code: "
+				print("Hello, World!")
+			"
+		},
+		....
+	] 
 }
 ```
 ---
@@ -306,6 +370,38 @@ If successful sends it by email do the student and returns:
 	"createdReport": " All the report's information",
 }
 ```
+Example:
+```JSON
+{
+	"list": {
+		"title": "Test 1",
+		"theHuxleyId": 2123,
+		"totalScore": 10,
+		"endDate": "2018-03-14T13:25:00.000Z"
+	},
+	"student":{
+		"name": "John Smith",
+		"theHuxleyId": 2123
+	},
+	"submissions": [
+		{
+			"problem": {
+				"name": "P1Q1 - Question 1",
+				"theHuxleyId": 2123,
+				"score": 1
+			},
+			comment: "Great!",
+			evaluation: "CORRECT",
+			code: "
+				print("Hello, World!")
+			"
+		},
+		....
+	],
+	finalComment: "Great Moves!, Keep it up, proud of you." 
+}
+```
+
 ---
 
 ```HTTP
