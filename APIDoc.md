@@ -324,7 +324,7 @@ Example:
 				print('Hello, World!')
 			"
 		},
-		....
+		"...."
 	] 
 }
 ```
@@ -393,7 +393,7 @@ Example:
 			"comment": "Great!",
 			"evaluation": "CORRECT",
 			"code": "
-				print("Hello, World!")
+				print('Hello, World!'')
 			"
 		},
 		"...."
