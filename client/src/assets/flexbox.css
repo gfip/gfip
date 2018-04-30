@@ -29,7 +29,7 @@
 }
 
 .active {
-    display: block;
+    display: flex;
 }
 
 .disabled {
