@@ -9,8 +9,10 @@ class NewStudentForm extends Component {
     this.state = {
       name: "",
       username: "",
-      statusColor: "#b43232"
+      statusColor: "#b43232",
     };
+
+    console.log("yp")
   }
 
   validateForm() {
@@ -27,6 +29,7 @@ class NewStudentForm extends Component {
     event.preventDefault();
     if(this.validateForm()){
         try {
+            this.setState({btn_disabled: true});
             let newStudent = await addStudent(this.props.auth, this.state.username, this.state.name);
             newStudent = newStudent.data;
             this.props.addStudent(newStudent);
@@ -56,7 +59,7 @@ class NewStudentForm extends Component {
                 <span style={{color: this.state.statusColor}}> {this.state.status} </span>
             </Form.Field>
             <div className="buttonHolder no-margin">
-                <Button type="submit" id="dashboard_addStudent_btn">Add</Button>
+                <Button disabled={this.state.btn_disabled} type="submit" id="dashboard_addStudent_btn">Add</Button>
             </div>
         </Form>
       </div>
