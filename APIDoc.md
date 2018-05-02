@@ -248,7 +248,6 @@ If successful:
 	"pendingLists": "An array with de information of the lists that doesnt have reports registered on this student" 
 }
 ```
-<<<<<<< HEAD
 =======
 Example:
 ```JSON
@@ -283,9 +282,6 @@ Example:
 	]
 }
 ```
-
-
->>>>>>> 33db98c24e27c39c3d19c96cf7d2f3a98f0da208
 ---
 ```HTTP
 GET /api/me/students/:student_id/lists/:list_id
@@ -302,7 +298,6 @@ If successful:
 	"list": "An object with the list's information and the to each problem code submitted to it" 
 }
 ```
-<<<<<<< HEAD
 =======
 Example:
 ```JSON
@@ -333,7 +328,6 @@ Example:
 	] 
 }
 ```
->>>>>>> 33db98c24e27c39c3d19c96cf7d2f3a98f0da208
 ---
 
 ## REPORT ROUTES:
@@ -376,7 +370,6 @@ If successful sends it by email do the student and returns:
 	"createdReport": " All the report's information",
 }
 ```
-<<<<<<< HEAD
 =======
 Example:
 ```JSON
@@ -409,8 +402,6 @@ Example:
 	"finalComment": "Great Moves!, Keep it up, proud of you." 
 }
 ```
-
->>>>>>> 33db98c24e27c39c3d19c96cf7d2f3a98f0da208
 ---
 
 ```HTTP
