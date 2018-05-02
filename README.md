@@ -59,12 +59,9 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 * **Lucas Barros**  - [lucasbarross](https://github.com/lucasbarross)
 * **Rafael Mota**   - [rafaelmotaalves](https://github.com/rafaelmotaalves)
 
-
-<<<<<<< HEAD
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 =======
 See also the list of [contributors](https://github.com/lucasbarross/feedback-generator/contributors) who participated in this project.
->>>>>>> 33db98c24e27c39c3d19c96cf7d2f3a98f0da208
 
 ## License
 
