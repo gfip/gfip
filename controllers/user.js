@@ -48,7 +48,7 @@ module.exports = {
 		try{
 			let foundUser = await User.findById(req.authData.user._id);
 			await foundUser.changePassword(req.body.oldPassword, req.body.newPassword);
-			return res.json("Password Successfully changed");
+			return res.status(200).send("Password Successfully changed");
 		}catch(err){
 			return res.status(500).send(err.message);
 		}
