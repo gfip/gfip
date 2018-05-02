@@ -59,7 +59,7 @@ module.exports = {
 		}
 	},
 
-	createStudent : async function(req, res){
+	createStudent: async function(req, res){
 		try{
 			let studentData = await theHuxley.getUserInfoByName(req.body.name);
 			let student = {
@@ -68,21 +68,26 @@ module.exports = {
 				theHuxleyId: studentData.id
 			}
 			let existingStudent = await Student.findOne({name: student.name});
+			let foundUser = await User.findById(req.authData.user._id).populate("students").exec();
 			if(existingStudent){
-			    throw new Error("Student already exists");
+				if(foundUser.students.find(std => student.name === std.name)){
+					throw new Error("Student already exists");
+				}else{
+					foundUser.students.push(existingStudent._id);
+					res.json("Student: " + existingStudent.name + " added to the user");
+				}
 			}else{
-				let foundUser = await User.findById(req.authData.user._id);
 				let createdStudent = await Student.create(student);
 				foundUser.students.push(createdStudent._id);
-				let updatedUser = await foundUser.save();
-				res.json(createdStudent);
+				res.json("Student: " +createdStudent.name + " created in the database and added to the user");
 			}
+			await foundUser.save();
 		}catch(err){
 			return res.status(500).send(err.message);
 		}
 	},
 
-	deleteStudent : async function(req, res){
+	deleteStudent: async function(req, res){
 		try{
 			let foundUser = await User.findById(req.authData.user._id);
 			let deletedStudent = await Student.findByIdAndRemove(req.params.student_id);
