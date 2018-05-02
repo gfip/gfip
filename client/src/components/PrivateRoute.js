@@ -30,7 +30,7 @@ class PrivateRoute extends React.Component {
       return (
         <Route exact={exact} path={path} render={rest => {
           const success = (
-            <Component user={user} {...rest}/>    
+            <Component user={user} auth={this.AuthService.getToken()} {...rest}/>    
           );
   
           const error = (

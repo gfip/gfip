@@ -37,12 +37,16 @@ export default class OutsideDeactivator extends Component {
     }
   }
 
+  insideClose(event) {
+    this.setState({active: false});
+    this.props.callback();
+  }
+
   render() {
     let Component = this.props.component;
     let active = this.state.active;
-    
     return (
-      <Component refMethod={this.setWrapperRef} active={active}/>
+      <Component refMethod={this.setWrapperRef} active={active} closeMe={this.insideClose.bind(this)} {...this.props}/>
     );
   }
 }
