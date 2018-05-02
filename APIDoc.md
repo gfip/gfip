@@ -88,6 +88,7 @@ If successful send email to user and returns:
 ---
 ```HTTP
 PUT /api/me/reset/:token
+
 ``` 
 
 #### REQUEST BODY
@@ -156,6 +157,13 @@ POST /api/me/students
 | key | value |
 | --- | ---   |
 | Authorization | Bearer authorization token |
+
+#### REQUEST BODY 
+| key  | value  |
+| ---  |  ---   |
+| name |  user's the huxley name|
+| username |  user's Cin's login|
+
 
 #### RESPONSE
 If successful:

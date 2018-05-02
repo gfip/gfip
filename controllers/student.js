@@ -67,11 +67,16 @@ module.exports = {
 				username: req.body.username,
 				theHuxleyId: studentData.id
 			}
-			let foundUser = await User.findById(req.authData.user._id);
-			let createdStudent = await Student.create(student);
-			foundUser.students.push(createdStudent._id);
-			let updatedUser = await foundUser.save();
-			res.json(createdStudent);
+			let existingStudent = await Student.findOne({name: student.name});
+			if(existingStudent){
+			    throw new Error("Student already exists");
+			}else{
+				let foundUser = await User.findById(req.authData.user._id);
+				let createdStudent = await Student.create(student);
+				foundUser.students.push(createdStudent._id);
+				let updatedUser = await foundUser.save();
+				res.json(createdStudent);
+			}
 		}catch(err){
 			return res.status(500).send(err.message);
 		}
