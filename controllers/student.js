@@ -7,7 +7,7 @@ const listController = require("./list.js");
 
 module.exports = {
 
-	getStudents : async function(req, res){
+	getStudents: async function(req, res){
 		try{
 			let foundUser = await User.findById(req.authData.user._id).populate("students").exec();
 			returnedStudents = foundUser.students.map( (student) => {
@@ -102,7 +102,7 @@ module.exports = {
 		}
 	},
 
-	showStudent : async function(req, res){
+	showStudent: async function(req, res){
 		try{
 			let foundStudent = await Student.findById(req.params.student_id);
 			return res.json(foundStudent);
@@ -111,7 +111,7 @@ module.exports = {
 		}
 	},
 
-	updateStudent : async function(req, res){
+	updateStudent: async function(req, res){
 		try{
 			let student = {
 				login : req.body.login,
