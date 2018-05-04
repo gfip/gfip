@@ -74,14 +74,14 @@ module.exports = {
 					throw new Error("Student already exists");
 				}else{
 					foundUser.students.push(existingStudent._id);
-					res.json("Student: " + existingStudent.name + " added to the user");
+					res.json(existingStudent);
 				}
 			}else{
 				let createdStudent = await Student.create(student);
 				foundUser.students.push(createdStudent._id);
-				res.json("Student: " +createdStudent.name + " created in the database and added to the user");
+				res.json(createdStudent);
 			}
-			await foundUser.save();
+			return await foundUser.save();
 		}catch(err){
 			return res.status(500).send(err.message);
 		}
