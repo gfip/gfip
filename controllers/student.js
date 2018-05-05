@@ -66,7 +66,7 @@ module.exports = {
 				username: req.body.username,
 				theHuxleyId: studentData.id
 			}
-			let existingStudent = await Student.findOne({name: student.name});
+			let existingStudent = await Student.findOne({name: student.name, username: req.body.username});
 			let foundUser = await User.findById(req.authData.user._id).populate("students").exec();
 			if(existingStudent){
 				if(foundUser.students.find(std => student.name === std.name)){
@@ -91,6 +91,14 @@ module.exports = {
 			let foundUser = await User.findById(req.authData.user._id);
 			foundUser.students.splice(foundUser.students.indexOf(req.params.student_id), 1);
 			let updatedUser = await foundUser.save();
+			let otherUser = await User.find({students: req.body.student_id});
+			let deletedStudent;
+			if(otherUser.length > 0){
+				deletedStudent = await Student.findById(req.params.student_id);
+			}else{
+				console.log(otherUser);
+				deletedStudent = await Student.findByIdAndRemove(req.params.student_id);
+			}
 			return res.json(deletedStudent);
 		}catch(err){
 			return res.status(500).send(err.message)
