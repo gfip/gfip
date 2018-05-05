@@ -35,11 +35,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use("/api/me/students/", verifyToken ,reportRoutes);
 app.use("/api/", userRoutes);
 app.use("/api/me/students/",verifyToken, studentRoutes);
-<<<<<<< HEAD
 app.use("/api/lists/", listRoutes);
-=======
-app.use("/api/lists/", verifyToken, listRoutes);
->>>>>>> 6c84ce94edda7e64cce2a46e3fdc67b6f0e4e6ca
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
