@@ -8,7 +8,7 @@ module.exports = {
 		try{
 			const requestedLists = await theHuxley.getFilteredLists();
 			const dbLists = await List.find({});
-			const createdLists = await Promise.all( requestedLists.filter( async (newList) => {
+			await Promise.all( requestedLists.map( async (newList) => {
 				if(!dbLists.find( dbList => dbList.theHuxleyId === newList.id)){
 					const problems = await theHuxley.getListProblems(list.id);
 					const refactoredProblems = await problems.data.map(function(problem) {
@@ -18,16 +18,17 @@ module.exports = {
 							score : problem.score
 						};
 					});
-					return await List.create({
+					const createdList = await List.create({
 						title : list.title,
 						theHuxleyId : list.id,
 						totalScore : list.score,
 						endDate : list.endDate,
 						problems : refactoredProblems
 					});
+					dbLists.push(createdList);
 				}
 			}));
-			return res.json(dbLists.concat(createdLists));;
+			return res.json(dbLists);
 		}catch (err) {
 			throw new Error(err.message);
 		}
