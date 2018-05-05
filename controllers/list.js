@@ -6,27 +6,29 @@ const _ = require("lodash");
 module.exports = {
  	getNewLists: async function (){
 		try{
-			let lists = await theHuxley.getFilteredLists();
-			for(let list of lists){
-				let foundList = await List.findOne({theHuxleyId: list.id});
-				if(!foundList){
-					let problems = await theHuxley.getListProblems(list.id);
-					let refactoredProblems = await problems.data.map(function(problem) {
+			const requestedLists = await theHuxley.getFilteredLists();
+			const dbLists = await Lists.find({});
+			createdLists = await Promise.all( requestedLists.map( async (newList) => {
+				if(!dbLists.find( dbList => dbList.theHuxleyId === newList.id)){
+					const problems = await theHuxley.getListProblems(list.id);
+					const refactoredProblems = await problems.data.map(function(problem) {
 						return { 
 							name : problem.name,
 							theHuxleyId : problem.id,
 							score : problem.score
 						};
 					});
-					let createdList = await List.create({
+					const createdList = await List.create({
 						title : list.title,
 						theHuxleyId : list.id,
 						totalScore : list.score,
 						endDate : list.endDate,
 						problems : refactoredProblems
-					});
+					});			
 				}
-			}
+			}));
+			dbLists = dbLists.concat(createdLists);
+			return res.json(dbLists);
 		}catch (err) {
 			throw new Error(err.message);
 		}

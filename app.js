@@ -11,12 +11,12 @@ const methodOverride = require('method-override');
 
 global.__base = __dirname + '/'; //set __base as root directory
 
-var verifyToken = require("./modules/authorization/index.js").token;
+const verifyToken = require("./modules/authorization/index.js").token;
 // requiring routes
-var reportRoutes = require("./routes/report.js");
-var userRoutes = require("./routes/user.js");
-var studentRoutes = require("./routes/student.js");
-
+const reportRoutes = require("./routes/report.js");
+const userRoutes = require("./routes/user.js");
+const studentRoutes = require("./routes/student.js");
+const listRoutes = require("./routes/list.js");
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(bodyParser.json())
@@ -35,6 +35,8 @@ passport.deserializeUser(User.deserializeUser());
 app.use("/api/me/students/", verifyToken ,reportRoutes);
 app.use("/api/", userRoutes);
 app.use("/api/me/students/",verifyToken, studentRoutes);
+app.use("/api/me/lists/", verifyToken, listRoutes);
+
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
