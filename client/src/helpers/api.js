@@ -15,7 +15,22 @@ export function getStudents(token){
         }
     })
 }
+export function getStudentPendingList(token, id){
+    return axios.get(`/api/me/students/${id}/lists`, {
+        headers: {
+            Authorization: 'Bearer ' + token 
+        }
+    })
+}
 
+export function deleteStudent(token, id) {
+    return axios.delete(`/api/me/students/${id}`, {
+        headers: {
+            Authorization: 'Bearer ' + token
+        }
+    })
+
+}
 export function addStudent(token, username, name){
     return axios.post('/api/me/students', {name, username} ,{
         headers: {

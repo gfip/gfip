@@ -11,8 +11,6 @@ class NewStudentForm extends Component {
       username: "",
       statusColor: "#b43232",
     };
-
-    console.log("yp")
   }
 
   validateForm() {
@@ -37,9 +35,9 @@ class NewStudentForm extends Component {
             this.props.closeMe();
         } catch (err) {
             if(err.response)
-                this.setState({status: err.response.data}); 
+                this.setState({status: err.response.data, btn_disabled: false}); 
             else 
-                this.setState({status: err.message});
+                this.setState({status: err.message, btn_disabled: false});
         }
     } else {
         this.setState({status: "Missing required fields."});
