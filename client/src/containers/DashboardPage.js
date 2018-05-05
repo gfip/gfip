@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 import { NewStudentForm, OutsideDeactivator, StudentCard, Navbar} from '../components'
-import { getStudents, deleteStudent, getStudentPendingList } from '../helpers/api';
+import { getStudents, deleteStudent, getStudentPendingList, updateLists } from '../helpers/api';
 import { Icon } from 'semantic-ui-react'
 import '../assets/dashboard.css'
 class DashboardPage extends Component {
@@ -49,6 +49,8 @@ class DashboardPage extends Component {
   async componentWillMount(){
     try {
       let students = await getStudents(this.props.auth);
+      let lists = await updateLists(this.props.auth);
+      console.log(lists);
       students = students.data;
       await Promise.all(students.map(async (student) => {
         let pendingLists = await getStudentPendingList(this.props.auth, student._id);
