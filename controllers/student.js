@@ -89,10 +89,6 @@ module.exports = {
 	deleteStudent: async function(req, res){
 		try{
 			let foundUser = await User.findById(req.authData.user._id);
-			let deletedStudent = await Student.findByIdAndRemove(req.params.student_id);
-			for(var i = 0 ; i < deletedStudent.reports.length; i++){
-				await Report.findByIdAndRemove(deletedStudent.reports[i]);
-			}
 			foundUser.students.splice(foundUser.students.indexOf(req.params.student_id), 1);
 			let updatedUser = await foundUser.save();
 			return res.json(deletedStudent);
