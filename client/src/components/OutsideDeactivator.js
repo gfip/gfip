@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-
+import PropTypes from 'prop-types';
 /**
- * Component that desactivate if you click outside of it
- * Component must have ref set to props.refMethod
- * Component must have active prop functionality to change class based on this variable
+ * Component that desactivate the Component prop passed if you click outside of it
+ * OutsideDeactivator needs to have a callback prop that is called when the component passed is deactivated.
+ * Component prop must have ref set to props.refMethod
+ * Component prop must change from active to disabled class based on the 'active' prop passed to it.
  */
-export default class OutsideDeactivator extends Component {
+class OutsideDeactivator extends Component {
   constructor(props) {
     super(props);
     this.state = { active: true }
@@ -50,3 +51,11 @@ export default class OutsideDeactivator extends Component {
     );
   }
 }
+
+OutsideDeactivator.propTypes = {
+    component: PropTypes.any.isRequired,
+    callback: PropTypes.func.isRequired,
+    auth: PropTypes.string
+}
+
+export default OutsideDeactivator;

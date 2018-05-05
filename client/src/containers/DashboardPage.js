@@ -1,42 +1,72 @@
 import React, { Component } from 'react'; 
 import { NewStudentForm, OutsideDeactivator, StudentCard, Navbar} from '../components'
-import { getStudents } from '../helpers/api';
+import { getStudents, deleteStudent, getStudentPendingList } from '../helpers/api';
 import { Icon } from 'semantic-ui-react'
 import '../assets/dashboard.css'
 class DashboardPage extends Component {
   constructor(props){
     super(props);
     this.state = {
-      addStudentForm: false,
+      studentForm: false,
       students: []
     }
   }
 
   openStudentForm = async event => {
-      this.setState({addStudentForm: true})
+    this.setState({studentForm: true})
   }
 
   deactivatedForm = event => {
-    this.setState({addStudentForm: false});
+    this.setState({studentForm: false});
+  }
+
+  deleteStudent = async id => {
+    try {
+      await deleteStudent(this.props.auth, id);
+      let newStudentsArray = this.state.students.filter((student) => {
+        return student._id !== id;
+      })
+      this.setState({students: newStudentsArray})
+    } catch(err) {
+      throw err;
+    }
   }
 
   addStudent = async student => {
-    this.state.students.push(student);
+    try {
+      let pendingLists = await getStudentPendingList(this.props.auth, student._id);
+      if(pendingLists.data.length > 0) {
+        student.pending = true;
+      }
+      let newArray = this.state.students;
+      newArray.push(student);
+      this.setState({students: newArray});
+    } catch (err) {
+      console.log(err.response.data);
+    }
   }
 
-  async componentDidMount(){
+  async componentWillMount(){
     try {
       let students = await getStudents(this.props.auth);
-      this.setState({students: students.data});
+      students = students.data;
+      await Promise.all(students.map(async (student) => {
+        let pendingLists = await getStudentPendingList(this.props.auth, student._id);
+        if(pendingLists.data.length > 0) {
+            student.pending = true;
+        }
+        return student;
+      }));
+      this.setState({students:students});
     } catch (err) {
       console.log(err.response.data);
     }
   }
 
   render() {
-    let addStudentForm = this.state.addStudentForm ? <OutsideDeactivator component={NewStudentForm} callback={this.deactivatedForm} addStudent={this.addStudent} auth={this.props.auth}/> : null;
+    let addStudentForm = this.state.studentForm ? <OutsideDeactivator component={NewStudentForm} callback={this.deactivatedForm.bind(this)} addStudent={this.addStudent.bind(this)} auth={this.props.auth}/> : null;
     let studentsCards = this.state.students.map((student) => {
-      return <StudentCard key={student._id} student={student}/>
+      return <StudentCard key={student._id} deleteStudent={this.deleteStudent.bind(this)} student={student}/>
     })
     return (
       <div className="container column centered">
@@ -49,7 +79,7 @@ class DashboardPage extends Component {
                 {addStudentForm}
               </div>
           </div>
-          <div>
+          <div className="container column">
             {studentsCards}
           </div>
       </div>
