@@ -466,3 +466,36 @@ If successful:
 	"foundReport": " All the report's information",
 }
 ```
+---
+## LIST ROUTES:
+```HTTP
+GET /api/me/list
+```
+if succesful updates lists in the database and returns:
+```JSON
+{
+	"dbLists":"Array of all the lists in the database"
+}
+```
+Example:
+```JSON
+{
+	"title": "Test 1",
+	"theHuxleyId" : 12345,
+	"totalScore" : 10,
+	"endDate" : "2018-03-14T13:25:00.000Z",
+	"problems" : [
+		{
+			"name" : "Problem 1",
+			"theHuxleyId" : 123,
+			"score" : 5
+		},
+		{
+			"name" : "Problem 2",
+			"theHuxleyId" : 124,
+			"score" : 5
+		}
+	]
+}
+
+
