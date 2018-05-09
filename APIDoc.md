@@ -306,7 +306,6 @@ If successful:
 	"list": "An object with the list's information and the to each problem code submitted to it" 
 }
 ```
-=======
 Example:
 ```JSON
 {
@@ -337,7 +336,6 @@ Example:
 }
 ```
 ---
-
 ## REPORT ROUTES:
 
 ```HTTP
