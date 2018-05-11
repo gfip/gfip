@@ -10,7 +10,7 @@ module.exports = {
 			const dbLists = await List.find({});
 			await Promise.all( requestedLists.map( async (newList) => {
 				if(!dbLists.find( dbList => dbList.theHuxleyId === newList.id)){
-					const problems = await theHuxley.getListProblems(list.id);
+					const problems = await theHuxley.getListProblems(newList.id);
 					const refactoredProblems = await problems.data.map(function(problem) {
 						return { 
 							name : problem.name,
@@ -19,10 +19,10 @@ module.exports = {
 						};
 					});
 					const createdList = await List.create({
-						title : list.title,
-						theHuxleyId : list.id,
-						totalScore : list.score,
-						endDate : list.endDate,
+						title : newList.title,
+						theHuxleyId : newList.id,
+						totalScore : newList.score,
+						endDate : newList.endDate,
 						problems : refactoredProblems
 					});
 					dbLists.push(createdList);

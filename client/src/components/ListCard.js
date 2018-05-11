@@ -10,19 +10,6 @@ class StudentCard extends Component {
         };
     }
 
-    deleteStudent = async event => {
-        event.preventDefault();
-        try {
-            if(this.state.deleteEnabled) {
-                this.setState({deleteEnabled: false})
-                await this.props.deleteStudent(event.target.dataset.id); 
-            }
-        } catch (err) {
-            this.setState({deleteEnabled: true});
-            console.log(err.message);
-        }
-    }
-
     render() {
         let statusClass = this.props.student.pending ? "pending" : "ok";
         return (

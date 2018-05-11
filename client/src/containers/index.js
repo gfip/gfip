@@ -1,4 +1,5 @@
 import Login from './LoginPage';
 import NotFound from './NotFoundPage';
 import Dashboard from './DashboardPage';
-export { Login, NotFound, Dashboard }
+import ShowStudent from './ShowStudentPage';
+export { Login, NotFound, Dashboard, ShowStudent }
