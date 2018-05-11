@@ -15,6 +15,15 @@ export function getStudents(token){
         }
     })
 }
+
+export function getStudentInfo(token, id){
+    return axios.get(`/api/me/students/${id}`, {
+        headers: {
+            Authorization: 'Bearer ' + token 
+        }
+    })
+}
+
 export function getStudentPendingList(token, id){
     return axios.get(`/api/me/students/${id}/lists`, {
         headers: {
@@ -22,6 +31,7 @@ export function getStudentPendingList(token, id){
         }
     })
 }
+
 export function updateLists(token){
     return axios.get(`/api/lists`, {
         headers: {

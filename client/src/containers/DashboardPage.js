@@ -42,11 +42,11 @@ class DashboardPage extends Component {
       newArray.push(student);
       this.setState({students: newArray});
     } catch (err) {
-      console.log(err.response.data);
+      console.log(err.message);
     }
   }
 
-  async componentWillMount(){
+  async componentDidMount(){
     try {
       let students = await getStudents(this.props.auth);
       let lists = await updateLists(this.props.auth);
@@ -61,7 +61,7 @@ class DashboardPage extends Component {
       }));
       this.setState({students:students});
     } catch (err) {
-      console.log(err.response.data);
+      console.log(err.message);
     }
   }
 
