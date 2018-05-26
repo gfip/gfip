@@ -356,7 +356,7 @@ If successful:
 ---
 
 ```HTTP
-POST /api/me/students/:student_id/reports
+POST /api/me/students/:student_id/lists/:list_id/reports
 ```
 #### HEADERS
 | key | value |
@@ -386,10 +386,6 @@ Example:
 		"totalScore": 10,
 		"endDate": "2018-03-14T13:25:00.000Z"
 	},
-	"student":{
-		"name": "John Smith",
-		"theHuxleyId": 2123
-	},
 	"submissions": [
 		{
 			"problem": {
@@ -409,6 +405,37 @@ Example:
 }
 ```
 ---
+
+```HTTP
+POST /api/me/students/:student_id/lists/:list_id/reports/blank
+```
+#### HEADERS
+| key | value |
+| --- | ---   |
+| Authorization | Bearer authorization token |
+
+#### RESPONSE
+If successful::
+```JSON
+{
+	"createdReport": " Blank report with the list information",
+}
+```
+=======
+Example:
+```JSON
+{
+	"list": {
+		"title": "Test 1",
+		"theHuxleyId": 2123,
+		"totalScore": 10,
+		"endDate": "2018-03-14T13:25:00.000Z"
+	},
+	"submissions": [],
+}
+```
+---
+
 
 ```HTTP
 POST /api/me/students/:student_id/reports

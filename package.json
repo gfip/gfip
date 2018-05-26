@@ -1,7 +1,8 @@
 {
   "name": "feedback-generator",
   "version": "0.1.0",
-  "private": true,
+  "license": "MIT",
+  "private": false,
   "dependencies": {
     "async": "^2.6.0",
     "axios": "^0.18.0",

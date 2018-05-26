@@ -19,8 +19,8 @@ module.exports = {
             .getStudentList(req.params.student_id, req.params.list_id);
             const foundStudent = await Student.findById(req.params.student_id);
             const report = {
-            list: studentList.list,
-            submissions: [],
+                list: studentList.list,
+                submissions: [],
             };
             for (let i = 0; i < studentList.submissions.length; i += 1) {
                 report.submissions.push({
@@ -38,6 +38,24 @@ module.exports = {
             foundStudent.reports.push(createdReport._id);
             await foundStudent.save();
             await mailer.sendReport(report, foundStudent);
+            return res.json(createdReport);
+        } catch (err) {
+            return res.status(500).send(err.message);
+        }
+    },
+
+    createBlankReport: async function(req, res) {
+        try {
+            const studentList = await listController
+            .getStudentList(req.params.student_id, req.params.list_id);
+            const foundStudent = await Student.findById(req.params.student_id);
+            const report = {
+                list: studentList.list,
+                submissions: []
+            };
+            const createdReport = await Report.create(report);
+            foundStudent.reports.push(createdReport._id);
+            await foundStudent.save();
             return res.json(createdReport);
         } catch (err) {
             return res.status(500).send(err.message);
