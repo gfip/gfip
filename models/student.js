@@ -4,10 +4,7 @@ var studentSchema = mongoose.Schema({
 	name: String,
 	username: String,
 	theHuxleyId: Number,
-	reports: [ {
-		listId: { type:mongoose.Schema.Types.ObjectId, ref: "Report"},
-		problems: [{problem: {name:String , theHuxleyId: Number} , status:String, code: String }]
-	}]
+	reports: [ { type:mongoose.Schema.Types.ObjectId, ref: "Report"} ]
 });
 
 module.exports = mongoose.model("Student", studentSchema);
