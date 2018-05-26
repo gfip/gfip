@@ -32,6 +32,22 @@ export function getStudentPendingList(token, id){
     })
 }
 
+export function getStudentPendingReports(token, id, list_id){
+    return axios.get(`/api/me/students/${id}/reports`, {
+        headers: {
+            Authorization: 'Bearer ' + token 
+        }
+    })
+}
+
+export function discardListReport(token, student_id, list_id){
+    return axios.post(`/api/me/students/${student_id}/lists/${list_id}/reports/blank`, {
+        headers: {
+            Authorization: 'Bearer ' + token 
+        }
+    })
+}
+
 export function updateLists(token){
     return axios.get(`/api/lists`, {
         headers: {

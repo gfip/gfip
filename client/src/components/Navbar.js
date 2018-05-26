@@ -24,7 +24,7 @@ class Navbar extends Component {
         let MenuComponent = this.state.menu ? <OutsideDeactivator component={MenuNavbar} callback={this.deactivatedMenu.bind(this)}/> : null;
         return (
             <div id="navbar" className="container verticalCentered spaceBetween">
-                <img src={logo} id="navbarLogo" alt="logo" />
+                <a href="/dashboard"><img src={logo} id="navbarLogo" alt="logo" /></a>
                 <img onClick={this.openMenu} src={this.props.user.imageUrl + ".jpg"} alt="userImage" id="userImage"/>
                 {MenuComponent}
             </div>
