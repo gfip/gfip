@@ -11,16 +11,17 @@ class ReportHistory extends Component {
     }
 
     render() {
-        let reports = orderBy(this.props.reports, ['endDate', 'title'], ['asc', 'asc']);
-            reports = reports.map((report) => {
-            return <ListCard report={report}/>
-        })
+        // let reports = orderBy(this.props.reports, ['endDate', 'title'], ['asc', 'asc']);
+        //     reports = reports.map((report) => {
+        //     return <HistoryCard report={report}/>
+        // })
 
         return (
             <div className="container column">
                 <h1 style={{"textAlign":"center"}} id="show_student_title">History</h1>
                 <div id="show_student_hr"></div>
-                {reports}
+                {/* {reports} */}
+                Under construction :)
             </div>
        )
     }
