@@ -1,7 +1,7 @@
 import React, { Component } from 'react'; 
 import '../assets/dashboard.css';
 import {getStudentPendingList} from '../helpers/api';
-import { StudentInfo, Navbar, StudentMenu, Lists, ReportHistory} from '../components';
+import { Navbar, Lists, ReportHistory, MenuBlock, InfoBlock} from '../components';
 import { getStudentInfo, getStudentPendingReports, discardListReport } from '../helpers/api';
 import Media from "react-media";
 class ShowStudentPage extends Component {
@@ -18,11 +18,14 @@ class ShowStudentPage extends Component {
         this.openHistory = this.openHistory.bind(this);
         this.discardReport = this.discardReport.bind(this);
     }
-
+    
     async componentDidMount(){
         let lists = await getStudentPendingList(this.props.auth, this.props.match.params.id)
         let student = await getStudentInfo(this.props.auth, this.props.match.params.id);
         let reports = await getStudentPendingReports(this.props.auth, this.props.match.params.id);
+        let studentName = student.data.name.split(' ');
+        studentName = studentName[0] + ' ' + studentName[studentName.length-1];
+        student.data.name = studentName;
         this.setState({lists: lists.data, student: student.data, reports: reports.data});
     }
     
@@ -33,7 +36,7 @@ class ShowStudentPage extends Component {
     openHistory() {
         this.setState({openLists: false, openHistory: true})
     }
-
+    
     discardReport = async event => {
         event.preventDefault();
         try {
@@ -56,15 +59,19 @@ class ShowStudentPage extends Component {
                 {matches => responsive = matches ? 'column' : 'row'}
         </Media>
         
+        
         return (
         <div className="container column centered">
             <Navbar user={this.props.user}/>
             <div className={ "container" + responsive + "centered"}>
                 <div className="container column centered">
-                    { this.state.student && <StudentInfo student={this.state.student}/> }
-                    <StudentMenu openHistory={this.openHistory} openPendingReports={this.openPendingReports}/>
+                    { this.state.student && <InfoBlock title={this.state.student.name} subtitle={this.state.student.username + '@cin.ufpe.br'}/> }
+                    <div className="show_student_studentMenu container column centered">
+                        <MenuBlock callback={this.openPendingReports} title='Pending reports' active={this.state.openLists}/>
+                        <MenuBlock callback={this.openHistory} title='History' active={this.state.openHistory}/>
+                    </div>
                 </div>
-                { this.state.openLists && <Lists lists={this.state.lists} discardReport={this.discardReport}/> } 
+                { this.state.openLists && <Lists lists={this.state.lists} discardReport={this.discardReport} student_id={this.state.student._id}/> } 
                 { this.state.openHistory && <ReportHistory reports={this.state.reports}/> } 
             </div>
         </div>

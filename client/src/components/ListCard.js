@@ -14,7 +14,7 @@ class listCard extends Component {
     render() {
         let days = moment().diff(moment(this.props.list.endDate), 'days');
         return (
-            <a data-id={this.props.list._id} className="show_student_listCard" href={`/lists/` + this.props.list._id}>
+            <a data-id={this.props.list._id} className="show_student_listCard" href={`${this.props.student_id}/lists/` + this.props.list._id}>
                 <Icon disabled={this.state.deleteEnabled} data-id={this.props.list._id} className="show_student_list_delete" onClick={this.props.discardReport} name="times rectangle" />
                 <div className="container column centered">
                     <b><h3>{this.props.list.title}</h3></b>
