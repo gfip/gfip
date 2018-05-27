@@ -11,9 +11,9 @@ import Lists from './Lists';
 import ReportHistory from './ReportHistory';
 import MenuBlock from './MenuBlock';
 import InfoBlock from './InfoBlock';
-import ReportMain from './ReportMain';
+import CodeViewer from './CodeViewer';
 
 export { AuthService, Navbar, NewStudentForm, OutsideDeactivator, PrivateRoute, 
     RegisterForm, StudentCard, MenuNavbar, ListCard, Lists, ReportHistory, MenuBlock,
-    InfoBlock, ReportMain
+    InfoBlock, CodeViewer
 }

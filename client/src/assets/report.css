@@ -26,3 +26,13 @@
     top: 38%;   
 }
 
+.report_main{
+    margin-left: 100px;
+    margin-top: 50px;
+}
+
+.report_code{
+    max-width: 600px;
+    max-height: 600px;
+}
+

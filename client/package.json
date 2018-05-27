@@ -10,9 +10,11 @@
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-highlight": "^0.12.0",
     "react-media": "^1.8.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
+    "react-syntax-highlighter": "^7.0.4",
     "semantic-ui-css": "^2.3.0",
     "semantic-ui-react": "^0.78.3",
     "universal-cookie": "^2.1.2"

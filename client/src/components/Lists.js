@@ -16,8 +16,8 @@ class Lists extends Component {
         })
 
         return (
-            <div className="container column">
-                <h1 style={{"textAlign":"center"}} id="show_student_title">PENDING REPORTS</h1>
+            <div className="container column centered">
+                <h1 id="show_student_title">PENDING REPORTS</h1>
                 <div id="show_student_hr"></div>
                 {listsCards}
             </div>
