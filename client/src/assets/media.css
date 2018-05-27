@@ -1,0 +1,104 @@
+@media only screen and (min-width: 1300px) and (max-width: 1750px) {
+    .report_listInfo{
+        left: 15%;
+    }
+    .report_listMenu{
+        left: 15%;
+    }
+}
+
+@media only screen and (min-width: 1000px) and (max-width: 1300px) {
+    .report_listInfo{
+        left: 5%;
+    }
+    .report_listMenu{
+        left: 5%;
+        top: 37%;
+    }
+}
+
+@media only screen and (max-width: 999px), only screen and (max-height: 600px){
+    .show_student_studentInfo{
+        position: static;
+        margin-top: 10px;
+    }
+    .show_student_studentMenu{
+        position: static;
+        margin-top: 10px;
+    }
+    .report_listMenu{
+        position: static;
+        margin-top: 10px;
+    }
+    .report_listInfo{
+        position: static;
+        margin-top: 10px;
+    }
+}
+@media only screen and (max-height: 620px) {
+    .report_listMenu{
+        top: 48%;
+    }
+}
+
+@media only screen and (min-width: 1300px) and (max-width: 1750px) {
+    .show_student_studentInfo{
+        left: 15%;
+    }
+    .show_student_studentMenu{
+        left: 15%;
+    }
+}
+
+@media only screen and (min-width: 1000px) and (max-width: 1300px) {
+    .show_student_studentInfo{
+        left: 5%;
+    }
+    .show_student_studentMenu{
+        left: 5%;
+        top: 37%;
+    }
+}
+
+@media only screen and (max-height: 620px) {
+    .show_student_studentMenu{
+        top: 40%;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    #dashboard_container{
+        min-width: 300px;
+        position: relative;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    #dashboard_newStudentForm{
+        width: 275px;
+    }
+    
+    .dashboard_studentCard {
+        min-width: 275px;
+    }
+
+    #dashboard_studentForm_wrapper {
+        display:inline-block;
+        position: absolute;
+        right: -5px;
+        top: 120px;
+    }
+
+    #dashboard_newStudentForm:before{
+        content: '';
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        right: 15px;
+        top: -10px;
+        background-color: #fcfcfc;
+        border-left: 1px solid rgb(226, 226, 226);
+        border-top: 1px solid rgb(226, 226, 226);   
+        transform: rotate(45deg);
+    }
+}

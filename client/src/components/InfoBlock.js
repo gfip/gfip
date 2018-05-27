@@ -11,7 +11,7 @@ class InfoBlock extends Component {
 
     render() {
         return (
-            <div className="show_student_studentInfo container column centered">
+            <div className={"container column centered " + this.props.class}>
                 <b><h3> { this.props.title } </h3></b>
                 <em><h5> { this.props.subtitle } </h5> </em>
             </div>

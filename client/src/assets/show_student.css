@@ -72,34 +72,3 @@
     font-size: 40px;
     padding-top: 50px;
 }
-
-
-@media only screen and (min-width: 1300px) and (max-width: 1750px) {
-    .show_student_studentInfo{
-        left: 15%;
-    }
-    .show_student_studentMenu{
-        left: 15%;
-    }
-}
-
-@media only screen and (min-width: 1000px) and (max-width: 1300px) {
-    .show_student_studentInfo{
-        left: 5%;
-    }
-    .show_student_studentMenu{
-        left: 5%;
-        top: 37%;
-    }
-}
-
-@media only screen and (max-width: 999px) {
-    .show_student_studentInfo{
-        position: static;
-        margin-top: 10px;
-    }
-    .show_student_studentMenu{
-        position: static;
-        margin-top: 10px;
-    }
-}

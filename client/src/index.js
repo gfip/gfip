@@ -9,6 +9,7 @@ import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 
 import 'semantic-ui-css/semantic.min.css';
 import './assets/flexbox.css';
+import './assets/media.css';
 
 this.AuthService = new AuthService();
 
