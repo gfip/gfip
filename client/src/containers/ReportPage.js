@@ -49,22 +49,20 @@ class ReportPage extends Component {
         let reporter_btn_class = this.state.openReporter ? 'black' : 'grey'
 
         return (
-        <div className="container column full">
+        <div className="container column centered">
             <Navbar user={this.props.user}/>
-            <div className='container column centered full'>
-                <div className={`container report_all centered`}>
-                    <div className="report_menu container column centered">
-                        <Button.Group className='report_btn_group'>
-                            <Button color={code_btn_class} onClick={(e) => this.setState(({openReporter: false}))}><Icon name='code'/>Code</Button>
-                            <Button color={reporter_btn_class} onClick={(e) => this.setState(({openReporter: true}))}><Icon name='content'/>Reporter</Button>
-                        </Button.Group>
-                        { this.state.list.student && <InfoBlock class='report_infoBlock' title={this.state.list.student.name} subtitle={`Score: ${totalScore}/${this.state.list.list.totalScore}`}/> }
-                        { this.state.list.student && <InfoBlock class='report_infoBlock' title={this.state.list.list.title} subtitle={''}/> }
-                        {menu}
-                    </div>
-                    {!this.state.openReporter && <CodeViewer problem={this.state.actualProblem}/>}
-                    { this.state.openReporter && <Reporter></Reporter>}
+            <div className='container report_all centered'>
+                <div className="container column report_menu">
+                    <Button.Group className='report_btn_group'>
+                        <Button color={code_btn_class} onClick={(e) => this.setState(({openReporter: false}))}><Icon name='code'/>Code</Button>
+                        <Button color={reporter_btn_class} onClick={(e) => this.setState(({openReporter: true}))}><Icon name='content'/>Reporter</Button>
+                    </Button.Group>
+                    { this.state.list.student && <InfoBlock class='report_infoBlock' title={this.state.list.student.name} subtitle={`Score: ${totalScore}/${this.state.list.list.totalScore}`}/> }
+                    { this.state.list.student && <InfoBlock class='report_infoBlock' title={this.state.list.list.title} subtitle={''}/> }
+                    {menu}
                 </div>
+                {!this.state.openReporter && <CodeViewer problem={this.state.actualProblem}/>}
+                { this.state.openReporter && <Reporter></Reporter>}
             </div>
         </div>
        )
