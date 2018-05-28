@@ -15,7 +15,7 @@ class CodeViewer extends Component {
         let code = this.props.problem.code;
         let evaluation = this.props.problem.evaluation;
         return (
-            <div className="container column centered report_main">
+            <div className="container column centered report_code_wrapper">
                 <div className='container row report_label'>
                     {code && <Label as='a' color='blue'>{this.props.problem.tries} submissions</Label>}
                     {evaluation === 'TIME_LIMIT_EXCEEDED' && code && <Label as='a' color='yellow'>TLE</Label>}

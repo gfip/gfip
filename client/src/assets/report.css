@@ -1,4 +1,4 @@
-.report_main{
+.report_code_wrapper{
     margin-left: 100px;
     margin-top: 50px;
     position: relative;
@@ -37,3 +37,4 @@
 .report_all{
     flex-direction: row;
 }
+
