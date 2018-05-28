@@ -21,10 +21,6 @@
     position: absolute;
 }
 
-.report_menu{
-    min-height: 600px;    
-}
-
 .report_infoBlock{
     width: 220px;
     height: 100px;

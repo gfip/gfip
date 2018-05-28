@@ -52,7 +52,7 @@
         flex-direction: column;
     }
     .report_btn_group{
-        margin-top: 10px;
+        padding-top: 30px;
         order: 1;
     }
     .full{
