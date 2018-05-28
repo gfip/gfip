@@ -9,6 +9,7 @@ axios.defaults.baseURL = "https://www.thehuxley.com/api";
 //ex: getSubmissionCode(1055140).then((response) => (console.log(response.data)))
 
 
+
 async function getSubmissionCode(submissionID){
     try {
         await login();
@@ -27,12 +28,19 @@ async function getStudentSubmissions(problemID, userID){
     }
 }
 
+function getSemester(date){
+    if(moment(date).month() < 7)
+        return 0;
+    return 1;
+}
+
 //pega as listas e filtra, deixando apenas as listas do ano atual e que já fecharam.
 async function getFilteredLists(){
     try {
         let lists = await getLists();
         lists = _.filter(lists.data, function(obj) {
-            return moment().year() == moment(obj.endDate).year() && moment() >= moment(obj.endDate);
+            return getSemester(Date.now()) == getSemester(obj.endDate) && moment().year() == moment(obj.endDate).year() 
+                && moment() >= moment(obj.endDate);
         }) 
         return Promise.resolve(lists);
     } catch(err){
