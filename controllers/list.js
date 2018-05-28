@@ -34,7 +34,7 @@ module.exports = {
 		}
 	},
 
-	getStudentList: async function ( studentId, listId) {
+	getStudentList: async function (studentId, listId) {
 		try{
 			let foundList = await List.findById(listId);
 			var studentList = {list:{},student:{},submissions:[]};
@@ -59,10 +59,11 @@ module.exports = {
 						});
 						var mainSubmission = filtered[0] || submissions.data[0];
 					}else{
-						var mainSubmission = {evaluation: "EMPTY", id: 0000};
+						var mainSubmission = {evaluation: "EMPTY", id: 0};
 					}
 
 					var newSubmission = {
+						tries: submissions.data.length,
 						problem: {
 							name: foundList.problems[i].name,
 							theHuxleyId: foundList.problems[i].theHuxleyId,
@@ -80,6 +81,7 @@ module.exports = {
 			throw new Error(err.message);
 		}			
 	},
+
 	
 	getSubmissionCode: async function (submissionHuxleyId){
 		try{

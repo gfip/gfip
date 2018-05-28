@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
-var controller = require("../controllers/list.js");
+const controller = require("../controllers/list.js");
+const verifyToken = require("../modules/authorization").token;
+
 
 router.get("/", controller.getNewLists);
 
