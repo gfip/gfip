@@ -1,22 +1,3 @@
-@media only screen and (min-width: 1300px) and (max-width: 1750px) {
-    .report_listInfo{
-        left: 15%;
-    }
-    .report_listMenu{
-        left: 15%;
-    }
-}
-
-@media only screen and (min-width: 1000px) and (max-width: 1300px) {
-    .report_listInfo{
-        left: 5%;
-    }
-    .report_listMenu{
-        left: 5%;
-        top: 37%;
-    }
-}
-
 @media only screen and (max-width: 999px), only screen and (max-height: 600px){
     .show_student_studentInfo{
         position: static;
@@ -26,25 +7,12 @@
         position: static;
         margin-top: 10px;
     }
-    .report_listMenu{
-        position: static;
-        margin-top: 10px;
-    }
-    .report_listInfo{
-        position: static;
-        margin-top: 10px;
-    }
     .report_code{
         max-width: 300px;
-        max-height: 300px;
     }
     .report_main{
-        margin: 0;
-    }
-}
-@media only screen and (max-height: 620px) {
-    .report_listMenu{
-        top: 48%;
+        margin-top: 50px;
+        margin-left: 0px;
     }
 }
 
@@ -77,6 +45,18 @@
     #dashboard_container{
         min-width: 300px;
         position: relative;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .report_all{
+        flex-direction: column;
+    }
+    .report_btn_group{
+        margin-top: 10px;
+        order: 1;
+    }
+    .full{
+        height: auto;
     }
 }
 

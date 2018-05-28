@@ -1,15 +1,16 @@
 import React, { Component } from 'react'; 
 import '../assets/report.css';
 import { getListInfo } from '../helpers/api';
-import { Navbar, MenuBlock, InfoBlock, CodeViewer} from '../components';
-import Media from "react-media";
+import { Navbar, MenuBlock, InfoBlock, CodeViewer, Reporter} from '../components';
+import { Button, Icon } from 'semantic-ui-react';
 class ReportPage extends Component {    
     constructor(props){
         super(props);
         this.state = {
             list: { submissions: []},
             actualProblem: {},
-            problems: {}
+            problems: {},
+            openReporter: false,
         }
        
     }
@@ -25,12 +26,8 @@ class ReportPage extends Component {
     }
 
     render() {
-        let responsive = '';
-        <Media query="(max-width: 768px)">
-                {matches => responsive = matches ? 'column' : 'row'}
-        </Media>
-
         let obj = this;
+        let totalScore = 0; 
         var menu = this.state.list.submissions.map((prob) => {
             let callback = function() {
                 let newState = {problems:{}};
@@ -43,21 +40,30 @@ class ReportPage extends Component {
                 }
                 obj.setState(newState);
             }
+            if(prob.evaluation === "CORRECT") totalScore+= prob.problem.score;
             prob.problem.name = prob.problem.name.substring(0,30);
             return <MenuBlock key={prob.problem.theHuxleyId} callback={callback} title={prob.problem.name} active={this.state.problems[prob.problem.theHuxleyId]}/>
         })
+
+        let code_btn_class = this.state.openReporter ? 'grey' : 'black'
+        let reporter_btn_class = this.state.openReporter ? 'black' : 'grey'
+
         return (
-        <div className="container column centered">
+        <div className="container column full">
             <Navbar user={this.props.user}/>
-            <div className={responsive}>
-                <div className="container column centered">
-                    { this.state.list.student && <InfoBlock class='report_listInfo' title={this.state.list.list.title} subtitle={'Score'}/> }
-                    <div className="report_listMenu container column centered">
+            <div className='container column centered full'>
+                <div className={`container report_all centered`}>
+                    <div className="report_menu container column centered">
+                        <Button.Group className='report_btn_group'>
+                            <Button color={code_btn_class} onClick={(e) => this.setState(({openReporter: false}))}><Icon name='code'/>Code</Button>
+                            <Button color={reporter_btn_class} onClick={(e) => this.setState(({openReporter: true}))}><Icon name='content'/>Reporter</Button>
+                        </Button.Group>
+                        { this.state.list.student && <InfoBlock class='report_infoBlock' title={this.state.list.student.name} subtitle={`Score: ${totalScore}/${this.state.list.list.totalScore}`}/> }
+                        { this.state.list.student && <InfoBlock class='report_infoBlock' title={this.state.list.list.title} subtitle={''}/> }
                         {menu}
                     </div>
-                </div>
-                <div className="container column centered report_main">
-                    <CodeViewer problem={this.state.actualProblem}/>
+                    {!this.state.openReporter && <CodeViewer problem={this.state.actualProblem}/>}
+                    { this.state.openReporter && <Reporter></Reporter>}
                 </div>
             </div>
         </div>

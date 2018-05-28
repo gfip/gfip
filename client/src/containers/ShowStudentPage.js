@@ -3,7 +3,6 @@ import '../assets/dashboard.css';
 import {getStudentPendingList} from '../helpers/api';
 import { Navbar, Lists, ReportHistory, MenuBlock, InfoBlock} from '../components';
 import { getStudentInfo, getStudentPendingReports, discardListReport } from '../helpers/api';
-import Media from "react-media";
 class ShowStudentPage extends Component {
     constructor(props){
         super(props);
@@ -11,7 +10,6 @@ class ShowStudentPage extends Component {
             lists: [],
             student: '',
             openLists: true,
-            openHistory: false,
             discardEnabled: true
         }
         this.openPendingReports = this.openPendingReports.bind(this);
@@ -33,11 +31,11 @@ class ShowStudentPage extends Component {
         }
     }
     openPendingReports () {
-        this.setState({openLists: true, openHistory: false})
+        this.setState({openLists: true})
     }
     
     openHistory() {
-        this.setState({openLists: false, openHistory: true})
+        this.setState({openLists: false})
     }
     
     discardReport = async event => {
@@ -57,16 +55,10 @@ class ShowStudentPage extends Component {
     }
 
     render() {
-        let responsive = '';
-        <Media query="(max-width: 768px)">
-                {matches => responsive = matches ? 'column' : 'row'}
-        </Media>
-        
-        
         return (
         <div className="container column centered">
             <Navbar user={this.props.user}/>
-            <div className={responsive}>
+            <div>
                 <div className="container column centered">
                     { this.state.student && <InfoBlock class='show_student_studentInfo' title={this.state.student.name} subtitle={this.state.student.username + '@cin.ufpe.br'}/> }
                     <div className="show_student_studentMenu container column centered">
@@ -75,7 +67,7 @@ class ShowStudentPage extends Component {
                     </div>
                 </div>
                 { this.state.openLists && <Lists lists={this.state.lists} discardReport={this.discardReport} student_id={this.state.student._id}/> } 
-                { this.state.openHistory && <ReportHistory reports={this.state.reports}/> } 
+                { !this.state.openLists && <ReportHistory reports={this.state.reports}/> } 
             </div>
         </div>
        )
