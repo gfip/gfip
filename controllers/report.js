@@ -16,7 +16,7 @@ module.exports = {
     createReport: async function(req, res) {
         try {
             const studentList = await listController
-            .getStudentList(req.params.student_id, req.params.list_id);
+                .getStudentList(req.params.student_id, req.params.list_id);
             const foundStudent = await Student.findById(req.params.student_id);
             const report = {
                 list: studentList.list,
@@ -25,8 +25,9 @@ module.exports = {
             for (let i = 0; i < studentList.submissions.length; i += 1) {
                 report.submissions.push({
                     problem: {
+                        tries: studentList.tries, 
                         name: studentList.submissions[i].problem.name,
-                         score: studentList.submissions[i].problem.score,
+                        score: studentList.submissions[i].problem.score,
                         theHuxleyId: studentList.submissions[i].problem.theHuxleyId,
                     },
                     evaluation: studentList.submissions[i].evaluation,
