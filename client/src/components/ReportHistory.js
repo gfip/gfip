@@ -1,6 +1,4 @@
 import React, { Component } from 'react'; 
-import { ListCard } from './';
-import { orderBy } from 'lodash';
 
 class ReportHistory extends Component {
     constructor(props){

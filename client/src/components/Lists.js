@@ -12,12 +12,12 @@ class Lists extends Component {
     render() {
         let listsCards = orderBy(this.props.lists, ['endDate', 'title'], ['asc', 'asc']);
         listsCards = listsCards.map((list) => {
-            return <ListCard key={list._id} list={list} discardReport={this.props.discardReport}/>
+            return <ListCard key={list._id} list={list} discardReport={this.props.discardReport} student_id={this.props.student_id}/>
         })
 
         return (
-            <div className="container column">
-                <h1 style={{"textAlign":"center"}} id="show_student_title">PENDING REPORTS</h1>
+            <div className="container column centered">
+                <h1 id="show_student_title">PENDING REPORTS</h1>
                 <div id="show_student_hr"></div>
                 {listsCards}
             </div>

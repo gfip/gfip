@@ -9,6 +9,7 @@ import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 
 import 'semantic-ui-css/semantic.min.css';
 import './assets/flexbox.css';
+import './assets/media.css';
 
 this.AuthService = new AuthService();
 
@@ -18,6 +19,7 @@ ReactDOM.render(
             <Route exact path='/' render={() => ( this.AuthService.getToken() ? (<Redirect to='/dashboard'/>) : (<Pages.Login/>))}/>
             <PrivateRoute exact path='/dashboard' component={Pages.Dashboard}/>
             <PrivateRoute exact path='/students/:id' component={Pages.ShowStudent}/>
+            <PrivateRoute exact path='/students/:student_id/lists/:list_id' component={Pages.Report}/>
             <Route component={Pages.NotFound} />
         </Switch>
     </BrowserRouter>,

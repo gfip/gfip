@@ -1,0 +1,43 @@
+.report_main{
+    margin-left: 100px;
+    margin-top: 50px;
+    position: relative;
+}
+
+.report_code{
+    width: 600px;
+    height: 600px;
+}
+
+.report_sadface {
+    max-width: 250px;
+    max-height: 250px;
+}
+
+.report_label{
+    max-width: 600px;
+    right: 5px;
+    top: -18px;
+    position: absolute;
+}
+
+.report_menu{
+    min-height: 600px;    
+}
+
+.report_infoBlock{
+    width: 220px;
+    height: 100px;
+    background-color: #FAFAFA;
+    padding: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+    border: 1px solid #F5F5F5;
+    -webkit-box-shadow: 0px 4px 5px -1px rgba(0,0,0,0.07);
+    -moz-box-shadow: 0px 4px 5px -1px rgba(0,0,0,0.07);
+    box-shadow: 0px 4px 5px -1px rgba(0,0,0,0.07);
+}
+
+.report_all{
+    flex-direction: row;
+}

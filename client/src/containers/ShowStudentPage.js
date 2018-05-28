@@ -1,9 +1,8 @@
 import React, { Component } from 'react'; 
 import '../assets/dashboard.css';
 import {getStudentPendingList} from '../helpers/api';
-import { StudentInfo, Navbar, StudentMenu, Lists, ReportHistory} from '../components';
+import { Navbar, Lists, ReportHistory, MenuBlock, InfoBlock} from '../components';
 import { getStudentInfo, getStudentPendingReports, discardListReport } from '../helpers/api';
-import Media from "react-media";
 class ShowStudentPage extends Component {
     constructor(props){
         super(props);
@@ -11,29 +10,34 @@ class ShowStudentPage extends Component {
             lists: [],
             student: '',
             openLists: true,
-            openHistory: false,
             discardEnabled: true
         }
         this.openPendingReports = this.openPendingReports.bind(this);
         this.openHistory = this.openHistory.bind(this);
         this.discardReport = this.discardReport.bind(this);
     }
-
-    async componentDidMount(){
-        let lists = await getStudentPendingList(this.props.auth, this.props.match.params.id)
-        let student = await getStudentInfo(this.props.auth, this.props.match.params.id);
-        let reports = await getStudentPendingReports(this.props.auth, this.props.match.params.id);
-        this.setState({lists: lists.data, student: student.data, reports: reports.data});
-    }
     
+    async componentDidMount(){
+        try{
+            let lists = await getStudentPendingList(this.props.auth, this.props.match.params.id)
+            let student = await getStudentInfo(this.props.auth, this.props.match.params.id);
+            let reports = await getStudentPendingReports(this.props.auth, this.props.match.params.id);
+            let studentName = student.data.name.split(' ');
+            studentName = studentName[0] + ' ' + studentName[studentName.length-1];
+            student.data.name = studentName;
+            this.setState({lists: lists.data, student: student.data, reports: reports.data});
+        } catch (err){
+            console.log(err.message);
+        }
+    }
     openPendingReports () {
-        this.setState({openLists: true, openHistory: false})
+        this.setState({openLists: true})
     }
     
     openHistory() {
-        this.setState({openLists: false, openHistory: true})
+        this.setState({openLists: false})
     }
-
+    
     discardReport = async event => {
         event.preventDefault();
         try {
@@ -51,21 +55,19 @@ class ShowStudentPage extends Component {
     }
 
     render() {
-        let responsive = '';
-        <Media query="(max-width: 768px)">
-                {matches => responsive = matches ? 'column' : 'row'}
-        </Media>
-        
         return (
         <div className="container column centered">
             <Navbar user={this.props.user}/>
-            <div className={ "container" + responsive + "centered"}>
+            <div>
                 <div className="container column centered">
-                    { this.state.student && <StudentInfo student={this.state.student}/> }
-                    <StudentMenu openHistory={this.openHistory} openPendingReports={this.openPendingReports}/>
+                    { this.state.student && <InfoBlock class='show_student_studentInfo' title={this.state.student.name} subtitle={this.state.student.username + '@cin.ufpe.br'}/> }
+                    <div className="show_student_studentMenu container column centered">
+                        <MenuBlock callback={this.openPendingReports} title='Pending reports' active={this.state.openLists}/>
+                        <MenuBlock callback={this.openHistory} title='History' active={this.state.openHistory}/>
+                    </div>
                 </div>
-                { this.state.openLists && <Lists lists={this.state.lists} discardReport={this.discardReport}/> } 
-                { this.state.openHistory && <ReportHistory reports={this.state.reports}/> } 
+                { this.state.openLists && <Lists lists={this.state.lists} discardReport={this.discardReport} student_id={this.state.student._id}/> } 
+                { !this.state.openLists && <ReportHistory reports={this.state.reports}/> } 
             </div>
         </div>
        )
