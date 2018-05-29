@@ -4,7 +4,7 @@ module.exports = function(report, student){
 	var	status = {
 		"CORRECT" : "Correto",
 		"WRONG_ANSWER" : "Errado",
-		"EMPTY": "Não fez"
+		"EMPTY": "Não fez",
 		"RUNTIME_ERROR": "Erro de execução",
 	}
 
