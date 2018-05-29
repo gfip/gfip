@@ -1,4 +1,4 @@
-.report_main{
+.report_code_wrapper{
     margin-left: 100px;
     margin-top: 50px;
     position: relative;
@@ -21,10 +21,6 @@
     position: absolute;
 }
 
-.report_menu{
-    min-height: 600px;    
-}
-
 .report_infoBlock{
     width: 220px;
     height: 100px;
@@ -40,4 +36,5 @@
 
 .report_all{
     flex-direction: row;
+    margin-top: 4%;
 }

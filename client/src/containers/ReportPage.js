@@ -52,7 +52,7 @@ class ReportPage extends Component {
         <div className="container column centered">
             <Navbar user={this.props.user}/>
             <div className='container report_all centered'>
-                <div className="container column report_menu">
+                <div className="container column">
                     <Button.Group className='report_btn_group'>
                         <Button color={code_btn_class} onClick={(e) => this.setState(({openReporter: false}))}><Icon name='code'/>Code</Button>
                         <Button color={reporter_btn_class} onClick={(e) => this.setState(({openReporter: true}))}><Icon name='content'/>Reporter</Button>

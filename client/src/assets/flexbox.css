@@ -2,7 +2,6 @@
 #root {
     height: 100vh;  
     width: 100vw;
-    overflow-y: scroll;
 }
 
 html, body{
@@ -52,5 +51,5 @@ html, body{
 }
 
 .full{
-    flex: 2;    
+    height: 100vh;
 }

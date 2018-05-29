@@ -1,4 +1,4 @@
-@media only screen and (max-width: 999px), only screen and (max-height: 600px){
+@media only screen and (max-width: 920px), only screen and (max-height: 600px){
     .show_student_studentInfo{
         position: static;
         margin-top: 10px;
@@ -9,10 +9,6 @@
     }
     .report_code{
         max-width: 300px;
-    }
-    .report_main{
-        margin-top: 50px;
-        margin-left: 0px;
     }
 }
 
@@ -52,11 +48,15 @@
         flex-direction: column;
     }
     .report_btn_group{
-        margin-top: 10px;
+        padding-top: 30px;
         order: 1;
     }
     .full{
         height: auto;
+    }
+    .report_code_wrapper{
+        margin-top: 50px;
+        margin-left: 0px;
     }
 }
 

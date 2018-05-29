@@ -9,7 +9,7 @@ class Reporter extends Component {
 
     render() {
         return (
-            <div className="container column centered report_main">
+            <div className="container column centered">
                 <div className='container row report_label'>
                    
                 </div>
