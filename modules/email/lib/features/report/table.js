@@ -5,6 +5,7 @@ module.exports = function(report, student){
 		"CORRECT" : "Correto",
 		"WRONG_ANSWER" : "Errado",
 		"EMPTY": "Não fez"
+		"RUNTIME_ERROR": "Erro de execução",
 	}
 
 	report.submissions.forEach(function(sub){
