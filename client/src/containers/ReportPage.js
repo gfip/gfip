@@ -34,6 +34,7 @@ class ReportPage extends Component {
             this.setState({sentEmail: true});
         } catch(err){
             console.log(err.message);
+            console.log(err.response.data);
             this.setState({sendDisabled: false});
         }
     }
