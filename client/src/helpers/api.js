@@ -80,6 +80,14 @@ export function addStudent(token, username, name){
     })
 }
 
+export function sendReport(token, student_id, list_id, comments, finalComment){
+    return axios.post(`/api/me/students/${student_id}/lists/${list_id}/reports`, {comments, finalComment} ,{
+        headers: {
+            Authorization: 'Bearer ' + token 
+        }
+    })
+}
+
 export function register(auth){
     return axios.post('/api/register', {
         username: auth.username,

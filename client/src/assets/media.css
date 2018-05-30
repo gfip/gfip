@@ -8,7 +8,15 @@
         margin-top: 10px;
     }
     .report_code{
-        max-width: 300px;
+        max-width: 400px;
+    }
+    .report_reporter_wrapper{
+        max-width: 400px;
+        margin-top: 10px;  
+        margin-bottom: 40px;
+    }
+    .report_reporter{
+        max-width: 400px;   
     }
 }
 
@@ -57,6 +65,19 @@
     .report_code_wrapper{
         margin-top: 50px;
         margin-left: 0px;
+    }
+
+    .report_code{
+        max-width: 300px;
+    }
+    .report_reporter_wrapper{
+        max-width: 300px;
+        margin-top: 10px; 
+        margin-left: 0;  
+        margin-bottom: 40px;
+    }
+    .report_reporter{
+        max-width: 300px;   
     }
 }
 

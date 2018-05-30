@@ -37,4 +37,51 @@
 .report_all{
     flex-direction: row;
     margin-top: 4%;
+    margin-bottom: 4%;
+}
+
+.report_reporter{
+    width: 600px;
+    height: 680px;
+    overflow: auto;
+    position: relative;
+    border: 1px solid #F5F5F5;
+    -webkit-box-shadow: 0px 4px 5px -1px rgba(0,0,0,0.07);
+    -moz-box-shadow: 0px 4px 5px -1px rgba(0,0,0,0.07);
+    box-shadow: 0px 4px 5px -1px rgba(0,0,0,0.07);
+}
+
+.report_reporter_wrapper{
+    margin-left: 100px;
+    position: relative;
+}
+
+.report_dropdown{
+    max-width: 50px;
+    margin-right: 10px;
+}
+
+.report_formfield{
+    width: 500px;
+}
+
+.report_form{
+    padding: 40px;
+    height: 598px;
+    position: relative;
+}
+
+#report_send_btn{
+    position: absolute;
+    right: -5px;
+    bottom: -35px;
+    background-color: #88FE56;
+    color: white;
+}
+#report_send_btn:hover{
+    position: absolute;
+    right: -5px;
+    bottom: -35px;
+    background-color: #C5FFAD;
+    color: white;
 }
