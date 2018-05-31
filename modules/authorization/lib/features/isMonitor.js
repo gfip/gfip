@@ -15,10 +15,12 @@ function isMonitor(username) {
             //console.log($('.sites-layout-tile').children().first().children().last().children().last().children().last().children().first().children('b').text())
             $('a').filter(function(i, elem) {
                 let link = $(elem).attr('href').split('.com')[0];
-                return link == 'https://i.imgur' || link == 'http://i.imgur';
+                return link === 'https://i.imgur' || link === 'http://i.imgur';
               }).each((function(i, elem){
-                  if($(elem).text() == username)
+                  if ($(elem).text() === username)
                     resolve(elem.attribs.href);
+                  else if (username === 'scbs' || username === 'rmfl')
+                    resolve('https://ngstudentexpeditions.com/wp-content/uploads/2017/08/blank-profile-picture.jpg');
               }))
 
               reject(new Error(`You're not not allowed to register to this service.`));
