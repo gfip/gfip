@@ -1,6 +1,7 @@
-const Student = require('../models/student.js');
-const Report = require('../models/report.js');
-const listController = require('./list.js');
+const Student = require('../models/student');
+const Report = require('../models/report');
+const User = require("../models/user");
+const listController = require('./list');
 const mailer = require('../modules/email');
 
 module.exports = {
@@ -15,6 +16,7 @@ module.exports = {
 
     createReport: async function(req, res) {
         try {
+            const foundUser = await User.findById(req.authData.user._id);
             const studentList = await listController
                 .getStudentList(req.params.student_id, req.params.list_id);
             const foundStudent = await Student.findById(req.params.student_id);
@@ -38,7 +40,7 @@ module.exports = {
             const createdReport = await Report.create(report);
             foundStudent.reports.push(createdReport._id);
             await foundStudent.save();
-            await mailer.sendReport(report, foundStudent);
+            await mailer.sendReport(report, foundStudent, foundUser);
             return res.json(createdReport);
         } catch (err) {
             return res.status(500).send(err.message);
