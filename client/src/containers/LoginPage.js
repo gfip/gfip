@@ -13,7 +13,7 @@ class LoginPage extends Component {
     this.state = {
       username: "",
       password: "",
-      register: false
+      registerOpened: false
     };
   }
 

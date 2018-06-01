@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../assets/dashboard.css';
 import {getStudentPendingList} from '../helpers/api';
 import { Navbar, Lists, ReportHistory, MenuBlock, InfoBlock} from '../components';
-import { getStudentInfo, getStudentPendingReports, discardListReport } from '../helpers/api';
+import { getStudentInfo, getStudentReports, discardListReport } from '../helpers/api';
 class ShowStudentPage extends Component {
     constructor(props){
         super(props);
@@ -21,7 +21,7 @@ class ShowStudentPage extends Component {
         try{
             let lists = await getStudentPendingList(this.props.auth, this.props.match.params.id)
             let student = await getStudentInfo(this.props.auth, this.props.match.params.id);
-            let reports = await getStudentPendingReports(this.props.auth, this.props.match.params.id);
+            let reports = await getStudentReports(this.props.auth, this.props.match.params.id);
             let studentName = student.data.name.split(' ');
             studentName = studentName[0] + ' ' + studentName[studentName.length-1];
             student.data.name = studentName;

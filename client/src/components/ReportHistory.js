@@ -19,7 +19,6 @@ class ReportHistory extends Component {
                 <h1 style={{"textAlign":"center"}} id="show_student_title">History</h1>
                 <div id="show_student_hr"></div>
                 {/* {reports} */}
-                Under construction :)
             </div>
        )
     }

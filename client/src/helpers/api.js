@@ -32,7 +32,7 @@ export function getStudentPendingList(token, id){
     })
 }
 
-export function getStudentPendingReports(token, id, list_id){
+export function getStudentReports(token, id, list_id){
     return axios.get(`/api/me/students/${id}/reports`, {
         headers: {
             Authorization: 'Bearer ' + token 
