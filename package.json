@@ -9,6 +9,7 @@
     "body-parser": "^1.18.2",
     "cheerio": "^1.0.0-rc.2",
     "dotenv": "^5.0.1",
+    "eslint": "^4.19.1",
     "express": "^4.16.3",
     "jwt-then": "^0.6.0",
     "lodash": "^4.17.5",
@@ -23,5 +24,9 @@
   "scripts": {
     "start": "node app.js",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.12.0"
   }
 }

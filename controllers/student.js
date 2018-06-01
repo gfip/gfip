@@ -46,7 +46,7 @@ module.exports = {
 			let studentList = await listController.getStudentList(req.params.student_id, req.params.list_id);
 			for(let i = 0; i < studentList.submissions.length; i++){
 				let sub = studentList.submissions[i];
-				if(sub.theHuxleyId === 0){
+        if(sub.theHuxleyId === 0){
 					sub.code = "";
 				}else{
 					sub.code =  await listController.getSubmissionCode(studentList.submissions[i].theHuxleyId);

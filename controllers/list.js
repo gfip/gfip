@@ -2,6 +2,7 @@ const List = require ("../models/list.js");
 const Student = require("../models/student.js");
 const theHuxley = require("../modules/thehuxley/");
 const _ = require("lodash");
+const moment = require('moment');
 
 module.exports = {
  	getNewLists: async function (req, res){
@@ -53,17 +54,15 @@ module.exports = {
 				}
 				for(var i = 0 ; i < foundList.problems.length ; i++){
 					let submissions = await theHuxley.getStudentSubmissions(foundList.problems[i].theHuxleyId, foundStudent.theHuxleyId);
-					if(submissions.data[0]){
-						let filtered = _.filter(submissions.data,(submission) => {
-							return submission.evaluation === "CORRECT";
-						});
-						var mainSubmission = filtered[0] || submissions.data[0];
+          let onDateSubmissions = _.filter(submissions.data, submission => moment(submission.submissionDate) < moment(foundList.endDate));
+          if(onDateSubmissions[0]){
+						let correctSubmission = _.find(onDateSubmissions, submission => submission.evaluation === "CORRECT");
+						var mainSubmission = correctSubmission || submissions.data[0];
 					}else{
-						var mainSubmission = {evaluation: "EMPTY", id: 0};
+						var mainSubmission = { evaluation: "EMPTY", id: 0 };
 					}
-
 					var newSubmission = {
-						tries: submissions.data.length,
+						tries: onDateSubmissions.length,
 						problem: {
 							name: foundList.problems[i].name,
 							theHuxleyId: foundList.problems[i].theHuxleyId,
