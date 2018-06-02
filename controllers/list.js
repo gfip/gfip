@@ -54,12 +54,12 @@ module.exports = {
 				}
 				for(var i = 0 ; i < foundList.problems.length ; i++){
 					let submissions = await theHuxley.getStudentSubmissions(foundList.problems[i].theHuxleyId, foundStudent.theHuxleyId);
-          let onDateSubmissions = _.filter(submissions.data, submission => moment(submission.submissionDate) < moment(foundList.endDate));
-          if(onDateSubmissions[0]){
+
+          const onDateSubmissions = _.filter(submissions.data, submission => moment(submission.submissionDate) < moment(foundList.endDate));
+          let mainSubmission = { evaluation: "EMPTY", id: 0 };
+          if (onDateSubmissions.length > 0) {
 						let correctSubmission = _.find(onDateSubmissions, submission => submission.evaluation === "CORRECT");
-						var mainSubmission = correctSubmission || submissions.data[0];
-					}else{
-						var mainSubmission = { evaluation: "EMPTY", id: 0 };
+						mainSubmission = correctSubmission || submissions.data[0];
 					}
 					var newSubmission = {
 						tries: onDateSubmissions.length,

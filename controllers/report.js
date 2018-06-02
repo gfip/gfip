@@ -37,7 +37,7 @@ module.exports = {
                 });
             }
             report.finalComment = req.body.finalComment;
-            report.author = foundUser;
+            report.author = foundUser.username;
             const createdReport = await Report.create(report);
             foundStudent.reports.push(createdReport._id);
             await foundStudent.save();

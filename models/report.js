@@ -13,7 +13,7 @@ var reportSchema = mongoose.Schema({
 		}
 	],
 	finalComment: String,
-	author: {type:mongoose.Schema.Types.ObjectId, ref: "User" }
+	author: String,
 });
 
 module.exports = mongoose.model("Report", reportSchema);
