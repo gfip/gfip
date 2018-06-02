@@ -1,10 +1,10 @@
-const express = require("express");
+const express = require('express');
+const controller = require('../controllers/list');
+
 const router = express.Router();
-const controller = require("../controllers/list.js");
-const verifyToken = require("../modules/authorization").token;
 
 
-router.get("/", controller.getNewLists);
+router.get('/', controller.getNewLists);
 
 
 module.exports = router;
