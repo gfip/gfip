@@ -6,4 +6,5 @@
 4. Make a pull request.
 
 Be sure your ide has eslint enabled, pull requests out of the project style guide will not be accepted.
+
 **After your pull request is merged**, you can safely delete your branch.
