@@ -26,7 +26,7 @@ module.exports = {
       const foundLists = await List.find({});
       const foundStudent = await Student.findById(req.params.student_id).populate('reports').exec();
       const pendingLists = foundLists
-        .filter(list => foundStudent.reports
+        .filter(list => !foundStudent.reports
           .find(report => report.list.theHuxleyId === list.theHuxleyId));
       return res.json(pendingLists);
     } catch (err) {
