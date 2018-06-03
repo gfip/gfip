@@ -1,21 +1,21 @@
-const express = require("express"),
-	controller = require("../controllers/student.js"),
-	router = express.Router();
+const express = require('express');
+const middleware = require('../modules/authorization').ownership;
+const controller = require('../controllers/student.js');
 
-var middleware = require("../modules/authorization").ownership;
+const router = express.Router();
 
-router.get("/", controller.getStudents);
+router.get('/', controller.getStudents);
 
-router.post("/", controller.createStudent);
+router.post('/', controller.createStudent);
 
-router.get("/:student_id/lists", middleware.checkStudentOwnership, controller.getStudentPendingLists);
+router.get('/:student_id/lists', middleware.checkStudentOwnership, controller.getStudentPendingLists);
 
-router.get("/:student_id/lists/:list_id", middleware.checkStudentOwnership,controller.showStudentList);
+router.get('/:student_id/lists/:list_id', middleware.checkStudentOwnership, controller.showStudentList);
 
-router.delete("/:student_id", middleware.checkStudentOwnership, controller.deleteStudent);
+router.delete('/:student_id', middleware.checkStudentOwnership, controller.deleteStudent);
 
-router.get("/:student_id", middleware.checkStudentOwnership, controller.showStudent);
+router.get('/:student_id', middleware.checkStudentOwnership, controller.showStudent);
 
-router.put("/:student_id", middleware.checkStudentOwnership, controller.updateStudent);
+router.put('/:student_id', middleware.checkStudentOwnership, controller.updateStudent);
 
 module.exports = router;
