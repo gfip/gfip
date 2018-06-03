@@ -3,9 +3,9 @@ const axios = require("axios");
 const URL = "https://sites.google.com/a/cin.ufpe.br/if669/"
 /** Check if user requesting to register is a monitor.
  * @param {string} username - User's CIn login
- */ 
+ */
 
-//isMonitor('lbam').then((username) => console.log(username)).catch((err) => console.log(err.message))
+// isMonitor('lbam').then((username) => console.log(username)).catch((err) => console.log(err.message))
 function isMonitor(username) {
     return new Promise((resolve, reject) => {
         axios.get(URL).then((body) => {

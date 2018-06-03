@@ -1,23 +1,24 @@
-const express = require("express"),
-	  router  = express.Router(),
-	  controller = require("../controllers/user.js");
+const express = require('express');
+const controller = require('../controllers/user.js');
+const verifyToken = require('../modules/authorization').token;
 
-const verifyToken = require("../modules/authorization").token;
+const router = express.Router();
 
-router.post("/register",controller.registerUser);
 
-router.post("/login", controller.loginUser);
+router.post('/register', controller.registerUser);
 
-router.put("/me/reset/:token", controller.resetPassword);
+router.post('/login', controller.loginUser);
 
-router.post("/me/reset", controller.resetPasswordEmail);
+router.put('/me/reset/:token', controller.resetPassword);
 
-router.get("/confirm/:token", controller.confirmUser);
+router.post('/me/reset', controller.resetPasswordEmail);
 
-router.get("/cancel/:token", controller.cancelRegister);
+router.get('/confirm/:token', controller.confirmUser);
 
-router.get("/me", verifyToken ,controller.getUser);
+router.get('/cancel/:token', controller.cancelRegister);
 
-router.put("/me", verifyToken, controller.changePassword);
+router.get('/me', verifyToken, controller.getUser);
+
+router.put('/me', verifyToken, controller.changePassword);
 
 module.exports = router;
