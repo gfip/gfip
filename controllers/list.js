@@ -35,7 +35,9 @@ module.exports = {
   getStudentList: async (studentId, listId) => {
     try {
       const foundList = await List.findById(listId);
-      const studentList = {};
+      const studentList = {
+        submissions: [],
+      };
       studentList.list = {
         title: foundList.title,
         theHuxleyId: foundList.theHuxleyId,
