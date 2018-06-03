@@ -1,6 +1,3 @@
-var address = require(__base + "/config/constants.js").address;
+var { address } = require(__base + '/config/constants.js');
 
-module.exports = function(token) {
-    return ` To reset your password <a href = "${address}/me/reset/${token}">click here</a>
-    `
-}
+module.exports = token => `To reset your password <a href = "${address}/me/reset/${token}">click here</a>`;

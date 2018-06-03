@@ -1,17 +1,14 @@
-const transporter = require("../transporter");
-const getOptions = require("../options");
-const table = require("./table");
+const transporter = require('../transporter');
+const getOptions = require('../options');
+const table = require('./table');
 
-module.exports = function(user, token) {
-
-    return new Promise((resolve, reject) => {
-        let options = getOptions(user, table(token),"Password reset")
-        transporter.sendMail(options, function(err, info){
-            if(err){
-                reject(err);
-            } else {
-                resolve(info);
-            }
-        })
-    })
-}
+module.exports = (user, token) => new Promise((resolve, reject) => {
+  const options = getOptions(user, table(token), 'Password reset');
+  transporter.sendMail(options, (err, info) => {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(info);
+    }
+  });
+});
