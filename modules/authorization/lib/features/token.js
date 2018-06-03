@@ -1,35 +1,29 @@
-const jwt = require("jwt-then");
-const User = require(__base + "models/user.js")
-const loginKey = require(__base + "config/constants.js").authentication.loginKey;
+const jwt = require('jwt-then');
+
+const User = require(__base + 'models/user.js');
+const { loginKey } = require(__base + 'config/constants.js').authentication;
 // to gain acess send Authorization header in the format Bearer <token>
 
 
-module.exports = async function(req, res, next) {
-	try{
-		var bearerHeader = req.headers['authorization'];
+module.exports = async (req, res, next) => {
+  try {
+    const bearerHeader = req.headers.authorization;
 
+    if (bearerHeader) {
+      const bearer = bearerHeader.split(' ');
+      const bearerToken = bearer[1];
 
-		if(bearerHeader){
-			var bearer = bearerHeader.split(' ');
-			
-			var bearerToken = bearer[1];
+      const authData = await jwt.verify(bearerToken, loginKey);
+      req.authData = authData;
+      const foundUser = await User.findById(authData.user._id);
+      if (foundUser) {
+        return next();
+      }
+      return res.status(500).send('User not found');
+    }
+    return res.status(401).send('You need to be logged in to that');
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
+};
 
-			req.token = bearerToken;
-
-			var authData = await jwt.verify(req.token, loginKey);
-			req.authData = authData;
-			var foundUser = await User.findById(authData.user._id);
-			if(foundUser){
-				next();
-			}else{
-				return res.status(500).send(err.message);
-			}
-
-		} else {
-			res.status(401).send("You need to be logged in to that");
-		}
-	}catch(err){
-		res.status(500).send(err.message);
-	}
-
-}
