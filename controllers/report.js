@@ -24,7 +24,7 @@ module.exports = {
         list: studentList.list,
         submissions: [],
       };
-      report.submissions = studentList.submissions.map((i, submission) => ({
+      report.submissions = studentList.submissions.map((submission, i) => ({
         problem: {
           tries: submission.tries,
           name: submission.problem.name,
