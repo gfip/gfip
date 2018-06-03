@@ -7,4 +7,4 @@ const studentSchema = mongoose.Schema({
   reports: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Report' }],
 });
 
-module.exports = mongoose.model(' Student', studentSchema);
+module.exports = mongoose.model('Student', studentSchema);
