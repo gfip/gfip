@@ -4,6 +4,7 @@ module.exports = (report, student, user) => {
     CORRECT: 'Correto',
     WRONG_ANSWER: 'Errado',
     EMPTY: 'Não fez',
+    EMPTY_ANSWER: 'Saída vázia',
     RUNTIME_ERROR: 'Erro de execução',
     TIME_LIMIT_EXCEEDED: 'Tempo limite execedido',
   };

@@ -27,28 +27,8 @@ module.exports = {
       const foundStudent = await Student.findById(req.params.student_id).populate('reports').exec();
       const pendingLists = foundLists
         .filter(list => !foundStudent.reports
-          .find(report => report.list.theHuxleyId === list.theHuxleyId));
+          .find(report => report.list.theHuxleyId === list.theHuxleyId && report.list.sent));
       return res.json(pendingLists);
-    } catch (err) {
-      return res.status(500).send(err.message);
-    }
-  },
-
-  showStudentList: async (req, res) => {
-    try {
-      const studentList = await listController.getStudentList(
-        req.params.student_id,
-        req.params.list_id,
-      );
-      for (let i = 0; i < studentList.submissions.length; i += 1) {
-        if (studentList.submissions[i].theHuxleyId === 0) {
-          studentList.submissions[i].code = '';
-        } else {
-          studentList.submissions[i].code = await listController
-            .getSubmissionCode(studentList.submissions[i].theHuxleyId);
-        }
-      }
-      return res.json(studentList);
     } catch (err) {
       return res.status(500).send(err.message);
     }

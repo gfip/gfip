@@ -14,33 +14,20 @@ module.exports = {
     }
   },
 
-  createReport: async (req, res) => {
+  saveReport: async (req, res) => {
     try {
       const foundUser = await User.findById(req.authData.user._id);
-      const studentList = await listController
-        .getStudentList(req.params.student_id, req.params.list_id);
-      const foundStudent = await Student.findById(req.params.student_id);
-      const report = {
-        list: studentList.list,
-        submissions: [],
-      };
-      report.submissions = studentList.submissions.map((submission, i) => ({
-        problem: {
-          tries: submission.tries,
-          name: submission.problem.name,
-          score: submission.problem.score,
-          theHuxleyId: submission.problem.theHuxleyId,
-        },
-        evaluation: studentList.submissions[i].evaluation,
-        comment: req.body.comments[i],
-      }));
-      report.finalComment = req.body.finalComment;
-      report.author = foundUser.username;
-      const createdReport = await Report.create(report);
-      foundStudent.reports.push(createdReport._id);
-      await foundStudent.save();
-      await mailer.sendReport(report, foundStudent, foundUser);
-      return res.json(createdReport);
+      const foundReport = await Report.findById(req.params.report_id);
+      if (foundReport) {
+        for (let i = 0; i < foundReport.submissions.length; i += 1) {
+          foundReport.submissions[i].comment = req.body.comments[i];
+        }
+        foundReport.finalComment = req.body.finalComment;
+        foundReport.author = foundUser.username;
+        await foundReport.save();
+        return res.json(foundReport);
+      }
+      throw new Error('Report not found');
     } catch (err) {
       return res.status(500).send(err.message);
     }
@@ -54,11 +41,31 @@ module.exports = {
       const report = {
         list: studentList.list,
         submissions: [],
+        sent: true,
       };
       const createdReport = await Report.create(report);
       foundStudent.reports.push(createdReport._id);
       await foundStudent.save();
       return res.json(createdReport);
+    } catch (err) {
+      return res.status(500).send(err.message);
+    }
+  },
+
+  sendReport: async (req, res) => {
+    try {
+      const foundStudent = await Student.findById(req.params.student_id);
+      const foundUser = await User.findById(req.authData.user._id);
+      const foundReport = await Report.findById(req.params.report_id);
+      for (let i = 0; i < foundReport.submissions.length; i += 1) {
+        foundReport.submissions[i].comment = req.body.comments[i];
+      }
+      foundReport.finalComment = req.body.finalComment;
+      foundReport.author = foundUser.username;
+      foundReport.sent = true;
+      await foundReport.save();
+      mailer.sendReport(foundReport, foundStudent, foundUser);
+      return res.json(foundReport);
     } catch (err) {
       return res.status(500).send(err.message);
     }
@@ -78,24 +85,43 @@ module.exports = {
 
   showReport: async (req, res) => {
     try {
-      const foundReport = await Report.findById(req.params.report_id);
-      return res.json(foundReport);
+      const foundUser = await User.findById(req.authData.user._id);
+      const studentList = await listController
+        .getStudentList(req.params.student_id, req.params.list_id);
+      const foundStudent = await Student.findById(req.params.student_id).populate('reports').exec();
+      const foundReport = foundStudent.reports
+        .find(report => report.list.theHuxleyId === studentList.list.theHuxleyId);
+      let returnedReport;
+      if (foundReport) {
+        returnedReport = foundReport;
+      } else {
+        const report = {
+          list: studentList.list,
+          submissions: [],
+          finalComment: '',
+          author: foundUser.username,
+        };
+        report.submissions = await Promise.all(studentList.submissions.map(async (submission, i) => ({
+          problem: {
+            tries: submission.tries,
+            name: submission.problem.name,
+            score: submission.problem.score,
+            theHuxleyId: submission.problem.theHuxleyId,
+          },
+          theHuxleyId: submission.theHuxleyId,
+          evaluation: studentList.submissions[i].evaluation,
+          comment: '',
+          code: submission.theHuxleyId === 0 ? '' : await listController.getSubmissionCode(submission.theHuxleyId),
+        })));
+        returnedReport = await Report.create(report);
+        foundStudent.reports.push(returnedReport._id);
+        await foundStudent.save();
+      }
+      return res.json(returnedReport);
     } catch (err) {
+      console.log(err);
       return res.status(500).send(err.message);
     }
   },
-
-  updateReport: async (req, res) => {
-    try {
-      const report = {
-        title: req.body.title,
-      };
-      await Report.findByIdAndUpdate(req.params.report_id, report);
-      return res.json(report);
-    } catch (err) {
-      return res.status(500).send(err.message);
-    }
-  },
-
 
 };
