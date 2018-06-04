@@ -1,6 +1,7 @@
-import AuthService from './AuthService';
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Route, Redirect} from 'react-router-dom';
+import AuthService from './AuthService';
 
 class PrivateRoute extends React.Component {
     constructor(props){
@@ -18,7 +19,7 @@ class PrivateRoute extends React.Component {
       .then((res) => {
         this.setState({ isFetching: false, isSuccess: true, user: res.data });
       })
-      .catch((err)=> {
+      .catch(()=> {
         this.setState({ isFetching: false, isSuccess: false });
       });
     }
@@ -48,6 +49,13 @@ class PrivateRoute extends React.Component {
         }}/>
       )
     } 
+  }
+
+  PrivateRoute.propTypes = {
+      exact: PropTypes.bool,
+      path: PropTypes.string,
+      component: PropTypes.any,
+      location: PropTypes.object
   }
 
   export default PrivateRoute;

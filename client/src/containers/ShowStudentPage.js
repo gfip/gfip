@@ -1,8 +1,9 @@
 import React, { Component } from 'react'; 
+import PropTypes from 'prop-types';
 import '../assets/dashboard.css';
-import {getStudentPendingList} from '../helpers/api';
 import { Navbar, Lists, ReportHistory, MenuBlock, InfoBlock} from '../components';
-import { getStudentInfo, getStudentReports, discardListReport } from '../helpers/api';
+import { getStudentInfo, getStudentReports, discardListReport, getStudentPendingList } from '../helpers/api';
+
 class ShowStudentPage extends Component {
     constructor(props){
         super(props);
@@ -38,7 +39,7 @@ class ShowStudentPage extends Component {
         this.setState({openLists: false})
     }
     
-    discardReport = async event => {
+    async discardReport(event) {
         event.preventDefault();
         try {
             let list_id = event.target.dataset.id;
@@ -60,7 +61,7 @@ class ShowStudentPage extends Component {
             <Navbar user={this.props.user}/>
             <div>
                 <div className="container column centered">
-                    { this.state.student && <InfoBlock class='show_student_studentInfo' title={this.state.student.name} subtitle={this.state.student.username + '@cin.ufpe.br'}/> }
+                    { this.state.student && <InfoBlock className='show_student_studentInfo' title={this.state.student.name} subtitle={this.state.student.username + '@cin.ufpe.br'}/> }
                     <div className="show_student_studentMenu container column centered">
                         <MenuBlock callback={this.openPendingReports} title='Pending reports' active={this.state.openLists}/>
                         <MenuBlock callback={this.openHistory} title='History' active={this.state.openHistory}/>
@@ -72,6 +73,12 @@ class ShowStudentPage extends Component {
         </div>
        )
     }
+}
+
+ShowStudentPage.propTypes = {
+    auth: PropTypes.string,
+    match: PropTypes.object,
+    user: PropTypes.object
 }
 
 export default ShowStudentPage;

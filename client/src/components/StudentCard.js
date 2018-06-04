@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Icon } from 'semantic-ui-react';
 import '../assets/navbar.css';
+
 class StudentCard extends Component {
   
     constructor(props) {
@@ -8,9 +10,11 @@ class StudentCard extends Component {
         this.state = {
             deleteEnabled: true
         };
+
+        this.deleteStudent = this.deleteStudent.bind(this);
     }
 
-    deleteStudent = async event => {
+    async deleteStudent (event) {
         event.preventDefault();
         try {
             if(this.state.deleteEnabled) {
@@ -19,7 +23,6 @@ class StudentCard extends Component {
             }
         } catch (err) {
             this.setState({deleteEnabled: true});
-            console.log(err.message);
         }
     }
 
@@ -36,6 +39,11 @@ class StudentCard extends Component {
             </a>
         );
   }
+}
+
+StudentCard.propTypes = {  
+    deleteStudent: PropTypes.func,
+    student: PropTypes.object
 }
 
 export default StudentCard;

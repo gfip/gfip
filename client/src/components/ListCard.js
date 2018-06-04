@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Icon } from 'semantic-ui-react';
-import '../assets/navbar.css';
 import moment from 'moment';
-class listCard extends Component {
+import PropTypes from 'prop-types';
+import '../assets/navbar.css';
+
+class ListCard extends Component {
   
     constructor(props) {
         super(props);
@@ -25,4 +27,10 @@ class listCard extends Component {
   }
 }
 
-export default listCard;
+ListCard.propTypes = {
+    list: PropTypes.object,
+    student_id: PropTypes.string,
+    discardReport: PropTypes.func
+}
+
+export default ListCard;

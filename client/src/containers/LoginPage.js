@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Button, Form } from 'semantic-ui-react';
+import { withRouter } from "react-router-dom";
 import logo from '../assets/img/logo.svg';
 import AuthService from '../components/AuthService';
 import RegisterForm from '../components/RegisterForm'; 
-import { withRouter } from "react-router-dom";
-import { Button, Form } from 'semantic-ui-react';
 import '../assets/login.css';
 
 class LoginPage extends Component {
@@ -15,29 +16,34 @@ class LoginPage extends Component {
       password: "",
       registerOpened: false
     };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.validateForm = this.validateForm.bind(this);
+    this.alterRegisterForm = this.alterRegisterForm.bind(this);
   }
 
   validateForm() {
     return this.state.username.length > 0 && this.state.password.length > 0;
   }
 
-  handleChange = event => {
+  handleChange(event){
     this.setState({
       [event.target.name]: event.target.value
     });
   }
 
-  handleSubmit = event => {
+  handleSubmit(event) {
     event.preventDefault();
     this.AuthService.login({username: this.state.username, password: this.state.password})
-    .then((res) => {
+    .then(() => {
       return this.props.history.push("/dashboard");
     }).catch((err) => {
       this.setState({status: err.response.data});
     })
   }
 
-  alterRegisterForm = (event, opened) => {
+  alterRegisterForm(event, opened){
     this.setState({registerOpened: opened});
   }
 
@@ -58,12 +64,17 @@ class LoginPage extends Component {
                 <Button type="submit" id="loginButton">Login</Button>
               </div>
             </Form>
-            <p id="registerText">Doesn't have an account yet? <a id="registerLink" onClick={(e) => { this.alterRegisterForm(e, true)}}>Register here</a></p>
+            <p id="registerText">Doesn&apos;t have an account yet? <a id="registerLink" onClick={(e) => { this.alterRegisterForm(e, true)}}>Register here</a></p>
             <RegisterForm active={this.state.registerOpened}/>
           </div>
       </div>
     );
   }
 }
+
+LoginPage.propTypes = {
+  history: PropTypes.object 
+}
+
 
 export default withRouter(LoginPage);

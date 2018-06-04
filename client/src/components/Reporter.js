@@ -1,5 +1,7 @@
 import React, { Component } from 'react'; 
+import PropTypes from 'prop-types';
 import { Form, Dropdown, Button, Icon, TextArea} from 'semantic-ui-react';
+
 class Reporter extends Component {
     constructor(props){
         super(props);
@@ -73,6 +75,15 @@ class Reporter extends Component {
             </div>
        )
     }
+}
+
+Reporter.propTypes = {
+    sendEmail: PropTypes.func,
+    actualProblem: PropTypes.number,
+    problems: PropTypes.array,
+    list: PropTypes.object,
+    sent: PropTypes.bool,
+    sendDisabled: PropTypes.bool
 }
 
 export default Reporter;

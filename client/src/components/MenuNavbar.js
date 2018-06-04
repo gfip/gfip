@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from "react-router-dom";
 import '../assets/navbar.css';
 import AuthService from './AuthService';
-import { withRouter } from "react-router-dom";
 
 class MenuNavbar extends Component {
   
@@ -10,9 +11,11 @@ class MenuNavbar extends Component {
         this.AuthService = new AuthService();
         this.state = {
         };
+        
+        this.logout = this.logout.bind(this);
     }
 
-    logout = event => {
+    logout() {
         this.AuthService.logout();
         this.props.history.push("/");
     }
@@ -26,6 +29,12 @@ class MenuNavbar extends Component {
             </div>
         );
     }
+}
+
+MenuNavbar.propTypes = {
+    refMethod: PropTypes.func,
+    active: PropTypes.bool,
+    history: PropTypes.object
 }
 
 export default withRouter(MenuNavbar);

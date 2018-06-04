@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import logo from '../assets/img/logo.svg';
 import MenuNavbar from './MenuNavbar';
 import OutsideDeactivator from './OutsideDeactivator';
 import '../assets/navbar.css';
+
 class Navbar extends Component {
   
     constructor(props) {
@@ -10,9 +12,12 @@ class Navbar extends Component {
         this.state = {
             menu: false
         };
+
+        this.openMenu = this.openMenu.bind(this);
+        this.deactivatedMenu = this.deactivatedMenu.bind(this);
     }
     
-    openMenu = event => {
+    openMenu() {
         this.setState({menu: true})        
     }
 
@@ -21,7 +26,7 @@ class Navbar extends Component {
     }
 
     render() {
-        let MenuComponent = this.state.menu ? <OutsideDeactivator component={MenuNavbar} callback={this.deactivatedMenu.bind(this)}/> : null;
+        let MenuComponent = this.state.menu ? <OutsideDeactivator component={MenuNavbar} callback={this.deactivatedMenu}/> : null;
         return (
             <div id="navbar" className="container verticalCentered spaceBetween">
                 <a href="/dashboard"><img src={logo} id="navbarLogo" alt="logo" /></a>
@@ -30,6 +35,10 @@ class Navbar extends Component {
             </div>
         );
   }
+}
+
+Navbar.propTypes = {
+    user: PropTypes.object,
 }
 
 export default Navbar;

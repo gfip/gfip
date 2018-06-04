@@ -12,6 +12,7 @@ class OutsideDeactivator extends Component {
     this.state = { active: true }
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.insideClose = this.insideClose.bind(this);
   }
 
   componentDidMount() {
@@ -38,7 +39,7 @@ class OutsideDeactivator extends Component {
     }
   }
 
-  insideClose(event) {
+  insideClose() {
     this.setState({active: false});
     this.props.callback();
   }
@@ -47,7 +48,7 @@ class OutsideDeactivator extends Component {
     let Component = this.props.component;
     let active = this.state.active;
     return (
-      <Component refMethod={this.setWrapperRef} active={active} closeMe={this.insideClose.bind(this)} {...this.props}/>
+      <Component refMethod={this.setWrapperRef} active={active} closeMe={this.insideClose} {...this.props}/>
     );
   }
 }

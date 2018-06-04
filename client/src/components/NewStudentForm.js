@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { addStudent } from '../helpers/api';
+import PropTypes from 'prop-types';
 import { Button, Form } from 'semantic-ui-react';
+import { addStudent } from '../helpers/api';
 import '../assets/login.css';
 
 class NewStudentForm extends Component {
@@ -11,19 +12,23 @@ class NewStudentForm extends Component {
       username: "",
       statusColor: "#b43232",
     };
+
+    this.validateForm = this.validateForm.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   validateForm() {
     return this.state.username.length > 0 && this.state.name.length > 0;
   }
 
-  handleChange = event => {
+  handleChange(event){
     this.setState({
       [event.target.name]: event.target.value
     });
   }
 
-  handleSubmit = async event => {
+  async handleSubmit(event){
     event.preventDefault();
     if(this.validateForm()){
         try {
@@ -63,6 +68,14 @@ class NewStudentForm extends Component {
       </div>
     );
   }
+}
+
+NewStudentForm.propTypes = {
+  auth: PropTypes.string,
+  addStudent: PropTypes.func,
+  closeMe: PropTypes.func,
+  active: PropTypes.bool,
+  refMethod: PropTypes.func
 }
 
 export default NewStudentForm;

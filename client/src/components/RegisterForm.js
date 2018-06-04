@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { register } from '../helpers/api';
+import PropTypes from 'prop-types';
 import { Button, Form } from 'semantic-ui-react';
+import { register } from '../helpers/api';
 import '../assets/login.css';
 
 class RegisterForm extends Component {
@@ -9,26 +10,25 @@ class RegisterForm extends Component {
     this.state = {
       username: "",
       password: "",
-      active: this.props.active,
       statusColor: "#b43232"
     };
+
+    this.validateForm = this.validateForm.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   validateForm() {
     return this.state.username.length > 0 && this.state.password.length > 0;
   }
 
-  handleChange = event => {
+  handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
   }
 
-  componentWillReceiveProps(nextProps){
-      this.setState({active: nextProps.active});
-  }
-
-  handleSubmit = event => {
+  handleSubmit(event) {
     event.preventDefault();
     if(this.validateForm()){
         register({username: this.state.username, password: this.state.password})
@@ -54,13 +54,13 @@ class RegisterForm extends Component {
   }
 
   render() {
-    let activeClass = this.state.active ? "active" : "disabled"
+    let activeClass = this.props.active ? "active" : "disabled"
     return (
       <div style={{position: "relative"}} className={activeClass}>
         <Form onSubmit={this.handleSubmit} id="registerForm">
             <Form.Field>
                 <input name="username" onChange={this.handleChange} value={this.state.username} placeholder='Username'/>
-                <span style={{color: "#C2C2C2"}}>* Your username from CIn's login system</span>
+                <span style={{color: "#C2C2C2"}}>* Your username from CIn&apos;s login system</span>
             </Form.Field>
             <Form.Field>
                 <input type="password" onChange={this.handleChange} value={this.state.password} name="password" placeholder='Password'/>
@@ -73,6 +73,10 @@ class RegisterForm extends Component {
       </div>
     );
   }
+}
+
+RegisterForm.propTypes = {
+    active: PropTypes.bool
 }
 
 export default RegisterForm;

@@ -1,8 +1,10 @@
 import React, { Component } from 'react'; 
+import { Icon } from 'semantic-ui-react'
+import PropTypes from 'prop-types';
 import { NewStudentForm, OutsideDeactivator, StudentCard, Navbar} from '../components'
 import { getStudents, deleteStudent, getStudentPendingList, updateLists } from '../helpers/api';
-import { Icon } from 'semantic-ui-react'
 import '../assets/dashboard.css'
+
 class DashboardPage extends Component {
   constructor(props){
     super(props);
@@ -10,17 +12,22 @@ class DashboardPage extends Component {
       studentForm: false,
       students: []
     }
+
+    this.openStudentForm = this.openStudentForm.bind(this);
+    this.deactivatedForm = this.deactivatedForm.bind(this);
+    this.deleteStudent = this.deleteStudent.bind(this);
+    this.addStudent = this.addStudent.bind(this);
   }
 
-  openStudentForm = async event => {
+  async openStudentForm() {
     this.setState({studentForm: true})
   }
 
-  deactivatedForm = event => {
+  deactivatedForm() {
     this.setState({studentForm: false});
   }
 
-  deleteStudent = async id => {
+  async deleteStudent(id){
     try {
       await deleteStudent(this.props.auth, id);
       let newStudentsArray = this.state.students.filter((student) => {
@@ -32,7 +39,7 @@ class DashboardPage extends Component {
     }
   }
 
-  addStudent = async student => {
+  async addStudent(student) {
     try {
       let pendingLists = await getStudentPendingList(this.props.auth, student._id);
       if(pendingLists.data.length > 0) {
@@ -66,9 +73,9 @@ class DashboardPage extends Component {
   }
 
   render() {
-    let addStudentForm = this.state.studentForm ? <OutsideDeactivator component={NewStudentForm} callback={this.deactivatedForm.bind(this)} addStudent={this.addStudent.bind(this)} auth={this.props.auth}/> : null;
+    let addStudentForm = this.state.studentForm ? <OutsideDeactivator component={NewStudentForm} callback={this.deactivatedForm} addStudent={this.addStudent} auth={this.props.auth}/> : null;
     let studentsCards = this.state.students.map((student) => {
-      return <StudentCard key={student._id} deleteStudent={this.deleteStudent.bind(this)} student={student}/>
+      return <StudentCard key={student._id} deleteStudent={this.deleteStudent} student={student}/>
     })
     return (
       <div className="container column centered">
@@ -87,6 +94,11 @@ class DashboardPage extends Component {
       </div>
     );
   }
+}
+
+DashboardPage.propTypes = {
+  auth: PropTypes.string,
+  user: PropTypes.object
 }
 
 export default DashboardPage;

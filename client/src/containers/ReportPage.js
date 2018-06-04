@@ -1,8 +1,10 @@
 import React, { Component } from 'react'; 
+import { Button, Icon } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 import '../assets/report.css';
 import { getListInfo, sendReport } from '../helpers/api';
 import { Navbar, MenuBlock, InfoBlock, CodeViewer, Reporter} from '../components';
-import { Button, Icon } from 'semantic-ui-react';
+
 class ReportPage extends Component {    
     constructor(props){
         super(props);
@@ -14,6 +16,8 @@ class ReportPage extends Component {
             sendDisabled: false,
             sentEmail: false,
         }
+
+        this.sendEmail = this.sendEmail.bind(this);
     }
     
     async componentDidMount(){
@@ -29,12 +33,9 @@ class ReportPage extends Component {
     async sendEmail(event, comments, finalComment){
         try {
             this.setState({sendDisabled: true});
-            let report = await sendReport(this.props.auth, this.props.match.params.student_id, this.props.match.params.list_id, comments, finalComment);
-            console.log(report.data);
+            await sendReport(this.props.auth, this.props.match.params.student_id, this.props.match.params.list_id, comments, finalComment);
             this.setState({sentEmail: true});
         } catch(err){
-            console.log(err.message);
-            console.log(err.response.data);
             this.setState({sendDisabled: false});
         }
     }
@@ -69,19 +70,25 @@ class ReportPage extends Component {
                 <div className="container column">
                     {this.state.list.student && 
                     <Button.Group className='report_btn_group'>
-                        <Button color={code_btn_class} onClick={(e) => this.setState(({openReporter: false}))}><Icon name='code'/>Code</Button>
-                        <Button color={reporter_btn_class} onClick={(e) => this.setState(({openReporter: true}))}><Icon name='content'/>Reporter</Button>
+                        <Button color={code_btn_class} onClick={() => this.setState(({openReporter: false}))}><Icon name='code'/>Code</Button>
+                        <Button color={reporter_btn_class} onClick={() => this.setState(({openReporter: true}))}><Icon name='content'/>Reporter</Button>
                     </Button.Group>}
-                    { this.state.list.student && <InfoBlock class='report_infoBlock' title={this.state.list.student.name} subtitle={`Score: ${totalScore}/${this.state.list.list.totalScore}`}/> }
-                    { this.state.list.student && <InfoBlock class='report_infoBlock' title={this.state.list.list.title} subtitle={''}/> }
+                    { this.state.list.student && <InfoBlock className='report_infoBlock' title={this.state.list.student.name} subtitle={`Score: ${totalScore}/${this.state.list.list.totalScore}`}/> }
+                    { this.state.list.student && <InfoBlock className='report_infoBlock' title={this.state.list.list.title} subtitle={''}/> }
                     {menu}
                 </div>
                 {!this.state.openReporter && <CodeViewer problem={this.state.actualProblem}/>}
-                { this.state.openReporter && <Reporter sent={this.state.sentEmail} sendDisabled={this.state.sendDisabled} sendEmail={this.sendEmail.bind(this)} list={this.state.list} actualProblem={problemIndex} problems={this.state.list.submissions}></Reporter>}
+                { this.state.openReporter && <Reporter sent={this.state.sentEmail} sendDisabled={this.state.sendDisabled} sendEmail={this.sendEmail} list={this.state.list} actualProblem={problemIndex} problems={this.state.list.submissions}></Reporter>}
             </div>
         </div>
        )
     }
+}
+
+ReportPage.propTypes = {
+    auth: PropTypes.string,
+    match: PropTypes.object,
+    user: PropTypes.object
 }
 
 export default ReportPage;

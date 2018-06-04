@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; 
-import { ListCard } from './';
 import { orderBy } from 'lodash';
+import PropTypes from 'prop-types';
+import { ListCard } from './';
 
 class Lists extends Component {
     constructor(props){
@@ -23,6 +24,12 @@ class Lists extends Component {
             </div>
        )
     }
+}
+
+Lists.propTypes = {
+    lists: PropTypes.array,
+    discardReport: PropTypes.func,
+    student_id: PropTypes.string
 }
 
 export default Lists;

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'; 
+import PropTypes from 'prop-types';
+import {Label} from 'semantic-ui-react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { xcode } from 'react-syntax-highlighter/styles/hljs';
 import sad_face from '../assets/img/sad_face.png';
-import {Label} from 'semantic-ui-react'
 
 class CodeViewer extends Component {
     constructor(props){
@@ -25,10 +26,14 @@ class CodeViewer extends Component {
                 </div>
                 {evaluation !== 'EMPTY' && code && <SyntaxHighlighter showLineNumbers className='report_code' language='java' style={xcode}>{String(code)}</SyntaxHighlighter>}
                 {evaluation === 'EMPTY' && <img className='report_sadface' src={sad_face} alt='sad face'/>}
-                {evaluation === 'EMPTY' && <h2 className='text-center'>The student didn't do this exercise.</h2>}
+                {evaluation === 'EMPTY' && <h2 className='text-center'> The student didn&apos;t do this exercise. </h2>}
             </div>
        )
     }
+}
+
+CodeViewer.propTypes = {
+    problem: PropTypes.object
 }
 
 export default CodeViewer;

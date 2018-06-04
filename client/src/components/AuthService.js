@@ -3,7 +3,7 @@ import { me } from '../helpers/api';
 
 export default class AuthService {
     // Initializing important variables
-    constructor(domain) {// React binding stuff
+    constructor() {// React binding stuff
         this.login = this.login.bind(this);
         this.getToken = this.getToken.bind(this);
     }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import '../assets/show_student.css';
 
 class MenuBlock extends Component {
@@ -17,6 +18,12 @@ class MenuBlock extends Component {
             </div>  
         );
   }
+}
+
+MenuBlock.propTypes = {
+    active: PropTypes.bool,
+    callback: PropTypes.func,
+    title: PropTypes.string
 }
 
 export default MenuBlock;
