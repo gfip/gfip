@@ -18,15 +18,36 @@ class CodeViewer extends Component {
         return (
             <div className="container column centered report_code_wrapper">
                 <div className='container row report_label'>
-                    {code && <Label as='a' color='blue'>{this.props.problem.tries} submissions</Label>}
-                    {evaluation === 'TIME_LIMIT_EXCEEDED' && code && <Label as='a' color='yellow'>TLE</Label>}
-                    {evaluation === 'RUNTIME_ERROR' && code && <Label as='a' color='red'>Runtime error</Label>}
-                    {(evaluation === 'WRONG_ANSWER' || evaluation === 'EMPTY_ANSWER' || evaluation === 'RUNTIME_ERROR' || evaluation === 'TIME_LIMIT_EXCEEDED') && code && <Label as='a' color='red'>Wrong solution</Label>}
-                    {evaluation === 'CORRECT' && code && <Label as='a' color='green'>Correct answer</Label>}
+                {code && <Label as='a' color='blue'>{this.props.problem.tries} submissions</Label>}
+                    {
+                        (() => {
+                            let tags = [];
+                            if(evaluation === 'TIME_LIMIT_EXCEEDED'){
+                                tags.push(<Label key='tle' as='a' color='yellow'>TLE</Label>);
+                                tags.push(<Label key='wa' as='a' color='red'>Wrong solution</Label>);
+                            }
+                            if(evaluation === 'RUNTIME_ERROR')
+                                tags.push(<Label key='rte' as='a' color='red'>Runtime error</Label>);
+                            if(evaluation === 'WRONG_ANSWER' || evaluation === 'EMPTY_ANSWER')
+                                tags.push(<Label key='wa' as='a' color='red'>Wrong solution</Label>);
+                            if(evaluation === 'CORRECT')
+                                tags.push(<Label key='ca' as='a' color='green'>Correct answer</Label>);
+                            if(evaluation === 'COMPILATION_ERROR')
+                                tags.push(<Label key='ce' as='a' color='red'>Compilation error</Label>);
+                            return (tags);
+                        })()
+                    }
                 </div>
-                {evaluation !== 'EMPTY' && code && <SyntaxHighlighter showLineNumbers className='report_code' language='java' style={xcode}>{String(code)}</SyntaxHighlighter>}
-                {evaluation === 'EMPTY' && <img className='report_sadface' src={sad_face} alt='sad face'/>}
-                {evaluation === 'EMPTY' && <h2 className='text-center'> The student didn&apos;t do this exercise. </h2>}
+                {
+                    (() => {
+                        if(evaluation === 'EMPTY'){
+                            return ([<img key='sad-face' className='report_sadface' src={sad_face} alt='sad face'/>,
+                                    <h2 key='text' className='text-center'> The student didn&apos;t do this exercise. </h2>])
+                        } else if(code){
+                            return <SyntaxHighlighter showLineNumbers className='report_code' language='java' style={xcode}>{String(code)}</SyntaxHighlighter>;
+                        }
+                    })()
+                }
             </div>
        )
     }
