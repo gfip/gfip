@@ -8,13 +8,13 @@ module.exports = {
     try {
       const requestedLists = await theHuxley.getFilteredLists();
       let dbLists = await List.find({});
-      dbLists = dbLists.filter((dbList) => {
+      await Promise.all(dbLists = dbLists.filter(async (dbList) => {
         if (!requestedLists.find(requestedList => requestedList.id === dbList.theHuxleyId)) {
-          List.findByIdAndRemove(dbList._id);
+          await List.findByIdAndRemove(dbList);
           return false;
         }
         return true;
-      });
+      }));
       await Promise.all(requestedLists.map(async (newList) => {
         if (!dbLists.find(dbList => dbList.theHuxleyId === newList.id)) {
           const problems = await theHuxley.getListProblems(newList.id);
