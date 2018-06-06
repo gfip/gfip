@@ -56,8 +56,7 @@ class DashboardPage extends Component {
     async componentDidMount() {
         try {
             let students = await getStudents(this.props.auth);
-            let lists = await updateLists(this.props.auth);
-            console.log(lists);
+            await updateLists(this.props.auth);
             students = students.data;
             await Promise.all(students.map(async(student) => {
                 let pendingLists = await getStudentPendingList(this.props.auth, student._id);

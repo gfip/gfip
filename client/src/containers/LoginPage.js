@@ -33,14 +33,14 @@ class LoginPage extends Component {
     });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
-    this.AuthService.login({username: this.state.username, password: this.state.password})
-    .then(() => {
+    try {
+      await this.AuthService.login({username: this.state.username, password: this.state.password});
       return this.props.history.push("/dashboard");
-    }).catch((err) => {
+    } catch (err){
       this.setState({status: err.response.data});
-    })
+    }
   }
 
   alterRegisterForm(event, opened){
