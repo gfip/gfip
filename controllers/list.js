@@ -7,7 +7,7 @@ module.exports = {
   getNewLists: async (req, res) => {
     try {
       const requestedLists = await theHuxley.getFilteredLists();
-      const dbLists = await List.find({});
+      let dbLists = await List.find({});
       dbLists = dbLists.filter((dbList) => {
         if (!requestedLists.find(requestedList => requestedList.id === dbList.theHuxleyId)) {
           List.findByIdAndRemove(dbLists._id);
