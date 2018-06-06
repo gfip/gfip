@@ -43,7 +43,12 @@ class CodeViewer extends Component {
                             return ([<img key='sad-face' className='report_sadface' src={sad_face} alt='sad face'/>,
                                     <h2 key='text' className='text-center'> The student didn&apos;t do this exercise. </h2>])
                         } else if(code){
-                            return <SyntaxHighlighter showLineNumbers className='report_code' language='java' style={xcode}>{String(code)}</SyntaxHighlighter>;
+                            return <SyntaxHighlighter 
+                                        showLineNumbers 
+                                        className='report_code' 
+                                        language='java' 
+                                        style={xcode}>{String(code)}
+                                    </SyntaxHighlighter>;
                         }
                     })()
                 }

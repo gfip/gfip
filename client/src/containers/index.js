@@ -4,4 +4,4 @@ import Dashboard from './DashboardPage';
 import ShowStudent from './ShowStudentPage';
 import Report from './ReportPage';
 
-export { Report, Login, NotFound, Dashboard, ShowStudent }
+export {Report, Login, NotFound, Dashboard, ShowStudent}

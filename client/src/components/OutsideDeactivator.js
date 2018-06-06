@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 /**
  * Component that desactivate the Component prop passed if you click outside of it
@@ -7,50 +7,54 @@ import PropTypes from 'prop-types';
  * Component prop must change from active to disabled class based on the 'active' prop passed to it.
  */
 class OutsideDeactivator extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { active: true }
-    this.setWrapperRef = this.setWrapperRef.bind(this);
-    this.handleClickOutside = this.handleClickOutside.bind(this);
-    this.insideClose = this.insideClose.bind(this);
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            active: true
+        }
+        this.setWrapperRef = this.setWrapperRef.bind(this);
+        this.handleClickOutside = this.handleClickOutside.bind(this);
+        this.insideClose = this.insideClose.bind(this);
+    }
 
-  componentDidMount() {
-    document.addEventListener('mousedown', this.handleClickOutside);
-  }
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside);
+    }
 
-  componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside);
-  }
-  /**
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside);
+    }
+    /**
    * Set the wrapper ref
    */
-  setWrapperRef(node) {
-    this.wrapperRef = node;
-  }
+    setWrapperRef(node) {
+        this.wrapperRef = node;
+    }
 
-  /**
+    /**
    * Desactivate element if user clicked on outside of element
    */
-  handleClickOutside(event) {
-    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+    handleClickOutside(event) {
+        if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+            this.setState({active: false});
+            this.props.callback();
+        }
+    }
+
+    insideClose() {
         this.setState({active: false});
         this.props.callback();
     }
-  }
 
-  insideClose() {
-    this.setState({active: false});
-    this.props.callback();
-  }
-
-  render() {
-    let Component = this.props.component;
-    let active = this.state.active;
-    return (
-      <Component refMethod={this.setWrapperRef} active={active} closeMe={this.insideClose} {...this.props}/>
-    );
-  }
+    render() {
+        let Component = this.props.component;
+        let active = this.state.active;
+        return (<Component
+            refMethod={this.setWrapperRef}
+            active={active}
+            closeMe={this.insideClose}
+            {...this.props}/>);
+    }
 }
 
 OutsideDeactivator.propTypes = {

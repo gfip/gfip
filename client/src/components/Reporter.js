@@ -56,9 +56,21 @@ class Reporter extends Component {
                         {text: <img alt='bad' src='/sad.png'/>, value: 'Ruim. '}
                     ]
         let fields = this.props.problems.map((problem, index) => {
-            return <Form.Field className="container row report_formfield" key={problem.problem.theHuxleyId}>
-                        <Dropdown className='report_dropdown' compact name={index} onChange={(e, data) => obj.handleComment(e, 'eval', data)} selection options={options}/>
-                        <input ref={(input) => this.focusRef.push(input)} name={index} onChange={(e) => obj.handleComment(e, 'comment')} placeholder={`Comments about ${problem.problem.name}`}/>
+            return <Form.Field 
+                    className="container row report_formfield" 
+                    key={problem.problem.theHuxleyId}>
+                        <Dropdown 
+                            className='report_dropdown' 
+                            compact 
+                            name={index} 
+                            onChange={(e, data) => obj.handleComment(e, 'eval', data)} 
+                            selection 
+                            options={options}/>
+                        <input 
+                            ref={(input) => this.focusRef.push(input)} 
+                            name={index}
+                            onChange={(e) => obj.handleComment(e, 'comment')} 
+                            placeholder={`Comments about ${problem.problem.name}`}/>
                     </Form.Field>
         })
         return (
@@ -67,11 +79,20 @@ class Reporter extends Component {
                     <Form className='container column centered report_form'>
                         {fields}
                         <Form.Field className="report_formfield">
-                            {this.props.list.student && <TextArea id='textarea' onChange={this.handleFinalComment.bind(this)} placeholder={`Geral comments about ${this.props.list.student.name}'s submissions for ${this.props.list.list.title}`}/>}
+                            {this.props.list.student && <TextArea 
+                                id='textarea' 
+                                onChange={this.handleFinalComment.bind(this)} 
+                                placeholder={`Geral comments about ${this.props.list.student.name}'s submissions for ${this.props.list.list.title}`}/>}
                         </Form.Field>
                     </Form>    
                 </div>
-                {!this.props.sent && <Button disabled={this.props.sendDisabled} loading={this.props.sendDisabled} onClick={this.sendEmail.bind(this)} id="report_send_btn" type='submit'><Icon name='send outline'/>Send</Button>}
+                {!this.props.sent && <Button 
+                        disabled={this.props.sendDisabled} 
+                        loading={this.props.sendDisabled} 
+                        onClick={this.sendEmail.bind(this)} 
+                        id="report_send_btn" 
+                        type='submit'> <Icon name='send outline'/>Send
+                    </Button>}
             </div>
        )
     }

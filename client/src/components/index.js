@@ -14,7 +14,20 @@ import InfoBlock from './InfoBlock';
 import CodeViewer from './CodeViewer';
 import Reporter from './Reporter';
 
-export { AuthService, Navbar, NewStudentForm, OutsideDeactivator, PrivateRoute, 
-    RegisterForm, StudentCard, MenuNavbar, ListCard, Lists, ReportHistory, MenuBlock,
-    InfoBlock, CodeViewer, Reporter
+export {
+    AuthService,
+    Navbar,
+    NewStudentForm,
+    OutsideDeactivator,
+    PrivateRoute,
+    RegisterForm,
+    StudentCard,
+    MenuNavbar,
+    ListCard,
+    Lists,
+    ReportHistory,
+    MenuBlock,
+    InfoBlock,
+    CodeViewer,
+    Reporter
 }

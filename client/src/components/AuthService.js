@@ -1,30 +1,36 @@
 import axios from 'axios';
-import { me } from '../helpers/api';
+import {me} from '../helpers/api';
 
 export default class AuthService {
     // Initializing important variables
-    constructor() {// React binding stuff
-        this.login = this.login.bind(this);
-        this.getToken = this.getToken.bind(this);
+    constructor() { // React binding stuff
+        this.login = this
+            .login
+            .bind(this);
+        this.getToken = this
+            .getToken
+            .bind(this);
     }
 
     login(auth) {
         // Get a token from api server
-        return axios.post('/api/login', auth).then(res => {
-            this.setToken(res.data.token) // Setting the token in localStorage
-            return Promise.resolve(res);
-        })
+        return axios
+            .post('/api/login', auth)
+            .then(res => {
+                this.setToken(res.data.token) // Setting the token in localStorage
+                return Promise.resolve(res);
+            })
     }
 
     loggedIn() {
-        if(!this.getToken()){
+        if (!this.getToken()) {
             return Promise.reject(new Error('No Token'));
         } else {
-            return me(this.getToken()).then((response) => { 
-                if(response.data.code){
+            return me(this.getToken()).then((response) => {
+                if (response.data.code) {
                     this.logout();
                     throw new Error('Invalid token');
-                } 
+                }
                 return Promise.resolve(response);
             });
         }

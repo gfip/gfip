@@ -1,19 +1,22 @@
-import React, { Component } from 'react'; 
-import { orderBy } from 'lodash';
+import React, {Component} from 'react';
+import {orderBy} from 'lodash';
 import PropTypes from 'prop-types';
-import { ListCard } from './';
+import {ListCard} from './';
 
 class Lists extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state = {
-        }
+        this.state = {}
     }
 
     render() {
         let listsCards = orderBy(this.props.lists, ['endDate', 'title'], ['asc', 'asc']);
         listsCards = listsCards.map((list) => {
-            return <ListCard key={list._id} list={list} discardReport={this.props.discardReport} student_id={this.props.student_id}/>
+            return <ListCard
+                key={list._id}
+                list={list}
+                discardReport={this.props.discardReport}
+                student_id={this.props.student_id}/>
         })
 
         return (
@@ -22,7 +25,7 @@ class Lists extends Component {
                 <div id="show_student_hr"></div>
                 {listsCards}
             </div>
-       )
+        )
     }
 }
 

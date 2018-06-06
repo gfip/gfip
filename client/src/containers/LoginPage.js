@@ -64,7 +64,10 @@ class LoginPage extends Component {
                 <Button type="submit" id="loginButton">Login</Button>
               </div>
             </Form>
-            <p id="registerText">Doesn&apos;t have an account yet? <a id="registerLink" onClick={(e) => { this.alterRegisterForm(e, true)}}>Register here</a></p>
+            <p id="registerText">
+              Doesn&apos;t have an account yet?&nbsp;&nbsp;
+              <a id="registerLink" onClick={(e) => { this.alterRegisterForm(e, true)}}>Register here</a>
+            </p>
             <RegisterForm active={this.state.registerOpened}/>
           </div>
       </div>
