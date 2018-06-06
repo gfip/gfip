@@ -11,7 +11,6 @@ module.exports = {
       dbLists = dbLists.filter((dbList) => {
         if (!requestedLists.find(requestedList => requestedList.id === dbList.theHuxleyId)) {
           List.findByIdAndRemove(dbList._id);
-
           return false;
         }
         return true;
