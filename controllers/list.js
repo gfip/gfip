@@ -10,7 +10,8 @@ module.exports = {
       let dbLists = await List.find({});
       dbLists = dbLists.filter((dbList) => {
         if (!requestedLists.find(requestedList => requestedList.id === dbList.theHuxleyId)) {
-          List.findByIdAndRemove(dbLists._id);
+          List.findByIdAndRemove(dbList._id);
+
           return false;
         }
         return true;
