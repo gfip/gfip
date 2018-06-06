@@ -19,24 +19,23 @@ class CodeViewer extends Component {
             <div className="container column centered report_code_wrapper">
                 <div className='container row report_label'>
                 {code && <Label as='a' color='blue'>{this.props.problem.tries} submissions</Label>}
-                    {
-                        (() => {
-                            let tags = [];
-                            if(evaluation === 'TIME_LIMIT_EXCEEDED'){
-                                tags.push(<Label key='tle' as='a' color='yellow'>TLE</Label>);
-                                tags.push(<Label key='wa' as='a' color='red'>Wrong solution</Label>);
-                            }
-                            if(evaluation === 'RUNTIME_ERROR')
-                                tags.push(<Label key='rte' as='a' color='red'>Runtime error</Label>);
-                            if(evaluation === 'WRONG_ANSWER' || evaluation === 'EMPTY_ANSWER')
-                                tags.push(<Label key='wa' as='a' color='red'>Wrong solution</Label>);
-                            if(evaluation === 'CORRECT')
-                                tags.push(<Label key='ca' as='a' color='green'>Correct answer</Label>);
-                            if(evaluation === 'COMPILATION_ERROR')
-                                tags.push(<Label key='ce' as='a' color='red'>Compilation error</Label>);
-                            return (tags);
-                        })()
-                    }
+                {
+                    (() => {
+                        let tags = [];
+                        if(evaluation === 'TIME_LIMIT_EXCEEDED'){
+                            tags.push(<Label key='tle' as='a' color='yellow'>TLE</Label>);
+                            tags.push(<Label key='wa' as='a' color='red'>Wrong solution</Label>);
+                        } else if(evaluation === 'RUNTIME_ERROR')
+                            tags.push(<Label key='rte' as='a' color='red'>Runtime error</Label>);
+                        else if(evaluation === 'WRONG_ANSWER' || evaluation === 'EMPTY_ANSWER')
+                            tags.push(<Label key='wa' as='a' color='red'>Wrong solution</Label>);
+                        else if(evaluation === 'CORRECT')
+                            tags.push(<Label key='ca' as='a' color='green'>Correct answer</Label>);
+                        else if(evaluation === 'COMPILATION_ERROR')
+                            tags.push(<Label key='ce' as='a' color='red'>Compilation error</Label>);
+                        return (tags);
+                    })()
+                }
                 </div>
                 {
                     (() => {
