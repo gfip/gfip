@@ -94,7 +94,7 @@ class Reporter extends Component {
                             min='0'
                             max={problem.problem.score}
                             style={{display: scoreDisplay}}
-                            defaultValue={problem.problem.score}
+                            defaultValue={defaultValue}
                             onChange={obj.handleScore}
                             name={index}/>
                         <input 
