@@ -1,15 +1,16 @@
+function getStatus(submission) {
+  if (submission.score === 0) {
+    return 'Errado';
+  } else if (submission.score < submission.problem.maxScore) {
+    return 'Nota Parcial';
+  }
+  return 'Correto';
+}
+
 
 module.exports = (report, student, user) => {
-  const status = {
-    CORRECT: 'Correto',
-    WRONG_ANSWER: 'Errado',
-    EMPTY: 'Não fez',
-    RUNTIME_ERROR: 'Erro de execução',
-    TIME_LIMIT_EXCEEDED: 'Tempo limite execedido',
-  };
-
   const problems = report.submissions.reduce((acc, submission) =>
-    `${acc}<li><strong><a href = 'https://www.thehuxley.com/problem/${submission.problem.theHuxleyId}' >${submission.problem.name}:</a></strong> ${status[submission.evaluation]};
+    `${acc}<li><strong><a href = 'https://www.thehuxley.com/problem/${submission.problem.theHuxleyId}' >${submission.problem.name}:</a></strong> ${getStatus(submission)} <strong>(${submission.score.toFixed(1)})</strong>;
       <p>${submission.comment || ''}</p>
     </li>
     `, '');
@@ -20,6 +21,7 @@ module.exports = (report, student, user) => {
   ${problems}
   </ul>
   <p>${report.finalComment || ''}</p>
+  <p>Pontuação total <strong>${report.score.toFixed(1)}/${report.list.totalScore.toFixed(1)}</strong></p>
   Responder para ${user.username}@cin.ufpe.br
 `;
 };
