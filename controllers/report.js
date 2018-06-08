@@ -24,13 +24,15 @@ module.exports = {
         list: studentList.list,
         submissions: [],
       };
+      report.score = req.body.scores.reduce((acm, score) => acm + score,0);
       report.submissions = studentList.submissions.map((submission, i) => ({
         problem: {
           tries: submission.tries,
           name: submission.problem.name,
-          score: submission.problem.score,
+          maxScore: submission.problem.score,
           theHuxleyId: submission.problem.theHuxleyId,
         },
+        score: req.body.scores[i],
         evaluation: studentList.submissions[i].evaluation,
         comment: req.body.comments[i],
       }));

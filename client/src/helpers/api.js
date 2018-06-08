@@ -83,9 +83,10 @@ export function addStudent(token, username, name) {
     })
 }
 
-export function sendReport(token, student_id, list_id, comments, finalComment) {
+export function sendReport(token, student_id, list_id, comments, scores, finalComment) {
     return axios.post(`/api/me/students/${student_id}/lists/${list_id}/reports`, {
         comments,
+        scores,
         finalComment
     }, {
         headers: {

@@ -38,10 +38,10 @@ class ReportPage extends Component {
         }
     }
 
-    async sendEmail(event, comments, finalComment) {
+    async sendEmail(event, comments, scores, finalComment) {
         try {
             this.setState({sendDisabled: true});
-            await sendReport(this.props.auth, this.props.match.params.student_id, this.props.match.params.list_id, comments, finalComment);
+            await sendReport(this.props.auth, this.props.match.params.student_id, this.props.match.params.list_id, comments, scores, finalComment);
             this.setState({sentEmail: true});
         } catch (err) {
             this.setState({sendDisabled: false});
