@@ -16,15 +16,17 @@ module.exports = {
 
   createReport: async (req, res) => {
     try {
-      const foundUser = await User.findById(req.authData.user._id);
-      const studentList = await listController
+      const findUser = User.findById(req.authData.user._id);
+      const listStudents = listController
         .getStudentList(req.params.student_id, req.params.list_id);
       const foundStudent = await Student.findById(req.params.student_id);
+      const foundUser = await findUser;
+      const studentList = await listStudents;
       const report = {
         list: studentList.list,
         submissions: [],
       };
-      report.score = req.body.scores.reduce((acm, score) => acm + score,0);
+      report.score = req.body.scores.reduce((acm, score) => acm + score, 0);
       report.submissions = studentList.submissions.map((submission, i) => ({
         problem: {
           tries: submission.tries,
@@ -38,10 +40,12 @@ module.exports = {
       }));
       report.finalComment = req.body.finalComment;
       report.author = foundUser.username;
-      const createdReport = await Report.create(report);
+      const createReport = Report.create(report);
+      const mail = mailer.sendReport(report, foundStudent, foundUser);
+      const createdReport = await createReport;
       foundStudent.reports.push(createdReport._id);
       await foundStudent.save();
-      await mailer.sendReport(report, foundStudent, foundUser);
+      await mail;
       return res.json(createdReport);
     } catch (err) {
       return res.status(500).send(err.message);

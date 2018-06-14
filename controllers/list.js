@@ -6,15 +6,19 @@ const moment = require('moment');
 module.exports = {
   getNewLists: async (req, res) => {
     try {
-      const requestedLists = await theHuxley.getFilteredLists();
-      let dbLists = await List.find({});
-      await Promise.all(dbLists = dbLists.filter(async (dbList) => {
+      const requestLists = theHuxley.getFilteredLists();
+      const requestDbLists = List.find({});
+      const requestedLists = await requestLists;
+      let dbLists = await requestDbLists;
+      const removedLists = [];
+      dbLists = dbLists.filter(async (dbList) => {
         if (!requestedLists.find(requestedList => requestedList.id === dbList.theHuxleyId)) {
-          await List.findByIdAndRemove(dbList);
+          removedLists.push(List.findByIdAndRemove(dbList));
           return false;
         }
         return true;
-      }));
+      });
+      await Promise.all(removedLists);
       await Promise.all(requestedLists.map(async (newList) => {
         if (!dbLists.find(dbList => dbList.theHuxleyId === newList.id)) {
           const problems = await theHuxley.getListProblems(newList.id);
@@ -53,35 +57,38 @@ module.exports = {
       };
       if (foundList) {
         const foundStudent = await Student.findById(studentId);
+        const getSubmissions = [];
+        for (let i = 0; i < foundList.problems.length; i += 1) {
+          getSubmissions.push(theHuxley.getStudentSubmissions(
+            foundList.problems[i].theHuxleyId,
+            foundStudent.theHuxleyId,
+          ).then((submissions) => {
+            const onDateSubmissions = submissions.data
+              .filter(submission => moment(submission.submissionDate) < moment(foundList.endDate));
+            let mainSubmission = { evaluation: 'EMPTY', id: 0 };
+            if (onDateSubmissions.length > 0) {
+              const correctSubmission = onDateSubmissions.find(submission => submission.evaluation === 'CORRECT');
+              mainSubmission = correctSubmission || submissions.data[0];
+            }
+            const newSubmission = {
+              tries: onDateSubmissions.length,
+              problem: {
+                name: foundList.problems[i].name,
+                theHuxleyId: foundList.problems[i].theHuxleyId,
+                score: foundList.problems[i].score,
+              },
+              theHuxleyId: mainSubmission.id,
+              evaluation: mainSubmission.evaluation,
+            };
+            studentList.submissions.push(newSubmission);
+          }));
+        }
+        await Promise.all(getSubmissions);
         studentList.student = {
           name: foundStudent.name,
           login: foundStudent.login,
           theHuxleyId: foundStudent.theHuxleyId,
         };
-        for (let i = 0; i < foundList.problems.length; i += 1) {
-          const submissions = await theHuxley.getStudentSubmissions(
-            foundList.problems[i].theHuxleyId,
-            foundStudent.theHuxleyId,
-          );
-          const onDateSubmissions = submissions.data
-            .filter(submission => moment(submission.submissionDate) < moment(foundList.endDate));
-          let mainSubmission = { evaluation: 'EMPTY', id: 0 };
-          if (onDateSubmissions.length > 0) {
-            const correctSubmission = onDateSubmissions.find(submission => submission.evaluation === 'CORRECT');
-            mainSubmission = correctSubmission || submissions.data[0];
-          }
-          const newSubmission = {
-            tries: onDateSubmissions.length,
-            problem: {
-              name: foundList.problems[i].name,
-              theHuxleyId: foundList.problems[i].theHuxleyId,
-              score: foundList.problems[i].score,
-            },
-            theHuxleyId: mainSubmission.id,
-            evaluation: mainSubmission.evaluation,
-          };
-          studentList.submissions.push(newSubmission);
-        }
         return studentList;
       }
       throw new Error('List not found');

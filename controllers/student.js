@@ -23,8 +23,9 @@ module.exports = {
 
   getStudentPendingLists: async (req, res) => {
     try {
-      const foundLists = await List.find({});
+      const findLists = List.find({});
       const foundStudent = await Student.findById(req.params.student_id).populate('reports').exec();
+      const foundLists = await findLists;
       const pendingLists = foundLists
         .filter(list => !foundStudent.reports
           .find(report => report.list.theHuxleyId === list.theHuxleyId));
@@ -40,14 +41,19 @@ module.exports = {
         req.params.student_id,
         req.params.list_id,
       );
+      const getCode = [];
       for (let i = 0; i < studentList.submissions.length; i += 1) {
         if (studentList.submissions[i].theHuxleyId === 0) {
           studentList.submissions[i].code = '';
         } else {
-          studentList.submissions[i].code = await listController
-            .getSubmissionCode(studentList.submissions[i].theHuxleyId);
+          getCode.push(listController.getSubmissionCode(studentList.submissions[i].theHuxleyId)
+            .then((code) => {
+              studentList.submissions[i].code = code;
+              return code;
+            }));
         }
       }
+      await Promise.all(getCode);
       return res.json(studentList);
     } catch (err) {
       return res.status(500).send(err.message);
