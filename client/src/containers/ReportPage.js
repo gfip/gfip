@@ -17,16 +17,12 @@ class ReportPage extends Component {
             openReporter: false,
             sendDisabled: false,
             sentEmail: false,
-<<<<<<< HEAD
-            score: 0
-=======
             comments: [],
             scores: [],
             custom: [],
             finalComment: '',
             sendDisable: false,
             totalScore: 0
->>>>>>> d31ed88f29d179736aa4b7468f49cebc1c656f42
         }
     }
 
@@ -160,11 +156,7 @@ class ReportPage extends Component {
                         {this.state.list.student && <InfoBlock
                             className='report_infoBlock'
                             title={this.state.list.student.name}
-<<<<<<< HEAD
-                            subtitle={`Score: ${this.state.score || totalScore}/${this.state.list.list.totalScore}`}/>}
-=======
                             subtitle={`Score: ${this.state.totalScore}/${this.state.list.list.totalScore}`}/>}
->>>>>>> d31ed88f29d179736aa4b7468f49cebc1c656f42
                         {this.state.list.student && <InfoBlock
                             className='report_infoBlock'
                             title={this.state.list.list.title}
