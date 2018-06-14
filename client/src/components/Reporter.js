@@ -81,7 +81,6 @@ Reporter.propTypes = {
     handleScore: PropTypes.func,
     handleDropdown: PropTypes.func,
     handleComment: PropTypes.func,
-    actualProblem: PropTypes.number,
     problems: PropTypes.array,
     custom: PropTypes.array,
     comments: PropTypes.array,

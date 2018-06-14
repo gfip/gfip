@@ -126,8 +126,9 @@ class ReportPage extends Component {
                     }
                     obj.setState(newState);
                 }
-                if (prob.evaluation === "CORRECT")
-                    prob.problem.name = prob.problem.name.substring(0, 30);
+                
+                prob.problem.name = prob.problem.name.substring(0, 30);
+                
                 return <MenuBlock
                     key={prob.problem.theHuxleyId}
                     callback={callback}
@@ -138,8 +139,7 @@ class ReportPage extends Component {
 
         let code_btn_class = this.state.openReporter ? 'grey' : 'black'
         let reporter_btn_class = this.state.openReporter ? 'black' : 'grey'
-
-        let problemIndex = this.state.list.submissions.indexOf(this.state.actualProblem); //passing to <reporter> so it can focus the right input
+        
         return (
             <div className="container column centered">
                 <Navbar user={this.props.user}/>
@@ -169,7 +169,6 @@ class ReportPage extends Component {
                         sendDisabled={this.state.sendDisabled}
                         sendEmail={this.sendEmail}
                         list={this.state.list}
-                        actualProblem={problemIndex}
                         handleComment={this.handleComment}
                         handleDropdown={this.handleDropdown}
                         handleScore={this.handleScore}
