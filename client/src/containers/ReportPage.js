@@ -16,7 +16,8 @@ class ReportPage extends Component {
             problems: {},
             openReporter: false,
             sendDisabled: false,
-            sentEmail: false
+            sentEmail: false,
+            score: 0
         }
 
         this.sendEmail = this.sendEmail.bind(this);
@@ -99,7 +100,7 @@ class ReportPage extends Component {
                         {this.state.list.student && <InfoBlock
                             className='report_infoBlock'
                             title={this.state.list.student.name}
-                            subtitle={`Score: ${totalScore}/${this.state.list.list.totalScore}`}/>}
+                            subtitle={`Score: ${this.state.score || totalScore}/${this.state.list.list.totalScore}`}/>}
                         {this.state.list.student && <InfoBlock
                             className='report_infoBlock'
                             title={this.state.list.list.title}
