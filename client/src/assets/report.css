@@ -58,6 +58,7 @@
 
 .report_dropdown{
     max-width: 50px;
+    max-height: 45px;
     margin-right: 5px;
 }
 
@@ -73,6 +74,7 @@
 
 .report_score{
     max-width: 70px;
+    max-height: 45px;
     margin-right: 5px !important; 
 }
 

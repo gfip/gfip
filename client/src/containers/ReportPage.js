@@ -17,40 +17,104 @@ class ReportPage extends Component {
             openReporter: false,
             sendDisabled: false,
             sentEmail: false,
+<<<<<<< HEAD
             score: 0
+=======
+            comments: [],
+            scores: [],
+            custom: [],
+            finalComment: '',
+            sendDisable: false,
+            totalScore: 0
+>>>>>>> d31ed88f29d179736aa4b7468f49cebc1c656f42
         }
-
-        this.sendEmail = this.sendEmail.bind(this);
     }
 
-    async componentDidMount() {
+    componentDidMount = async () => {
         try {
             let listInfo = await getListInfo(this.props.auth, this.props.match.params.student_id, this.props.match.params.list_id);
             let firstProblem = listInfo.data.submissions[0];
-            this.setState({
+            
+            await this.setState({
                 list: listInfo.data,
                 actualProblem: firstProblem,
                 problems: {
                     [firstProblem.problem.theHuxleyId]: true
                 }
             });
+
+            this.state.list.submissions.forEach((problem, index) => {
+                let defaultValue = 0;
+                
+                if(problem.evaluation === 'CORRECT'){
+                    defaultValue = problem.problem.score;
+                    this.setState({totalScore: this.state.totalScore += problem.problem.score});
+                }
+                
+                this.setStateArrayValue('scores', index, defaultValue);
+            });
         } catch (err) {
             console.log(err.message);
         }
     }
 
-    async sendEmail(event, comments, scores, finalComment) {
+    sendEmail = async () => {
         try {
             this.setState({sendDisabled: true});
-            await sendReport(this.props.auth, this.props.match.params.student_id, this.props.match.params.list_id, comments, scores, finalComment);
+            await sendReport(this.props.auth, this.props.match.params.student_id, 
+                            this.props.match.params.list_id, this.state.comments, 
+                            this.state.scores, this.state.finalComment);
             this.setState({sentEmail: true});
         } catch (err) {
             this.setState({sendDisabled: false});
         }
     }
+
+    handleComment = (event) => {
+        this.setStateArrayValue('comments', event.target.name, event.target.value);
+    }
+ 
+    handleScore = (event) => {
+        let problem = this.state.list.submissions[Number(event.target.name)]
+        
+        if(event.target.value > problem.problem.score){
+            event.target.value = problem.problem.score;
+        } else if (event.target.value < 0){
+            event.target.value = 0;
+        }
+        
+        this.setStateArrayValue('scores', event.target.name, Number(event.target.value));
+        this.calculateNewScore();
+    }
+     
+     handleDropdown = async (event, data) => {
+         let custom = data.value === 'custom';
+         this.setStateArrayValue('custom', data.name, custom);
+         if(!custom){
+            await this.setStateArrayValue('scores', data.name, data.value);
+            this.calculateNewScore();
+        }
+    }
+
+    calculateNewScore(){
+        let newScore = this.state.scores.reduce( (accum, curr) => accum + curr );
+        this.setState({totalScore: newScore});
+    }
+ 
+     handleFinalComment = (event) =>{
+         this.setState({
+             finalComment: event.target.value
+         })
+     }
+
+     setStateArrayValue = async (collection, index, value) => {
+        let news = this.state[collection];
+        news[Number(index)] = value;
+        await this.setState({[collection]: news});
+    }
+
     render() {
         let obj = this;
-        let totalScore = 0;
         var menu = this.state.list.submissions.map(
             (prob) => {
                 let callback = function () {
@@ -66,12 +130,8 @@ class ReportPage extends Component {
                     }
                     obj.setState(newState);
                 }
-                if (prob.evaluation === "CORRECT") 
-                    totalScore += prob.problem.score;
-                prob.problem.name = prob
-                    .problem
-                    .name
-                    .substring(0, 30);
+                if (prob.evaluation === "CORRECT")
+                    prob.problem.name = prob.problem.name.substring(0, 30);
                 return <MenuBlock
                     key={prob.problem.theHuxleyId}
                     callback={callback}
@@ -100,7 +160,11 @@ class ReportPage extends Component {
                         {this.state.list.student && <InfoBlock
                             className='report_infoBlock'
                             title={this.state.list.student.name}
+<<<<<<< HEAD
                             subtitle={`Score: ${this.state.score || totalScore}/${this.state.list.list.totalScore}`}/>}
+=======
+                            subtitle={`Score: ${this.state.totalScore}/${this.state.list.list.totalScore}`}/>}
+>>>>>>> d31ed88f29d179736aa4b7468f49cebc1c656f42
                         {this.state.list.student && <InfoBlock
                             className='report_infoBlock'
                             title={this.state.list.list.title}
@@ -114,6 +178,14 @@ class ReportPage extends Component {
                         sendEmail={this.sendEmail}
                         list={this.state.list}
                         actualProblem={problemIndex}
+                        handleComment={this.handleComment}
+                        handleDropdown={this.handleDropdown}
+                        handleScore={this.handleScore}
+                        handleFinalComment={this.handleFinalComment}
+                        custom={this.state.custom}
+                        comments={this.state.comments}
+                        finalComment={this.state.finalComment}
+                        scores={this.state.scores}
                         problems={this.state.list.submissions}></Reporter>}
                 </div>
             </div>
