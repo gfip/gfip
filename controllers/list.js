@@ -21,20 +21,22 @@ module.exports = {
       await Promise.all(removedLists);
       await Promise.all(requestedLists.map(async (newList) => {
         if (!dbLists.find(dbList => dbList.theHuxleyId === newList.id)) {
-          const problems = await theHuxley.getListProblems(newList.id);
-          const refactoredProblems = await problems.data.map(problem => ({
-            name: problem.name,
-            theHuxleyId: problem.id,
-            score: problem.score,
-          }));
-          const createdList = await List.create({
-            title: newList.title,
-            theHuxleyId: newList.id,
-            totalScore: newList.score,
-            endDate: newList.endDate,
-            problems: refactoredProblems,
-          });
-          dbLists.push(createdList);
+          theHuxley.getListProblems(newList.id)
+            .then((problems) => {
+              const refactoredProblems = problems.data.map(problem => ({
+                name: problem.name,
+                theHuxleyId: problem.id,
+                score: problem.score,
+              }));
+              return List.create({
+                title: newList.title,
+                theHuxleyId: newList.id,
+                totalScore: newList.score,
+                endDate: newList.endDate,
+                problems: refactoredProblems,
+              });
+            })
+            .then(createdList => dbLists.push(createdList));
         }
       }));
       return res.json(dbLists);
