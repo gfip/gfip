@@ -8,7 +8,7 @@ function getStatus(submission) {
 }
 
 
-module.exports = (report, student, user) => {
+module.exports = (report, student) => {
   const problems = report.submissions.reduce((acc, submission) =>
     `${acc}<li><strong><a href = 'https://www.thehuxley.com/problem/${submission.problem.theHuxleyId}' >${submission.problem.name}:</a></strong> ${getStatus(submission)} <strong>(${submission.score.toFixed(1)})</strong>;
       <p>${submission.comment || ''}</p>
@@ -22,6 +22,6 @@ module.exports = (report, student, user) => {
   </ul>
   <p>${report.finalComment || ''}</p>
   <p>Pontuação total <strong>${report.score.toFixed(1)}/${report.list.totalScore.toFixed(1)}</strong></p>
-  Responder para ${user.username}@cin.ufpe.br
+  Responder para ${report.author}@cin.ufpe.br
 `;
 };
