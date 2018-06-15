@@ -57,12 +57,12 @@ module.exports = {
       const getStudentList = listController
         .getStudentList(req.params.student_id, req.params.list_id);
       const findStudent = Student.findById(req.params.student_id);
+      const studentList = await getStudentList;
       const report = {
         list: studentList.list,
         submissions: [],
       };
       const createdReport = await Report.create(report);
-      const studentList = await getStudentList;
       const foundStudent = await findStudent;
       foundStudent.reports.push(createdReport._id);
       await foundStudent.save();
