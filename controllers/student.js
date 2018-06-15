@@ -94,7 +94,7 @@ module.exports = {
       const foundUser = await User.findById(req.authData.user._id);
       foundUser.students.splice(foundUser.students.indexOf(req.params.student_id), 1);
       await foundUser.save();
-      const otherUser = await User.find({ students: req.body.student_id });
+      const otherUser = await User.find({ students: req.params.student_id });
       let deletedStudent;
       if (otherUser.length > 0) {
         deletedStudent = await Student.findById(req.params.student_id);

@@ -19,7 +19,7 @@ module.exports = {
       const findUser = User.findById(req.authData.user._id);
       const listStudents = listController
         .getStudentList(req.params.student_id, req.params.list_id);
-      const findOtherUsers = User.find({ students: req.body.student_id });
+      const findOtherUsers = User.find({ students: req.params.student_id });
       const foundStudent = await Student.findById(req.params.student_id);
       const foundUser = await findUser;
       const studentList = await listStudents;
