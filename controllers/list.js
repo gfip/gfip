@@ -19,9 +19,9 @@ module.exports = {
         return true;
       });
       await Promise.all(removedLists);
-      await Promise.all(requestedLists.map(async (newList) => {
+      await Promise.all(requestedLists.map((newList) => {
         if (!dbLists.find(dbList => dbList.theHuxleyId === newList.id)) {
-          theHuxley.getListProblems(newList.id)
+          return theHuxley.getListProblems(newList.id)
             .then((problems) => {
               const refactoredProblems = problems.data.map(problem => ({
                 name: problem.name,
@@ -38,6 +38,7 @@ module.exports = {
             })
             .then(createdList => dbLists.push(createdList));
         }
+        return undefined;
       }));
       return res.json(dbLists);
     } catch (err) {

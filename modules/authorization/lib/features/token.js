@@ -13,9 +13,10 @@ module.exports = async (req, res, next) => {
       const bearer = bearerHeader.split(' ');
       const bearerToken = bearer[1];
 
-      const authData = await jwt.verify(bearerToken, loginKey);
-      req.authData = authData;
+      const checkToken = jwt.verify(bearerToken, loginKey);
       const foundUser = await User.findById(authData.user._id);
+      const authData = await checkToken;
+      req.authData = authData;
       if (foundUser) {
         return next();
       }
