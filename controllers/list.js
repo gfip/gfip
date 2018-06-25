@@ -83,7 +83,7 @@ module.exports = {
               theHuxleyId: mainSubmission.id,
               evaluation: mainSubmission.evaluation,
             };
-            studentList.submissions.push(newSubmission);
+            studentList.submissions[i] = newSubmission;
           }));
         }
         await Promise.all(getSubmissions);
