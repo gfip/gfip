@@ -9,37 +9,26 @@ function getStatus(submission) {
   return 'Correto';
 }
 
-function addCodePrettify(str) {
-  let result = str;
-  let index = result.indexOf('<code');
-  while (index !== -1) {
-    result = [result.slice(0, index + 5), result.slice(index + 5)].join(' class = "prettyprint"');
-    index = result.indexOf('<code', index + 1);
-  }
-  return result.split('code').join('pre');
-}
-
 module.exports = (report, student) => {
   const problems = report.submissions.reduce((acc, submission) =>
     `${acc}<li>
       <strong>
         <a href = 'https://www.thehuxley.com/problem/${submission.problem.theHuxleyId}' >${submission.problem.name}:</a>
-      </strong> ${getStatus(submission)} <strong>(${submission.score.toFixed(1)})</strong>;
+      </strong> ${getStatus(submission)} <strong>(${submission.score})</strong>;
       <p>
-        ${addCodePrettify(markdown.toHTML(submission.comment || ''))}
+        ${markdown.toHTML(submission.comment || '').split('code').join('pre')}
       </p>
     </li>
     `, '');
 
   return `
-  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
   <p>Olá, ${student.name.split(' ')[0]}</p>
   <p> Segue o Feedback da ${report.list.title} : </p>
   <ul style = 'margin:0; padding:0'>
     ${problems}
   </ul>
-  <p>${addCodePrettify(markdown.toHTML(report.finalComment || ''))}</p>
-  <p>Pontuação total <strong>${report.score.toFixed(1)}/${report.list.totalScore.toFixed(1)}</strong></p>
+  <p>${markdown.toHTML(report.finalComment || '').split('code').join('pre')}</p>
+  <p>Pontuação total <strong>${report.score}/${report.list.totalScore}</strong></p>
   Responder para ${report.author}@cin.ufpe.br
 `;
 };
