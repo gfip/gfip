@@ -21,17 +21,17 @@ function addCodePrettify(str) {
 
 module.exports = (report, student) => {
   const problems = report.submissions.reduce((acc, submission) =>
-    `${acc}
-    <li>
+    `${acc}<li>
       <strong>
         <a href = 'https://www.thehuxley.com/problem/${submission.problem.theHuxleyId}' >${submission.problem.name}:</a>
       </strong> ${getStatus(submission)} <strong>(${submission.score.toFixed(1)})</strong>;
       <p>
-        <pre style = 'font-size: 12px; color: black;'>${addCodePrettify(markdown.toHTML(submission.comment || ''))}</pre>
+        ${addCodePrettify(markdown.toHTML(submission.comment || ''))}
       </p>
     </li>
     `, '');
 
+  console.log(problems);
   return `
   <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
   <p>Olá, ${student.name.split(' ')[0]}</p>
