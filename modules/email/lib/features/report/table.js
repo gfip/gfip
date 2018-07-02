@@ -16,7 +16,7 @@ function addCodePrettify(str) {
     result = [result.slice(0, index + 5), result.slice(index + 5)].join(' class = "prettyprint"');
     index = result.indexOf('<code', index + 1);
   }
-  return result;
+  return result.split('code').join('pre');
 }
 
 module.exports = (report, student) => {
@@ -31,7 +31,6 @@ module.exports = (report, student) => {
     </li>
     `, '');
 
-  console.log(problems);
   return `
   <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
   <p>Olá, ${student.name.split(' ')[0]}</p>
@@ -39,7 +38,7 @@ module.exports = (report, student) => {
   <ul style = 'margin:0; padding:0'>
     ${problems}
   </ul>
-  <p><pre style = 'font-size: 12px; color: black;' >${addCodePrettify(markdown.toHTML(report.finalComment || ''))}</pre></p>
+  <p>${addCodePrettify(markdown.toHTML(report.finalComment || ''))}</p>
   <p>Pontuação total <strong>${report.score.toFixed(1)}/${report.list.totalScore.toFixed(1)}</strong></p>
   Responder para ${report.author}@cin.ufpe.br
 `;
