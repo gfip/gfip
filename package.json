@@ -14,6 +14,7 @@
     "express": "^4.16.3",
     "jwt-then": "^0.6.0",
     "lodash": "^4.17.10",
+    "markdown": "^0.5.0",
     "method-override": "^2.3.10",
     "moment": "^2.22.2",
     "mongoose": "^5.0.10",
