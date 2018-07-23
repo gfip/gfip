@@ -28,38 +28,13 @@ module.exports = {
       const foundLists = await findLists;
       const pendingLists = foundLists
         .filter(list => !foundStudent.reports
-          .find(report => report.list.theHuxleyId === list.theHuxleyId));
+          .find(report => report.list.theHuxleyId === list.theHuxleyId && report.list.sent));
       return res.json(pendingLists);
     } catch (err) {
       return res.status(500).send(err.message);
     }
   },
-
-  showStudentList: async (req, res) => {
-    try {
-      const studentList = await listController.getStudentList(
-        req.params.student_id,
-        req.params.list_id,
-      );
-      const getCode = [];
-      for (let i = 0; i < studentList.submissions.length; i += 1) {
-        if (studentList.submissions[i].theHuxleyId === 0) {
-          studentList.submissions[i].code = '';
-        } else {
-          getCode.push(listController.getSubmissionCode(studentList.submissions[i].theHuxleyId)
-            .then((code) => {
-              studentList.submissions[i].code = code;
-              return code;
-            }));
-        }
-      }
-      await Promise.all(getCode);
-      return res.json(studentList);
-    } catch (err) {
-      return res.status(500).send(err.message);
-    }
-  },
-
+  
   createStudent: async (req, res) => {
     try {
       const studentData = await theHuxley.getUserInfoByName(req.body.name);

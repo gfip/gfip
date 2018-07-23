@@ -12,15 +12,21 @@ const reportSchema = mongoose.Schema({
     {
       problem: {
         name: String,
+        score: Number,
+        tries: Number,
+        theHuxleyId: Number,
         maxScore: Number,
       },
       score: Number,
       evaluation: String,
       comment: String,
+      theHuxleyId: Number,
+      code: String,
     },
   ],
   finalComment: String,
   author: String,
+  sent: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model('Report', reportSchema);
