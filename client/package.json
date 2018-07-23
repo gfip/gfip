@@ -7,8 +7,10 @@
     "async": "^2.6.0",
     "axios": "^0.18.0",
     "lodash": "^4.17.10",
+    "moment": "^2.22.2",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
+    "react-autosize-textarea": "^3.0.3",
     "react-dom": "^16.2.0",
     "react-media": "^1.8.0",
     "react-router-dom": "^4.2.2",
@@ -23,5 +25,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "eslint-plugin-react": "^7.9.1"
   }
 }

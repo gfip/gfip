@@ -14,8 +14,8 @@ module.exports = async (req, res, next) => {
       const bearerToken = bearer[1];
 
       const authData = await jwt.verify(bearerToken, loginKey);
-      req.authData = authData;
       const foundUser = await User.findById(authData.user._id);
+      req.authData = authData;
       if (foundUser) {
         return next();
       }

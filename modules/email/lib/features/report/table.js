@@ -1,26 +1,34 @@
+const { markdown } = require('markdown');
 
-module.exports = (report, student, user) => {
-  const status = {
-    CORRECT: 'Correto',
-    WRONG_ANSWER: 'Errado',
-    EMPTY: 'Não fez',
-    EMPTY_ANSWER: 'Saída vázia',
-    RUNTIME_ERROR: 'Erro de execução',
-    TIME_LIMIT_EXCEEDED: 'Tempo limite execedido',
-  };
+function getStatus(submission) {
+  if (submission.score === 0) {
+    return 'Errado';
+  } else if (submission.score < submission.problem.maxScore) {
+    return 'Nota Parcial';
+  }
+  return 'Correto';
+}
 
+module.exports = (report, student) => {
   const problems = report.submissions.reduce((acc, submission) =>
-    `${acc}<li><strong><a href = 'https://www.thehuxley.com/problem/${submission.problem.theHuxleyId}' >${submission.problem.name}:</a></strong> ${status[submission.evaluation]};
-      <p>${submission.comment || ''}</p>
+    `${acc}<li>
+      <strong>
+        <a href = 'https://www.thehuxley.com/problem/${submission.problem.theHuxleyId}' >${submission.problem.name}:</a>
+      </strong> ${getStatus(submission)} <strong>(${submission.score})</strong>;
+      <p>
+        ${markdown.toHTML(submission.comment || '').split('code').join('pre')}
+      </p>
     </li>
     `, '');
 
-  return `<p>Olá, ${student.name.split(' ')[0]}</p>
+  return `
+  <p>Olá, ${student.name.split(' ')[0]}</p>
   <p> Segue o Feedback da ${report.list.title} : </p>
   <ul style = 'margin:0; padding:0'>
-  ${problems}
+    ${problems}
   </ul>
-  <p>${report.finalComment || ''}</p>
-  Responder para ${user.username}@cin.ufpe.br
+  <p>${markdown.toHTML(report.finalComment || '').split('code').join('pre')}</p>
+  <p>Pontuação total <strong>${report.score}/${report.list.totalScore}</strong></p>
+  Responder para ${report.author}@cin.ufpe.br
 `;
 };

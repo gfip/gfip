@@ -1,10 +1,11 @@
-import React, { Component } from 'react'; 
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import '../assets/dashboard.css';
-import {getStudentPendingList} from '../helpers/api';
-import { Navbar, Lists, ReportHistory, MenuBlock, InfoBlock} from '../components';
-import { getStudentInfo, getStudentReports, discardListReport } from '../helpers/api';
+import {Navbar, Lists, ReportHistory, MenuBlock, InfoBlock} from '../components';
+import {getStudentInfo, getStudentReports, discardListReport, getStudentPendingList} from '../helpers/api';
+
 class ShowStudentPage extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             lists: [],
@@ -16,36 +17,38 @@ class ShowStudentPage extends Component {
         this.openHistory = this.openHistory.bind(this);
         this.discardReport = this.discardReport.bind(this);
     }
-    
-    async componentDidMount(){
-        try{
+
+    async componentDidMount() {
+        try {
             let lists = await getStudentPendingList(this.props.auth, this.props.match.params.id)
             let student = await getStudentInfo(this.props.auth, this.props.match.params.id);
             let reports = await getStudentReports(this.props.auth, this.props.match.params.id);
             let studentName = student.data.name.split(' ');
-            studentName = studentName[0] + ' ' + studentName[studentName.length-1];
+            studentName = studentName[0] + ' ' + studentName[studentName.length - 1];
             student.data.name = studentName;
             this.setState({lists: lists.data, student: student.data, reports: reports.data});
-        } catch (err){
+        } catch (err) {
             console.log(err.message);
         }
     }
-    openPendingReports () {
+    openPendingReports() {
         this.setState({openLists: true})
     }
-    
+
     openHistory() {
         this.setState({openLists: false})
     }
-    
-    discardReport = async event => {
+
+    async discardReport(event) {
         event.preventDefault();
         try {
             let list_id = event.target.dataset.id;
-            if(this.state.discardEnabled) {
+            if (this.state.discardEnabled) {
                 this.setState({discardEnabled: false});
-                await discardListReport(this.props.auth, this.state.student._id, list_id); 
-                let newLists = this.state.lists.filter((list) => { return list._id !== list_id })
+                await discardListReport(this.props.auth, this.state.student._id, list_id);
+                let newLists = this.state.lists.filter((list) => {
+                    return list._id !== list_id
+                })
                 this.setState({lists: newLists});
             }
         } catch (err) {
@@ -56,22 +59,40 @@ class ShowStudentPage extends Component {
 
     render() {
         return (
-        <div className="container column centered">
-            <Navbar user={this.props.user}/>
-            <div>
-                <div className="container column centered">
-                    { this.state.student && <InfoBlock class='show_student_studentInfo' title={this.state.student.name} subtitle={this.state.student.username + '@cin.ufpe.br'}/> }
-                    <div className="show_student_studentMenu container column centered">
-                        <MenuBlock callback={this.openPendingReports} title='Pending reports' active={this.state.openLists}/>
-                        <MenuBlock callback={this.openHistory} title='History' active={this.state.openHistory}/>
+            <div className="container column centered">
+                <Navbar user={this.props.user}/>
+                <div>
+                    <div className="container column centered">
+                        {this.state.student && <InfoBlock
+                            className='show_student_studentInfo'
+                            title={this.state.student.name}
+                            subtitle={this.state.student.username + '@cin.ufpe.br'}/>}
+                        <div className="show_student_studentMenu container column centered">
+                            <MenuBlock
+                                callback={this.openPendingReports}
+                                title='Pending reports'
+                                active={this.state.openLists}/>
+                            <MenuBlock
+                                callback={this.openHistory}
+                                title='History'
+                                active={this.state.openHistory}/>
+                        </div>
                     </div>
+                    {this.state.openLists && <Lists
+                        lists={this.state.lists}
+                        discardReport={this.discardReport}
+                        student_id={this.state.student._id}/>}
+                    {!this.state.openLists && <ReportHistory reports={this.state.reports}/>}
                 </div>
-                { this.state.openLists && <Lists lists={this.state.lists} discardReport={this.discardReport} student_id={this.state.student._id}/> } 
-                { !this.state.openLists && <ReportHistory reports={this.state.reports}/> } 
             </div>
-        </div>
-       )
+        )
     }
+}
+
+ShowStudentPage.propTypes = {
+    auth: PropTypes.string,
+    match: PropTypes.object,
+    user: PropTypes.object
 }
 
 export default ShowStudentPage;

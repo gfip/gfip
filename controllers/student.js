@@ -23,8 +23,9 @@ module.exports = {
 
   getStudentPendingLists: async (req, res) => {
     try {
-      const foundLists = await List.find({});
+      const findLists = List.find({});
       const foundStudent = await Student.findById(req.params.student_id).populate('reports').exec();
+      const foundLists = await findLists;
       const pendingLists = foundLists
         .filter(list => !foundStudent.reports
           .find(report => report.list.theHuxleyId === list.theHuxleyId && report.list.sent));
@@ -33,7 +34,7 @@ module.exports = {
       return res.status(500).send(err.message);
     }
   },
-
+  
   createStudent: async (req, res) => {
     try {
       const studentData = await theHuxley.getUserInfoByName(req.body.name);
@@ -68,7 +69,7 @@ module.exports = {
       const foundUser = await User.findById(req.authData.user._id);
       foundUser.students.splice(foundUser.students.indexOf(req.params.student_id), 1);
       await foundUser.save();
-      const otherUser = await User.find({ students: req.body.student_id });
+      const otherUser = await User.find({ students: req.params.student_id });
       let deletedStudent;
       if (otherUser.length > 0) {
         deletedStudent = await Student.findById(req.params.student_id);

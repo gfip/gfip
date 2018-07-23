@@ -18,8 +18,10 @@ module.exports = {
     try {
       const foundUser = await User.findById(req.authData.user._id);
       const foundReport = await Report.findById(req.params.report_id);
+      foundReport.score = req.body.scores.reduce((acm, score) => acm + score, 0);
       if (foundReport) {
         for (let i = 0; i < foundReport.submissions.length; i += 1) {
+          foundReport.submissions[i].score = req.body.scores[i];
           foundReport.submissions[i].comment = req.body.comments[i];
         }
         foundReport.finalComment = req.body.finalComment;
@@ -35,15 +37,17 @@ module.exports = {
 
   createBlankReport: async (req, res) => {
     try {
-      const studentList = await listController
+      const getStudentList = listController
         .getStudentList(req.params.student_id, req.params.list_id);
-      const foundStudent = await Student.findById(req.params.student_id);
+      const findStudent = Student.findById(req.params.student_id);
+      const studentList = await getStudentList;
       const report = {
         list: studentList.list,
         submissions: [],
         sent: true,
       };
       const createdReport = await Report.create(report);
+      const foundStudent = await findStudent;
       foundStudent.reports.push(createdReport._id);
       await foundStudent.save();
       return res.json(createdReport);
@@ -57,7 +61,9 @@ module.exports = {
       const foundStudent = await Student.findById(req.params.student_id);
       const foundUser = await User.findById(req.authData.user._id);
       const foundReport = await Report.findById(req.params.report_id);
+      foundReport.score = req.body.scores.reduce((acm, score) => acm + score, 0);
       for (let i = 0; i < foundReport.submissions.length; i += 1) {
+        foundReport.submissions[i].score = req.body.scores[i];
         foundReport.submissions[i].comment = req.body.comments[i];
       }
       foundReport.finalComment = req.body.finalComment;
@@ -105,9 +111,10 @@ module.exports = {
           problem: {
             tries: submission.tries,
             name: submission.problem.name,
-            score: submission.problem.score,
+            maxScore: submission.problem.score,
             theHuxleyId: submission.problem.theHuxleyId,
           },
+          score: submission.proble.score,
           theHuxleyId: submission.theHuxleyId,
           evaluation: studentList.submissions[i].evaluation,
           comment: '',
