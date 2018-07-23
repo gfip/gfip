@@ -15,6 +15,21 @@ router.post('/:student_id/lists/:list_id/reports/blank', middleware.checkStudent
 
 router.delete('/:student_id/reports/:report_id', middleware.checkStudentOwnership, middleware.checkReportOwnership, controller.deleteReport);
 
-router.get('/:student_id/lists/:list_id', middleware.checkStudentOwnership, controller.showReport);
+router.get('/:student_id/lists/:list_id/reports', middleware.checkStudentOwnership, controller.showReport);
 
 module.exports = router;
+
+/**
+ * GET
+ * /:students_id/lists/:list_id/reports
+ * Checa se ja existe um report para essa lista e o retorna, caso não exista cria um.
+ * 
+ * PUT
+ * /:students_id/reports/:report_id
+ * Atualiza/Salva o report
+ * 
+ * PUT
+ * /:students_id/reports/:report_id/send
+ * Envia o report
+ * 
+ */
