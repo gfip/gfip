@@ -22,7 +22,6 @@ module.exports = username => new Promise((resolve, reject) => {
         }
       });
       reject(new Error("You're not not allowed to register to this service."));
-    })
-    .catch(err => reject(err));
+    }).catch(err => reject(err));
 });
 
