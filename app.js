@@ -7,6 +7,8 @@ const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const path = require('path');
 
+const listController = require('./controllers/list')
+
 const app = express();
 
 global.__base = `${__dirname}/`; // set __base as root directory

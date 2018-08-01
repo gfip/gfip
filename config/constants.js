@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-module.exports = {
+const constants = {
 
   authentication: {
     loginKey: process.env.SECRET_KEY,
@@ -20,3 +20,6 @@ module.exports = {
 
   address: process.env.ADDRESS,
 };
+
+
+module.exports = constants;

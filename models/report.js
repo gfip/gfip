@@ -7,17 +7,21 @@ const reportSchema = mongoose.Schema({
     totalScore: Number,
     endDate: String,
   },
+  student: {
+    name: String,
+    login: String,
+    theHuxleyId: Number,
+  },
   score: Number,
   submissions: [
     {
       problem: {
         name: String,
         score: Number,
-        tries: Number,
         theHuxleyId: Number,
         maxScore: Number,
       },
-      score: Number,
+      tries: Number,
       evaluation: String,
       comment: String,
       theHuxleyId: Number,

@@ -1,5 +1,5 @@
 const axios = require("axios");
-const config = require( __base +"/config/constants.js");
+const config = require("../../../../config/constants.js");
 const _ = require("lodash");
 const moment = require("moment")
 var authorization = null;

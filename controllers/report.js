@@ -3,6 +3,8 @@ const Report = require('../models/report');
 const User = require('../models/user');
 const listController = require('./list');
 const mailer = require('../modules/email');
+const List = require('../models/list');
+const _ = require('lodash');
 
 module.exports = {
   getReports: async (req, res) => {
@@ -17,7 +19,10 @@ module.exports = {
   saveReport: async (req, res) => {
     try {
       const foundUser = await User.findById(req.authData.user._id);
-      const foundReport = await Report.findById(req.params.report_id);
+      const foundStudent = await Student.findById(req.params.student_id);
+      const list = await List.findById(req.params.list_id);
+      const foundReport = foundStudent.reports
+        .find(report => report.list.theHuxleyId === list.theHuxleyId);
       foundReport.score = req.body.scores.reduce((acm, score) => acm + score, 0);
       if (foundReport) {
         for (let i = 0; i < foundReport.submissions.length; i += 1) {
@@ -58,9 +63,12 @@ module.exports = {
 
   sendReport: async (req, res) => {
     try {
+      console.log('aaa');
       const foundStudent = await Student.findById(req.params.student_id);
+      const list = await List.findById(req.params.list_id);
+      const foundReport = foundStudent.reports
+        .find(report => report.list.theHuxleyId === list.theHuxleyId);
       const foundUser = await User.findById(req.authData.user._id);
-      const foundReport = await Report.findById(req.params.report_id);
       foundReport.score = req.body.scores.reduce((acm, score) => acm + score, 0);
       for (let i = 0; i < foundReport.submissions.length; i += 1) {
         foundReport.submissions[i].score = req.body.scores[i];
@@ -99,34 +107,38 @@ module.exports = {
         .find(report => report.list.theHuxleyId === studentList.list.theHuxleyId);
       let returnedReport;
       if (foundReport) {
+        console.log(foundReport);
         returnedReport = foundReport;
       } else {
         const report = {
           list: studentList.list,
           submissions: [],
           finalComment: '',
+          student: {
+            name: foundStudent.name,
+            login: foundStudent.login,
+            theHuxleyId: foundStudent.theHuxleyId,
+          },
           author: foundUser.username,
         };
         report.submissions = await Promise.all(studentList.submissions.map(async (submission, i) => ({
+          tries: submission.tries,
           problem: {
-            tries: submission.tries,
             name: submission.problem.name,
             maxScore: submission.problem.score,
             theHuxleyId: submission.problem.theHuxleyId,
+            score: submission.problem.score,
           },
-          score: submission.proble.score,
           theHuxleyId: submission.theHuxleyId,
           evaluation: studentList.submissions[i].evaluation,
           comment: '',
           code: submission.theHuxleyId === 0 ? '' : await listController.getSubmissionCode(submission.theHuxleyId),
         })));
         returnedReport = await Report.create(report);
-        foundStudent.reports.push(returnedReport._id);
         await foundStudent.save();
       }
       return res.json(returnedReport);
     } catch (err) {
-      console.log(err);
       return res.status(500).send(err.message);
     }
   },
