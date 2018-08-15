@@ -28,7 +28,7 @@ module.exports = {
       const foundLists = await findLists;
       const pendingLists = foundLists
         .filter(list => !foundStudent.reports
-          .find(report => report.list.theHuxleyId === list.theHuxleyId && report.list.sent));
+          .find(report => report.list.theHuxleyId === list.theHuxleyId && report.sent));
       return res.json(pendingLists);
     } catch (err) {
       return res.status(500).send(err.message);

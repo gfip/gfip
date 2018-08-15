@@ -52,7 +52,7 @@ class DashboardPage extends Component {
             console.log(err.message);
         }
     }
-
+    
     async componentDidMount() {
         try {
             let students = await getStudents(this.props.auth);

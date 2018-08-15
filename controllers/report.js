@@ -4,7 +4,7 @@ const User = require('../models/user');
 const listController = require('./list');
 const mailer = require('../modules/email');
 const List = require('../models/list');
-const _ = require('lodash');
+const mongoose = require('mongoose');
 
 module.exports = {
   getReports: async (req, res) => {
@@ -18,6 +18,7 @@ module.exports = {
 
   saveReport: async (req, res) => {
     try {
+      console.log('save report');
       const foundUser = await User.findById(req.authData.user._id);
       const foundStudent = await Student.findById(req.params.student_id);
       const list = await List.findById(req.params.list_id);
@@ -63,24 +64,29 @@ module.exports = {
 
   sendReport: async (req, res) => {
     try {
-      console.log('aaa');
-      const foundStudent = await Student.findById(req.params.student_id);
+      const foundStudent = await Student.findById(req.params.student_id).populate('reports').exec();
       const list = await List.findById(req.params.list_id);
+      console.log(foundStudent.reports);
       const foundReport = foundStudent.reports
         .find(report => report.list.theHuxleyId === list.theHuxleyId);
-      const foundUser = await User.findById(req.authData.user._id);
+      if(!foundReport) {
+        return res.json('not found');
+      }
+      console.log(foundReport.submissions);
+      const foundUsers = await User.find({ students: { $in: mongoose.Types.ObjectId((foundStudent._id)) } });
       foundReport.score = req.body.scores.reduce((acm, score) => acm + score, 0);
       for (let i = 0; i < foundReport.submissions.length; i += 1) {
         foundReport.submissions[i].score = req.body.scores[i];
         foundReport.submissions[i].comment = req.body.comments[i];
       }
       foundReport.finalComment = req.body.finalComment;
-      foundReport.author = foundUser.username;
+      foundReport.author = req.authData.user.username;
       foundReport.sent = true;
       await foundReport.save();
-      mailer.sendReport(foundReport, foundStudent, foundUser);
+      mailer.sendReport(foundReport, foundStudent, foundUsers);
       return res.json(foundReport);
     } catch (err) {
+      console.log(err);
       return res.status(500).send(err.message);
     }
   },
@@ -107,7 +113,6 @@ module.exports = {
         .find(report => report.list.theHuxleyId === studentList.list.theHuxleyId);
       let returnedReport;
       if (foundReport) {
-        console.log(foundReport);
         returnedReport = foundReport;
       } else {
         const report = {
@@ -116,7 +121,7 @@ module.exports = {
           finalComment: '',
           student: {
             name: foundStudent.name,
-            login: foundStudent.login,
+            login: foundStudent.username,
             theHuxleyId: foundStudent.theHuxleyId,
           },
           author: foundUser.username,
@@ -135,6 +140,7 @@ module.exports = {
           code: submission.theHuxleyId === 0 ? '' : await listController.getSubmissionCode(submission.theHuxleyId),
         })));
         returnedReport = await Report.create(report);
+        foundStudent.reports.push(returnedReport._id);
         await foundStudent.save();
       }
       return res.json(returnedReport);

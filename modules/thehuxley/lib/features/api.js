@@ -29,7 +29,7 @@ async function getStudentSubmissions(problemID, userID){
 }
 
 function getSemester(date){
-    if(moment(date).month() < 7)
+    if(moment(date).month() < 10)
         return 0;
     return 1;
 }

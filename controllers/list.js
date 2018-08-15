@@ -10,6 +10,7 @@ module.exports = {
       const requestDbLists = List.find({});
       const requestedLists = await requestLists;
       let dbLists = await requestDbLists;
+      console.log(requestedLists);
       const removedLists = [];
       dbLists = dbLists.filter(async (dbList) => {
         if (!requestedLists.find(requestedList => requestedList.id === dbList.theHuxleyId)) {

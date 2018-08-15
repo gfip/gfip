@@ -8,6 +8,8 @@ const User = require('./models/user');
 const path = require('path');
 
 const listController = require('./controllers/list')
+const Report = require('./models/report');
+
 
 const app = express();
 
