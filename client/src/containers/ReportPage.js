@@ -34,8 +34,7 @@ class ReportPage extends Component {
             let firstProblem = listInfo.data.submissions[0];
             report = report.data;
             let comments = report.submissions.map((subm) => subm.comment);
-            console.log(comments)
-            console.log(report)
+
             this.setState({finalComment: report.finalComment, comments: comments});
             
             await this.setState({
@@ -53,7 +52,6 @@ class ReportPage extends Component {
             });
 
             setInterval(() => {
-                console.log("yey")
                 this.saveReportCall();
             }, 1500)
         } catch (err) {
@@ -76,7 +74,6 @@ class ReportPage extends Component {
     handleComment = (event) => {
         this.setStateArrayValue('comments', event.target.name, event.target.value);
         this.setReportDirty();
-        console.log(this.state.comments)
     }
  
     handleScore = (event) => {
@@ -122,14 +119,12 @@ class ReportPage extends Component {
     }
 
     setReportDirty = () => {
-        console.log("dirty")
         this.setState({reportIsDirty: true});
     }
 
     saveReportCall = async () => {
         try{
             if (this.state.reportIsDirty){
-                console.log("ae")
                 await saveReport(this.props.auth, this.props.match.params.student_id, this.props.match.params.list_id, this.state.comments, this.state.scores, this.state.finalComment);
                 this.setState({reportIsDirty: false});
             } 
