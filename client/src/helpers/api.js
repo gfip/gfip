@@ -83,8 +83,28 @@ export function addStudent(token, username, name) {
     })
 }
 
+export function showReport(token, student_id, list_id) {
+    return axios.get(`/api/me/students/${student_id}/lists/${list_id}/reports`, {
+        headers: {
+            Authorization: 'Bearer ' + token
+        }
+    })
+}
+
 export function sendReport(token, student_id, list_id, comments, scores, finalComment) {
     return axios.put(`/api/me/students/${student_id}/lists/${list_id}/reports/send`, {
+        comments,
+        scores,
+        finalComment
+    }, {
+        headers: {
+            Authorization: 'Bearer ' + token
+        }
+    })
+}
+
+export function saveReport(token, student_id, list_id, comments, scores, finalComment) {
+    return axios.put(`/api/me/students/${student_id}/lists/${list_id}/reports/save`, {
         comments,
         scores,
         finalComment

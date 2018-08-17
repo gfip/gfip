@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Button, Icon} from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import '../assets/report.css';
-import {getListInfo, sendReport} from '../helpers/api';
+import {getListInfo, sendReport, showReport, saveReport} from '../helpers/api';
 import {Navbar, MenuBlock, InfoBlock, CodeViewer, Reporter} from '../components';
 
 class ReportPage extends Component {
@@ -28,8 +28,13 @@ class ReportPage extends Component {
 
     componentDidMount = async () => {
         try {
+            let report = await showReport(this.props.auth, this.props.match.params.student_id, this.props.match.params.list_id);
             let listInfo = await getListInfo(this.props.auth, this.props.match.params.student_id, this.props.match.params.list_id);
             let firstProblem = listInfo.data.submissions[0];
+            report = report.data;
+            let comments = report.submissions.map((subm) => subm.comment);
+            console.log(comments)
+            this.setState({finalComment: report.finalComment, comments: comments});
             
             await this.setState({
                 list: listInfo.data,
@@ -39,16 +44,26 @@ class ReportPage extends Component {
                 }
             });
 
-            this.state.list.submissions.forEach((problem, index) => {
+            report.submissions.forEach((submission, index) => {
                 let defaultValue = 0;
                 
-                if(problem.evaluation === 'CORRECT'){
-                    defaultValue = problem.problem.score;
-                    this.setState({totalScore: this.state.totalScore += problem.problem.score});
+                if(submission.evaluation === 'CORRECT'){
+                    if(submission.score){
+                        defaultValue = submission.score;
+                    } else {
+                        defaultValue =  submission.problem.score;
+                    }
+
+                    this.setState({totalScore: this.state.totalScore += defaultValue});
                 }
                 
                 this.setStateArrayValue('scores', index, defaultValue);
             });
+
+            setInterval(() => {
+                console.log("yey")
+                this.saveReportCall();
+            }, 3000)
         } catch (err) {
             console.log(err.message);
         }
@@ -68,6 +83,7 @@ class ReportPage extends Component {
 
     handleComment = (event) => {
         this.setStateArrayValue('comments', event.target.name, event.target.value);
+        this.setReportDirty();
     }
  
     handleScore = (event) => {
@@ -81,6 +97,7 @@ class ReportPage extends Component {
         
         this.setStateArrayValue('scores', event.target.name, Number(event.target.value));
         this.calculateNewScore();
+        this.setReportDirty();
     }
      
      handleDropdown = async (event, data) => {
@@ -90,6 +107,7 @@ class ReportPage extends Component {
             await this.setStateArrayValue('scores', data.name, data.value);
             this.calculateNewScore();
         }
+        this.setReportDirty();
     }
 
     calculateNewScore(){
@@ -97,16 +115,33 @@ class ReportPage extends Component {
         this.setState({totalScore: newScore});
     }
  
-     handleFinalComment = (event) =>{
+    handleFinalComment = (event) =>{
          this.setState({
              finalComment: event.target.value
          })
      }
 
-     setStateArrayValue = async (collection, index, value) => {
+    setStateArrayValue = async (collection, index, value) => {
         let news = this.state[collection];
         news[Number(index)] = value;
         await this.setState({[collection]: news});
+    }
+
+    setReportDirty = () => {
+        console.log("dirty")
+        this.setState({reportIsDirty: true});
+    }
+
+    saveReportCall = async () => {
+        try{
+            if (this.state.reportIsDirty){
+                console.log("ae")
+                await saveReport(this.props.auth, this.props.match.params.student_id, this.props.match.params.list_id, this.state.comments, this.state.scores, this.state.finalComment);
+                this.setState({reportIsDirty: false});
+            } 
+        } catch (err) {
+            console.log(err);   
+        }
     }
 
     render() {

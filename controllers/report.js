@@ -23,7 +23,8 @@ module.exports = {
       const foundStudent = await Student.findById(req.params.student_id);
       const list = await List.findById(req.params.list_id);
       const foundReport = foundStudent.reports
-        .find(report => report.list.theHuxleyId === list.theHuxleyId);
+        // .find(report => report.list.theHuxleyId === list.theHuxleyId);
+        .find(report => console.log(report));
       foundReport.score = req.body.scores.reduce((acm, score) => acm + score, 0);
       if (foundReport) {
         for (let i = 0; i < foundReport.submissions.length; i += 1) {
@@ -37,6 +38,7 @@ module.exports = {
       }
       throw new Error('Report not found');
     } catch (err) {
+      console.log(err);
       return res.status(500).send(err.message);
     }
   },
@@ -69,7 +71,7 @@ module.exports = {
       console.log(foundStudent.reports);
       const foundReport = foundStudent.reports
         .find(report => report.list.theHuxleyId === list.theHuxleyId);
-      if(!foundReport) {
+      if (!foundReport) {
         return res.json('not found');
       }
       console.log(foundReport.submissions);
@@ -106,11 +108,9 @@ module.exports = {
   showReport: async (req, res) => {
     try {
       const foundUser = await User.findById(req.authData.user._id);
-      const studentList = await listController
-        .getStudentList(req.params.student_id, req.params.list_id);
+      const studentList = await listController.getStudentList(req.params.student_id, req.params.list_id);
       const foundStudent = await Student.findById(req.params.student_id).populate('reports').exec();
-      const foundReport = foundStudent.reports
-        .find(report => report.list.theHuxleyId === studentList.list.theHuxleyId);
+      const foundReport = foundStudent.reports.find(report => report.list.theHuxleyId === studentList.list.theHuxleyId);
       let returnedReport;
       if (foundReport) {
         returnedReport = foundReport;
