@@ -7,17 +7,22 @@ class Reporter extends Component {
     render() {
         let obj = this;
         let fields = this.props.problems.map((problem, index) => {
-            let DropdownOptions = [ {text: <img alt='done' src='/checked.png'/>, value: problem.problem.score}, 
+            let DropdownOptions = [ {text: <img alt='done' src='/checked.png'/>, value: problem.problem.maxScore}, 
                             {text: <img alt='medium' src='/aprox.png'/>, value: 'custom'},
                             {text: <img alt='didnot' src='/close-button.png'/>, value: 0}
                         ]
             
-            let defaultValue = obj.props.scores[index]
+            let defaultValue = obj.props.scores[index];
             let scoreDisplay = 'none';
             
-            if(obj.props.custom[index]){
+            if(obj.props.custom[index] || (obj.props.scores[index] !== 0 && obj.props.scores[index] !== problem.problem.maxScore)){
                 defaultValue = 'custom'
                 scoreDisplay = 'block'
+            }
+
+            if(obj.props.scores[index] === 0){
+                console.log("zero")
+                defaultValue = 0;
             }
             
             return <Form.Field 
@@ -63,6 +68,7 @@ class Reporter extends Component {
                         </Form.Field>
                     </Form>    
                 </div>
+                {!this.props.reportIsDirty && <span id="saving_message">Report saved.</span>}
                 {!this.props.sent && <Button 
                         disabled={this.props.sendDisabled} 
                         loading={this.props.sendDisabled} 
@@ -76,6 +82,7 @@ class Reporter extends Component {
 }
 
 Reporter.propTypes = {
+    reportIsDirty: PropTypes.bool,
     sendEmail: PropTypes.func,
     handleFinalComment: PropTypes.func,
     handleScore: PropTypes.func,

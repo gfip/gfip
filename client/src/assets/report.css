@@ -80,15 +80,19 @@
 
 #report_send_btn{
     position: absolute;
-    right: -5px;
-    bottom: -35px;
+    right: -3px;
+    bottom: -45px;
     background-color: #88FE56;
     color: white;
 }
 #report_send_btn:hover{
-    position: absolute;
-    right: -5px;
-    bottom: -35px;
     background-color: #C5FFAD;
     color: white;
+}
+
+#saving_message {
+    position: absolute;
+    bottom: -25px;
+    left: 5px;
+    color: grey;
 }

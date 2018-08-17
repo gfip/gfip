@@ -22,7 +22,8 @@ class ReportPage extends Component {
             custom: [],
             finalComment: '',
             sendDisable: false,
-            totalScore: 0
+            totalScore: 0,
+            reportIsDirty: false
         }
     }
 
@@ -34,6 +35,7 @@ class ReportPage extends Component {
             report = report.data;
             let comments = report.submissions.map((subm) => subm.comment);
             console.log(comments)
+            console.log(report)
             this.setState({finalComment: report.finalComment, comments: comments});
             
             await this.setState({
@@ -45,25 +47,15 @@ class ReportPage extends Component {
             });
 
             report.submissions.forEach((submission, index) => {
-                let defaultValue = 0;
-                
-                if(submission.evaluation === 'CORRECT'){
-                    if(submission.score){
-                        defaultValue = submission.score;
-                    } else {
-                        defaultValue =  submission.problem.score;
-                    }
-
-                    this.setState({totalScore: this.state.totalScore += defaultValue});
-                }
-                
+                let defaultValue = submission.problem.score;
+                this.setState({totalScore: this.state.totalScore += defaultValue});
                 this.setStateArrayValue('scores', index, defaultValue);
             });
 
             setInterval(() => {
                 console.log("yey")
                 this.saveReportCall();
-            }, 3000)
+            }, 1500)
         } catch (err) {
             console.log(err.message);
         }
@@ -119,6 +111,7 @@ class ReportPage extends Component {
          this.setState({
              finalComment: event.target.value
          })
+         this.setReportDirty();
      }
 
     setStateArrayValue = async (collection, index, value) => {
@@ -212,6 +205,7 @@ class ReportPage extends Component {
                         comments={this.state.comments}
                         finalComment={this.state.finalComment}
                         scores={this.state.scores}
+                        reportIsDirty={this.state.reportIsDirty}
                         problems={this.state.list.submissions}></Reporter>}
                 </div>
             </div>
