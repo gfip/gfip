@@ -2,7 +2,6 @@ const Student = require('../models/student.js');
 const User = require('../models/user.js');
 const List = require('../models/list.js');
 const theHuxley = require('../modules/thehuxley/');
-const listController = require('./list.js');
 
 module.exports = {
 
@@ -34,7 +33,7 @@ module.exports = {
       return res.status(500).send(err.message);
     }
   },
-  
+
   createStudent: async (req, res) => {
     try {
       const studentData = await theHuxley.getUserInfoByName(req.body.name);
@@ -60,7 +59,6 @@ module.exports = {
       }
       return await foundUser.save();
     } catch (err) {
-      console.log(err.message);
       return res.status(500).send(err.message);
     }
   },

@@ -21,7 +21,6 @@ class Reporter extends Component {
             }
 
             if(obj.props.scores[index] === 0){
-                console.log("zero")
                 defaultValue = 0;
             }
             

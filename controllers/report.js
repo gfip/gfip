@@ -2,9 +2,7 @@ const Student = require('../models/student');
 const Report = require('../models/report');
 const User = require('../models/user');
 const listController = require('./list');
-const mailer = require('../modules/email');
 const List = require('../models/list');
-const mongoose = require('mongoose');
 const checkBarrier = require('../modules/barrier/');
 
 module.exports = {
@@ -28,7 +26,6 @@ module.exports = {
       }
       foundReport.score = req.body.scores.reduce((acm, score) => acm + score, 0);
       for (let i = 0; i < foundReport.submissions.length; i += 1) {
-        console.log(req.body.comments[i]);
         foundReport.submissions[i].problem.score = req.body.scores[i];
         foundReport.submissions[i].comment = req.body.comments[i];
       }
@@ -37,7 +34,6 @@ module.exports = {
       await foundReport.save();
       return res.json(foundReport);
     } catch (err) {
-      console.log(err);
       return res.status(500).send(err.message);
     }
   },
@@ -84,7 +80,6 @@ module.exports = {
       res.json(foundReport);
       await checkBarrier(list);
     } catch (err) {
-      console.log(err);
       return res.status(500).send(err.message);
     }
   },
@@ -128,7 +123,7 @@ module.exports = {
             name: submission.problem.name,
             maxScore: submission.problem.score,
             theHuxleyId: submission.problem.theHuxleyId,
-            score: submission.problem.score,
+            score: submission.evaluation === 'CORRECT' ? submission.problem.score : 0,
           },
           theHuxleyId: submission.theHuxleyId,
           evaluation: studentList.submissions[i].evaluation,
