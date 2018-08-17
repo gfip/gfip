@@ -104,6 +104,7 @@ export function sendReport(token, student_id, list_id, comments, scores, finalCo
 }
 
 export function saveReport(token, student_id, list_id, comments, scores, finalComment) {
+    console.log(comments)
     return axios.put(`/api/me/students/${student_id}/lists/${list_id}/reports/save`, {
         comments,
         scores,

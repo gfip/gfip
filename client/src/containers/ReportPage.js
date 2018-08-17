@@ -76,6 +76,7 @@ class ReportPage extends Component {
     handleComment = (event) => {
         this.setStateArrayValue('comments', event.target.name, event.target.value);
         this.setReportDirty();
+        console.log(this.state.comments)
     }
  
     handleScore = (event) => {

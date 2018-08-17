@@ -28,8 +28,9 @@ module.exports = {
       }
       foundReport.score = req.body.scores.reduce((acm, score) => acm + score, 0);
       for (let i = 0; i < foundReport.submissions.length; i += 1) {
+        console.log(req.body.comments[i]);
         foundReport.submissions[i].problem.score = req.body.scores[i];
-        foundReport.submissions[i].problem.comment = req.body.comments[i];
+        foundReport.submissions[i].comment = req.body.comments[i];
       }
       foundReport.finalComment = req.body.finalComment;
       foundReport.author = req.authData.user.username;
@@ -74,7 +75,7 @@ module.exports = {
       foundReport.score = req.body.scores.reduce((acm, score) => acm + score, 0);
       for (let i = 0; i < foundReport.submissions.length; i += 1) {
         foundReport.submissions[i].problem.score = req.body.scores[i];
-        foundReport.submissions[i].problem.comment = req.body.comments[i];
+        foundReport.submissions[i].comment = req.body.comments[i];
       }
       foundReport.finalComment = req.body.finalComment;
       foundReport.author = req.authData.user.username;
