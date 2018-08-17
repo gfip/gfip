@@ -14,7 +14,7 @@ module.exports = list => new Promise( async (resolve, reject) => {
     const students = await Student.find({});
     const reports = await findReports;
     reports.forEach((report) => {
-      if (report.done) {
+      if (report.sent) {
         doneReports[report.student.theHuxleyId] = report;
       }
     });

@@ -5,6 +5,7 @@ const listController = require('./list');
 const mailer = require('../modules/email');
 const List = require('../models/list');
 const mongoose = require('mongoose');
+const checkBarrier = require('../modules/barrier/');
 
 module.exports = {
   getReports: async (req, res) => {
@@ -18,24 +19,22 @@ module.exports = {
 
   saveReport: async (req, res) => {
     try {
-      console.log('save report');
-      const foundUser = await User.findById(req.authData.user._id);
-      const foundStudent = await Student.findById(req.params.student_id);
+      const foundStudent = await Student.findById(req.params.student_id).populate('reports').exec();
       const list = await List.findById(req.params.list_id);
       const foundReport = foundStudent.reports
         .find(report => report.list.theHuxleyId === list.theHuxleyId);
-      foundReport.score = req.body.scores.reduce((acm, score) => acm + score, 0);
-      if (foundReport) {
-        for (let i = 0; i < foundReport.submissions.length; i += 1) {
-          foundReport.submissions[i].score = req.body.scores[i];
-          foundReport.submissions[i].comment = req.body.comments[i];
-        }
-        foundReport.finalComment = req.body.finalComment;
-        foundReport.author = foundUser.username;
-        await foundReport.save();
-        return res.json(foundReport);
+      if (!foundReport) {
+        return res.json('not found');
       }
-      throw new Error('Report not found');
+      foundReport.score = req.body.scores.reduce((acm, score) => acm + score, 0);
+      for (let i = 0; i < foundReport.submissions.length; i += 1) {
+        foundReport.submissions[i].score = req.body.scores[i];
+        foundReport.submissions[i].comment = req.body.comments[i];
+      }
+      foundReport.finalComment = req.body.finalComment;
+      foundReport.author = req.authData.user.username;
+      await foundReport.save();
+      return res.json(foundReport);
     } catch (err) {
       return res.status(500).send(err.message);
     }
@@ -66,14 +65,11 @@ module.exports = {
     try {
       const foundStudent = await Student.findById(req.params.student_id).populate('reports').exec();
       const list = await List.findById(req.params.list_id);
-      console.log(foundStudent.reports);
       const foundReport = foundStudent.reports
         .find(report => report.list.theHuxleyId === list.theHuxleyId);
-      if(!foundReport) {
+      if (!foundReport) {
         return res.json('not found');
       }
-      console.log(foundReport.submissions);
-      const foundUsers = await User.find({ students: { $in: mongoose.Types.ObjectId((foundStudent._id)) } });
       foundReport.score = req.body.scores.reduce((acm, score) => acm + score, 0);
       for (let i = 0; i < foundReport.submissions.length; i += 1) {
         foundReport.submissions[i].score = req.body.scores[i];
@@ -83,8 +79,8 @@ module.exports = {
       foundReport.author = req.authData.user.username;
       foundReport.sent = true;
       await foundReport.save();
-      mailer.sendReport(foundReport, foundStudent, foundUsers);
-      return res.json(foundReport);
+      res.json(foundReport);
+      await checkBarrier(list);
     } catch (err) {
       console.log(err);
       return res.status(500).send(err.message);
