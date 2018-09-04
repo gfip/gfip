@@ -7,7 +7,7 @@ const User = require('../../../models/report');
 
 const { sendReport } = require('../../email/');
 
-module.exports = list => new Promise( async (resolve, reject) => {
+module.exports = list => new Promise(async (resolve, reject) => {
   try {
     const doneReports = {};
     const findReports = Report.find({ list: { theHuxleyId: list.theHuxleyId } });
