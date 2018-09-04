@@ -18,22 +18,22 @@ module.exports = list => new Promise(async (resolve, reject) => {
         doneReports[report.student.theHuxleyId] = report;
       }
     });
-    let allDone = true;
-    for (let i = 0; i < students.length && allDone; i += 1) {
-      if (!doneReports[students[i].theHuxleyId]) {
-        allDone = false;
-      }
-    }
-    if (allDone) {
-      await Promise.all(students.map(async (student) => {
-        const report = doneReports[student.theHuxleyId];
-        const foundUsers = await User.find({ students: { $in: mongoose.Types.ObjectId((student._id)) } });
-        sendReport(report, student, foundUsers);
-      }));
-      resolve(true);
-    } else {
-      resolve(false);
-    }
+    // let allDone = true;
+    // for (let i = 0; i < students.length && allDone; i += 1) {
+    //   if (!doneReports[students[i].theHuxleyId]) {
+    //     allDone = false;
+    //   }
+    // }
+    // if (allDone) {
+    await Promise.all(students.map(async (student) => {
+      const report = doneReports[student.theHuxleyId];
+      const foundUsers = await User.find({ students: { $in: mongoose.Types.ObjectId((student._id)) } });
+      sendReport(report, student, foundUsers);
+    }));
+    resolve(true);
+    // } else {
+    //   resolve(false);
+    // }
   } catch (err) {
     return reject(err);
   }

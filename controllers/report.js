@@ -77,8 +77,8 @@ module.exports = {
       foundReport.author = req.authData.user.username;
       foundReport.sent = true;
       await foundReport.save();
-      res.json(foundReport);
       await checkBarrier(list);
+      return res.json(foundReport);
     } catch (err) {
       return res.status(500).send(err.message);
     }
