@@ -67,6 +67,7 @@ class ReportPage extends Component {
                             this.state.scores, this.state.finalComment);
             this.setState({sentEmail: true});
         } catch (err) {
+            console.log(err.message);
             this.setState({sendDisabled: false});
         }
     }
