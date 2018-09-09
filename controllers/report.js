@@ -62,9 +62,10 @@ module.exports = {
   sendReport: async (req, res) => {
     try {
       const foundStudent = await Student.findById(req.params.student_id).populate('reports').exec();
+      console.log(req.params.list_id);
       const list = await List.findById(req.params.list_id);
-      const foundReport = foundStudent.reports
-        .find(report => report.list.theHuxleyId === list.theHuxleyId);
+      console.log(list);
+      const foundReport = foundStudent.reports.find(report => report.list.theHuxleyId === list.theHuxleyId);
       if (!foundReport) {
         return res.json('not found');
       }
