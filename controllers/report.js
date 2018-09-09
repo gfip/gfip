@@ -67,7 +67,7 @@ module.exports = {
       const list = await List.findById(req.params.list_id);
       console.log(list);
       const foundReport = foundStudent.reports.find(report => report.list.theHuxleyId === list.theHuxleyId);
-      const foundUsers = await User.find({ students: { $in: [mongoose.Types.ObjectId((foundStudent._id))] } });
+      //const foundUsers = await User.find({ students: { $in: [mongoose.Types.ObjectId((foundStudent._id))] } });
       if (!foundReport) {
         return res.json('not found');
       }
@@ -80,8 +80,8 @@ module.exports = {
       foundReport.author = req.authData.user.username;
       foundReport.sent = true;
       await foundReport.save();
-      await sendReport(foundReport, foundStudent, foundUsers);
-      //await checkBarrier(list);
+      //await sendReport(foundReport, foundStudent, foundUsers);
+      await checkBarrier(list);
       return res.json(foundReport);
     } catch (err) {
       return res.status(500).send(err);

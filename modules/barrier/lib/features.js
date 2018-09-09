@@ -18,13 +18,13 @@ module.exports = list => new Promise(async (resolve, reject) => {
         doneReports[report.student.theHuxleyId] = report;
       }
     });
-    // let allDone = true;
-    // for (let i = 0; i < students.length && allDone; i += 1) {
-    //   if (!doneReports[students[i].theHuxleyId]) {
-    //     allDone = false;
-    //   }
-    // }
-    // if (allDone) {
+    let allDone = true;
+    for (let i = 0; i < students.length && allDone; i += 1) {
+      if (!doneReports[students[i].theHuxleyId]) {
+        allDone = false;
+      }
+    }
+    if (allDone) {
     console.log(doneReports);
     console.log(reports);
 
@@ -34,9 +34,9 @@ module.exports = list => new Promise(async (resolve, reject) => {
       sendReport(report, student, foundUsers);
     }));
     resolve(true);
-    // } else {
-    //   resolve(false);
-    // }
+    } else {
+      resolve(false);
+    }
   } catch (err) {
     return reject(err);
   }
