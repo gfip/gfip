@@ -80,7 +80,7 @@ module.exports = {
       await checkBarrier(list);
       return res.json(foundReport);
     } catch (err) {
-      return res.status(500).send(err.message);
+      return res.status(500).send(err);
     }
   },
 
