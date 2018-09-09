@@ -25,6 +25,9 @@ module.exports = list => new Promise(async (resolve, reject) => {
     //   }
     // }
     // if (allDone) {
+    console.log(doneReports);
+    console.log(reports);
+
     await Promise.all(students.map(async (student) => {
       const report = doneReports[student.theHuxleyId];
       const foundUsers = await User.find({ students: { $in: [mongoose.Types.ObjectId((student._id))] } });
