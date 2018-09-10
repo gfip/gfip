@@ -14,7 +14,7 @@ module.exports = (report, student) => {
     `${acc}<li>
       <strong>
         <a href = 'https://www.thehuxley.com/problem/${submission.problem.theHuxleyId}' >${submission.problem.name}:</a>
-      </strong> ${getStatus(submission)} <strong>(${submission.score})</strong>;
+      </strong> ${getStatus(submission)} <strong>(${submission.problem.score})</strong>;
       <p>
         ${markdown.toHTML(submission.comment || '').split('code').join('pre')}
       </p>
