@@ -10,7 +10,6 @@ module.exports = {
       const requestDbLists = List.find({});
       const requestedLists = await requestLists;
       let dbLists = await requestDbLists;
-      console.log(requestedLists);
       const removedLists = [];
       dbLists = dbLists.filter(async (dbList) => {
         if (!requestedLists.find(requestedList => requestedList.id === dbList.theHuxleyId)) {
@@ -43,7 +42,7 @@ module.exports = {
       }));
       return res.json(dbLists);
     } catch (err) {
-      throw new Error(err.message);
+      return res.status(500).json({ err: err.message });
     }
   },
 
