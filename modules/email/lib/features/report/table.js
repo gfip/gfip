@@ -1,9 +1,9 @@
 const { markdown } = require('markdown');
 
 function getStatus(submission) {
-  if (submission.score === 0) {
+  if (submission.problem.score === 0) {
     return 'Errado';
-  } else if (submission.score < submission.problem.maxScore) {
+  } else if (submission.problem.score < submission.problem.maxScore) {
     return 'Nota Parcial';
   }
   return 'Correto';
