@@ -39,7 +39,7 @@ class Reporter extends Component {
                             className='report_score' 
                             type='number'
                             min='0'
-                            max={problem.problem.score}
+                            max={problem.problem.maxScore}
                             style={{display: scoreDisplay}}
                             defaultValue={obj.props.scores[index]}
                             onChange={obj.props.handleScore}
