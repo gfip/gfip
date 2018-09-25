@@ -80,8 +80,8 @@ class ReportPage extends Component {
     handleScore = (event) => {
         let problem = this.state.list.submissions[Number(event.target.name)]
         
-        if(event.target.value > problem.problem.score){
-            event.target.value = problem.problem.score;
+        if(event.target.value > problem.problem.maxScore){
+            event.target.value = problem.problem.maxScore;
         } else if (event.target.value < 0){
             event.target.value = 0;
         }
