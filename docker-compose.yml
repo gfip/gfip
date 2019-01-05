@@ -4,9 +4,9 @@ services:
     container_name: app_server
     command: nodemon app.js
     restart: always
-    build: ./server
+    build: .
     volumes:
-      - ./server:/usr/src/app/
+      - .:/usr/src/app/
     env_file: .env
     ports:
       - "5000:5000"
