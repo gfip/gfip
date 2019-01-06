@@ -34,6 +34,12 @@ A website that makes it easy to send code review feedbacks to Programming Introd
 
 - Go to the `/client` folder inside the project folder and type `npm start`in the command prompt. This will start React server.
 
+* An alternative is using Docker to run this application development environment, for this you have to complete the first pass described and then run (with docker and docker compose installed in you machine) the command: 
+  ```bash
+    sudo docker-compose up
+  ```
+
+
 ## Methods
 
 To see the API methods - go to the [APIDoc.md](APIDoc.md) file
