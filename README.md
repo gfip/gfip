@@ -36,7 +36,7 @@ A website that makes it easy to send code review feedbacks to Programming Introd
 
 * An alternative is using Docker to run this application development environment, for this you have to complete the first pass described and then run (with docker and docker compose installed in you machine) the command: 
   ```bash
-    sudo docker-compose up
+    docker-compose up
   ```
 
 
@@ -59,8 +59,6 @@ The project on github is linked directly with Heroku, being deployed in live ver
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us. 
 
 ## Authors
-
-* **Éden Ernandes** - [edenalsant](https://github.com/edenalsant)
 * **Luan Antunes**  - [luanbrito7](https://github.com/luanbrito7)
 * **Lucas Barros**  - [lucasbarross](https://github.com/lucasbarross)
 * **Rafael Mota**   - [rafaelmotaalves](https://github.com/rafaelmotaalves)
