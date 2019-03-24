@@ -5,7 +5,7 @@ A website that makes it easy to send code review feedbacks to Programming Introd
 ## Getting Started
 
 ### Prerequisites
-[MongoDB](https://www.mongodb.com/download-center?jmp=nav#community)
+[MongoDB](https://www.mongodb.com/download-center?jmp=nav#community) (if you are not using docker)
 
 ### Installing
 - Setup a `.env` file inside the project directory with the following content:
