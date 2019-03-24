@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' })
 
 const constants = {
 
@@ -18,8 +18,9 @@ const constants = {
     password: process.env.THEHUXLEY_PASSWORD,
   },
 
+  clientAddress: process.env.CLIENT_ADDRESS || process.env.ADDRESS,
   address: process.env.ADDRESS,
+  port: process.env.PORT
 };
-
 
 module.exports = constants;

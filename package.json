@@ -1,35 +1,23 @@
 {
-  "name": "feedback-generator",
-  "version": "0.1.0",
-  "license": "MIT",
-  "private": false,
-  "dependencies": {
-    "async": "^2.6.0",
-    "axios": "^0.18.0",
-    "body-parser": "^1.18.2",
-    "cheerio": "^1.0.0-rc.2",
-    "dotenv": "^5.0.1",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb": "^16.1.0",
-    "express": "^4.16.3",
-    "jwt-then": "^0.6.0",
-    "lodash": "^4.17.10",
-    "markdown": "^0.5.0",
-    "method-override": "^2.3.10",
-    "moment": "^2.22.2",
-    "mongoose": "^5.0.10",
-    "nodemailer": "^4.6.0",
-    "passport": "^0.4.0",
-    "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^5.0.0"
-  },
+  "name": "gfip",
+  "version": "1.0.0",
+  "description": "A website that makes it easy to send code review feedbacks to Programming Introduction students at CIn/UFPE.",
+  "main": "server/app.js",
   "scripts": {
-    "start": "node app.js",
-    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "cd server && npm start",
+    "client": "cd client && npm start",
+    "start": "docker-compose up",
+    "prod-start": "docker-compose -f docker-compose-prod.yml up"
   },
-  "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.12.0"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gfip/gfip.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gfip/gfip/issues"
+  },
+  "homepage": "https://github.com/gfip/gfip#readme"
 }

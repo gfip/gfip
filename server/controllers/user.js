@@ -4,6 +4,7 @@ const passport = require('passport');
 const mailer = require('../modules/email');
 const auth = require('../config/constants.js').authentication;
 const { isMonitor } = require('../modules/authorization');
+const env = require('../config/constants');
 
 module.exports = {
 
@@ -85,7 +86,7 @@ module.exports = {
       if (foundUser) {
         foundUser.isConfirmed = true;
         await foundUser.save();
-        return res.redirect('/');
+        return res.redirect(env.clientAddress);
       }
       throw new Error('User already canceled registration');
     } catch (err) {
@@ -101,7 +102,7 @@ module.exports = {
         throw new Error('User already confirmed registration');
       } else {
         await User.findByIdAndRemove(foundUser._id);
-        return res.redirect('/');
+        return res.redirect(env.clientAddress);
       }
     } catch (err) {
       return res.status(500).send(err.message);

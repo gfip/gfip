@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
 export function me(token) {
     return axios.get('/api/me', {
         headers: {

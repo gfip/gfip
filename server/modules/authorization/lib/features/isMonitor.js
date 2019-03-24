@@ -6,6 +6,8 @@ const URL = 'https://sites.google.com/a/cin.ufpe.br/if669/';
  * @param {string} username - User's CIn login
  */
 
+const specialUsers = ['scbs', 'rmfl', 'rma7', 'lbam']
+
 // isMonitor('lbam').then((username) => console.log(username))
 // .catch((err) => console.log(err.message))
 module.exports = username => new Promise((resolve, reject) => {
@@ -17,7 +19,7 @@ module.exports = username => new Promise((resolve, reject) => {
       }).each((i, elem) => {
         if ($(elem).text() === username) {
           resolve(elem.attribs.href);
-        } else if (username === 'scbs' || username === 'rmfl') {
+        } else if (specialUsers.includes(username)) {
           resolve('https://ngstudentexpeditions.com/wp-content/uploads/2017/08/blank-profile-picture.jpg');
         }
       });
