@@ -26,7 +26,9 @@ A website that makes it easy to send code review feedbacks to Programming Introd
 
   >PASSRESET_SECRET=anythingyouwant.
 
-  >ADDRESS=The address which the app is hosted on, for local developement you can use http://localhost:5000.
+  >ADDRESS=The address which the api is hosted on, for local developement you can use http://localhost:5000.
+  
+  >CLIENT_ADDRESS=The address which the front end is hosted on, for local developement you can leave it blank
 
 - Go to the `mongodb/server/YOURVERSION/bin` folder, open a command prompt and execute `mongod`. This will run your local mongoDB database(only required if you didn't set MONGO_URL in your environment variables).
 
