@@ -1,6 +1,7 @@
 import axios from 'axios';
+require('dotenv').config({ path: '../.env' })
 
-axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.baseURL = process.env.REACT_APP_API_ADDRESS || 'https://localhost:5000';
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 export function me(token) {

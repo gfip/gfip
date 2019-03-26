@@ -23,6 +23,8 @@ services:
       dockerfile: Dockerfile-prod
     ports:
       - "80:80"
+    environment:
+      - REACT_APP_API_ADDRESS=http://gfip.cin.ufpe.br:8080
     depends_on:
       - server
   mongo:
