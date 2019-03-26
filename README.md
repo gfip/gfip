@@ -5,7 +5,7 @@ A website that makes it easy to send code review feedbacks to Programming Introd
 ## Getting Started
 
 ### Prerequisites
-[MongoDB](https://www.mongodb.com/download-center?jmp=nav#community)
+[MongoDB](https://www.mongodb.com/download-center?jmp=nav#community) (if you are not using docker)
 
 ### Installing
 - Setup a `.env` file inside the project directory with the following content:
@@ -26,7 +26,9 @@ A website that makes it easy to send code review feedbacks to Programming Introd
 
   >PASSRESET_SECRET=anythingyouwant.
 
-  >ADDRESS=The address which the app is hosted on, for local developement you can use http://localhost:5000.
+  >ADDRESS=The address which the api is hosted on, for local developement you can use http://localhost:5000.
+  
+  >CLIENT_ADDRESS=The address which the front end is hosted on, for local developement you can leave it blank
 
 - Go to the `mongodb/server/YOURVERSION/bin` folder, open a command prompt and execute `mongod`. This will run your local mongoDB database(only required if you didn't set MONGO_URL in your environment variables).
 
@@ -36,7 +38,7 @@ A website that makes it easy to send code review feedbacks to Programming Introd
 
 * An alternative is using Docker to run this application development environment, for this you have to complete the first pass described and then run (with docker and docker compose installed in you machine) the command: 
   ```bash
-    sudo docker-compose up
+    docker-compose up
   ```
 
 
@@ -59,8 +61,6 @@ The project on github is linked directly with Heroku, being deployed in live ver
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us. 
 
 ## Authors
-
-* **Éden Ernandes** - [edenalsant](https://github.com/edenalsant)
 * **Luan Antunes**  - [luanbrito7](https://github.com/luanbrito7)
 * **Lucas Barros**  - [lucasbarross](https://github.com/lucasbarross)
 * **Rafael Mota**   - [rafaelmotaalves](https://github.com/rafaelmotaalves)
