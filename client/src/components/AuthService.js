@@ -1,8 +1,8 @@
 import axios from 'axios';
 import {me} from '../helpers/api';
 
-// axios.defaults.baseURL = process.env.REACT_APP_API_ADDRESS || 'https://localhost:3000';
-// axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+axios.defaults.baseURL = process.env.REACT_APP_API_ADDRESS || 'https://localhost:3000';
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 export default class AuthService {
     // Initializing important variables
@@ -17,11 +17,6 @@ export default class AuthService {
 
     login(auth) {
         // Get a token from api server
-        axios.defaults.baseURL = process.env.REACT_APP_API_ADDRESS || 'https://localhost:3000';
-        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-        
-        console.log(process.env.REACT_APP_API_ADDRESS);
-        
         return axios
             .post('/api/login', auth)
             .then(res => {
