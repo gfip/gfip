@@ -1,6 +1,6 @@
 #!/bin/bash
 
-domains=(gfip.cin.ufpe.br www.gfip.cin.ufpe.br)
+domains=(gfip.cin.ufpe.br)
 rsa_key_size=4096
 data_path="./client/certbot"
 email="lbam@cin.ufpe.br" # Adding a valid address is strongly recommended
@@ -72,4 +72,4 @@ sudo docker-compose -f docker-compose-prod.yml run --rm --entrypoint "\
 echo
 
 echo "### Reloading nginx ..."
-sudo docker-compose -f docker-compose-prod.yml exec client client -s reload
+sudo docker-compose -f docker-compose-prod.yml exec client -s reload
