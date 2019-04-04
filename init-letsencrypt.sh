@@ -72,4 +72,4 @@ sudo docker-compose -f docker-compose-prod.yml run --rm --entrypoint "\
 echo
 
 echo "### Reloading nginx ..."
-sudo docker-compose exec client client -s reload
+sudo docker-compose -f docker-compose-prod.yml exec client client -s reload
