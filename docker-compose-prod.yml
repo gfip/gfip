@@ -29,6 +29,7 @@ services:
     depends_on:
       - server
     volumes:
+      - ./client/nginx/conf/conf.d:/etc/nginx/conf.d
       - ./client/certbot/conf:/etc/letsencrypt
       - ./client/certbot/www:/var/www/certbot
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
