@@ -8,8 +8,10 @@ const User = require('./models/user');
 const path = require('path');
 const env = require('./config/constants');
 const cors = require('cors');
-
+const fs = require("fs");
 const app = express();
+const http = require("http");
+const https = require("https");
 
 global.__base = `${__dirname}/`; // set __base as root directory
 
@@ -47,5 +49,12 @@ app.use('/api/lists/', listRoutes);
 //   res.sendFile(path.join(`${__dirname}/client/build/index.html`));
 // });
 
-app.listen(env.port || 5000, 
-  () => console.log(`Server listening on port ${env.port || 5000}`));
+var options = {
+  key: fs.readFileSync('../../../var/www/certbot/conf/live/gfip.cin.ufpe.br/privkey.pem'),
+  cert: fs.readFileSync('../../../var/www/certbot/conf/live/gfip.cin.ufpe.br/cert.pem')
+};
+
+http.createServer(app).listen(3000);
+https.createServer(options, app).listen(3000)
+// app.listen(env.port || 5000, 
+//  () => console.log(`Server listening on port ${env.port || 5000}`));

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {me} from '../helpers/api';
 
-axios.defaults.baseURL = process.env.REACT_APP_API_ADDRESS || 'https://localhost:3000';
+axios.defaults.baseURL = 'https://gfip.cin.ufpe.br:3000' || 'https://localhost:3000';
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 export default class AuthService {

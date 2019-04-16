@@ -26,3 +26,5 @@ yarn-error.log*
 
 data/
 .vscode
+certbot/
+client/certbot/*
